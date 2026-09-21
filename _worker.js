@@ -1,7 +1,7 @@
 /* Teesher.cloud - Cloudflare Pages worker
    Needs: KV binding named BLOG, and variable ADMIN_PASSWORD (Pages > Settings). */
 
-const SITE = 'https://teesher.cloud';
+const DEFAULT_SITE = 'https://teesher.cloud'; // links use whatever address the visitor is on
 const NAME = 'Teesher.cloud';
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,90}$/;
 const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
@@ -9,9 +9,9 @@ const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
 const DEFAULTS = {
   social: { fb: '', wa: '', ig: '', x: '', yt: '', li: '', tt: '', tg: '' },
   stores: {
-    amazon: 'https://www.amazon.com/',
-    jumia: 'https://www.jumia.com.ng/',
-    konga: 'https://www.konga.com/'
+    amazon: { link: 'https://www.amazon.com/', id: '', img: 0 },
+    jumia: { link: 'https://www.jumia.com.ng/', id: '', img: 0 },
+    konga: { link: 'https://www.konga.com/', id: '', img: 0 }
   },
   phones: ['+2347069444260', '+2349017668973']
 };
@@ -109,39 +109,86 @@ async function getSettings(env) {
   try {
     s = JSON.parse((await env.BLOG.get('settings')) || '{}');
   } catch (e) {}
+  const stores = {};
+  for (const k of Object.keys(DEFAULTS.stores)) {
+    let v = s.stores && s.stores[k];
+    if (typeof v === 'string') v = { link: v };
+    stores[k] = { ...DEFAULTS.stores[k], ...(v || {}) };
+  }
   return {
     social: { ...DEFAULTS.social, ...(s.social || {}) },
-    stores: { ...DEFAULTS.stores, ...(s.stores || {}) },
+    stores,
     phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones
   };
 }
 
-function cleanSettings(b) {
+const HANDLE = {
+  fb: (h) => 'https://facebook.com/' + h,
+  ig: (h) => 'https://instagram.com/' + h,
+  x: (h) => 'https://x.com/' + h,
+  yt: (h) => 'https://youtube.com/@' + h,
+  li: (h) => 'https://linkedin.com/in/' + h,
+  tt: (h) => 'https://tiktok.com/@' + h,
+  tg: (h) => 'https://t.me/' + h
+};
+
+function cleanSettings(b, existing) {
   const out = { social: {}, stores: {}, phones: [] };
   const src = (b && b.social) || {};
   for (const k of Object.keys(DEFAULTS.social)) {
-    let v = String(src[k] || '').trim();
-    if (k === 'wa' && v && !/^https?:\/\//i.test(v) && /^[+\d\s()-]{6,}$/.test(v)) {
+    const v = String(src[k] || '').trim().slice(0, 300);
+    if (!v) {
+      out.social[k] = '';
+    } else if (k === 'wa' && !/^https?:\/\//i.test(v) && /^[+\d\s()-]{6,}$/.test(v)) {
       out.social[k] = 'https://wa.me/' + v.replace(/\D/g, '');
+    } else if (
+      HANDLE[k] &&
+      !/^https?:\/\//i.test(v) &&
+      !/[\/]/.test(v) &&
+      !/^www\./i.test(v) &&
+      !/\.(com|net|org|me|tv|be|co|io|app|link)$/i.test(v) &&
+      /^@?[A-Za-z0-9._-]{2,60}$/.test(v)
+    ) {
+      out.social[k] = HANDLE[k](v.replace(/^@/, ''));
     } else {
       out.social[k] = normUrl(v);
     }
   }
   const st = (b && b.stores) || {};
   for (const k of Object.keys(DEFAULTS.stores)) {
-    out.stores[k] = normUrl(st[k]) || DEFAULTS.stores[k];
+    const o = st[k] || {};
+    out.stores[k] = {
+      link: normUrl(o.link) || DEFAULTS.stores[k].link,
+      id: String(o.id || '').replace(/[^A-Za-z0-9._-]/g, '').slice(0, 60),
+      img: (existing && existing.stores[k] && existing.stores[k].img) || 0
+    };
   }
   const ph = (b && Array.isArray(b.phones) ? b.phones : []).slice(0, 5);
   out.phones = ph.map((p) => String(p).replace(/[^0-9+ ()-]/g, '').trim().slice(0, 20)).filter(Boolean);
   return out;
 }
 
+const dataUrlOk = (s, max) => typeof s === 'string' && /^data:image\/(jpeg|png|webp);base64,/.test(s) && s.length < max;
+
+function imgResponse(v) {
+  const c = v.indexOf(',');
+  const mime = v.slice(5, v.indexOf(';'));
+  const bin = atob(v.slice(c + 1));
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Response(arr, { headers: { 'content-type': mime, 'cache-control': 'public, max-age=31536000, immutable' } });
+}
+
 async function savePost(env, body, id, existing) {
   const title = String(body.title || '').trim().slice(0, 200);
   const content = String(body.content || '').replace(/\r\n?/g, '\n').trim().slice(0, 50000);
-  if (!title || !content) return { error: 'missing_fields' };
-  const type = body.type === 'book' ? 'book' : 'blog';
-  const link = body.link ? safeUrl(String(body.link).slice(0, 500)) : '';
+  const type = body.type === 'book' || body.type === 'product' ? body.type : 'blog';
+  const link = body.link ? normUrl(body.link) : '';
+  if (!title) return { error: 'missing_fields' };
+  if (type === 'blog' && !content) return { error: 'missing_fields' };
+  if (type === 'product' && !link) return { error: 'missing_fields' };
+  const store = type === 'product' && ['amazon', 'jumia', 'konga', 'other'].includes(body.store) ? body.store : '';
+  const price = type === 'product' ? String(body.price || '').trim().slice(0, 40) : '';
   const now = new Date().toISOString();
   id = id || makeId(title);
 
@@ -149,17 +196,18 @@ async function savePost(env, body, id, existing) {
   if (Array.isArray(body.images)) {
     const imgs = body.images
       .slice(0, 4)
-      .filter((s) => typeof s === 'string' && /^data:image\/(jpeg|png|webp);base64,/.test(s) && s.length < 1800000);
+      .filter((s) => dataUrlOk(s, 1800000));
     for (let n = 0; n < (existing ? existing.imgCount || 0 : 0); n++) await env.BLOG.delete(`img:${id}:${n}`);
     for (let n = 0; n < imgs.length; n++) await env.BLOG.put(`img:${id}:${n}`, imgs[n]);
     imgCount = imgs.length;
   }
 
-  const post = { id, title, type, content, link, imgCount, date: existing ? existing.date : now, updated: now };
+  const post = { id, title, type, content, link, store, price, imgCount, date: existing ? existing.date : now, updated: now };
   await env.BLOG.put(`post:${id}`, JSON.stringify(post));
 
   const idx = await getIndex(env);
   const sum = { id, title, type, excerpt: excerpt(content), imgCount, date: post.date, updated: now };
+  if (type === 'product') Object.assign(sum, { link, store, price });
   const i = idx.findIndex((p) => p.id === id);
   if (i >= 0) idx[i] = sum;
   else idx.push(sum);
@@ -184,9 +232,50 @@ async function api(request, env, url) {
       if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
       const b = await request.json().catch(() => null);
       if (!b) return json({ error: 'bad_json' }, 400);
-      const s = cleanSettings(b);
+      const existing = await getSettings(env);
+      const s = cleanSettings(b, existing);
+      const imgs = b.storeImgs || {};
+      for (const k of Object.keys(DEFAULTS.stores)) {
+        if (imgs[k] === null) {
+          await env.BLOG.delete('simg:' + k);
+          s.stores[k].img = 0;
+        } else if (dataUrlOk(imgs[k], 600000)) {
+          await env.BLOG.put('simg:' + k, imgs[k]);
+          s.stores[k].img = Date.now();
+        }
+      }
       await env.BLOG.put('settings', JSON.stringify(s));
       return json(s);
+    }
+  }
+
+  if (route === 'subscribe' && m === 'POST') {
+    const b = await request.json().catch(() => null);
+    if (!b || b.website) return json({ ok: true }); // hidden field filled in = bot, pretend it worked
+    const email = String(b.email || '').trim().toLowerCase();
+    if (email.length > 200 || !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(email)) return json({ error: 'bad_email' }, 400);
+    await env.BLOG.put('sub:' + email, '1', { metadata: { d: new Date().toISOString() } });
+    return json({ ok: true });
+  }
+
+  if (route === 'subscribers') {
+    if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
+    if (m === 'GET') {
+      const keys = [];
+      let cursor;
+      do {
+        const r = await env.BLOG.list({ prefix: 'sub:', cursor, limit: 1000 });
+        keys.push(...r.keys);
+        cursor = r.list_complete ? undefined : r.cursor;
+      } while (cursor && keys.length < 5000);
+      return json({
+        subscribers: keys.map((k) => ({ email: k.name.slice(4), date: (k.metadata && k.metadata.d) || '' }))
+      });
+    }
+    if (m === 'DELETE') {
+      const e = (url.searchParams.get('email') || '').trim().toLowerCase();
+      if (e) await env.BLOG.delete('sub:' + e);
+      return json({ ok: true });
     }
   }
 
@@ -195,15 +284,14 @@ async function api(request, env, url) {
     const n = parseInt(parts[3], 10);
     if (!ID_RE.test(id) || !(n >= 0 && n < 4)) return new Response('Not found', { status: 404 });
     const v = await env.BLOG.get(`img:${id}:${n}`);
-    if (!v) return new Response('Not found', { status: 404 });
-    const c = v.indexOf(',');
-    const mime = v.slice(5, v.indexOf(';'));
-    const bin = atob(v.slice(c + 1));
-    const arr = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
-    return new Response(arr, {
-      headers: { 'content-type': mime, 'cache-control': 'public, max-age=31536000, immutable' }
-    });
+    return v ? imgResponse(v) : new Response('Not found', { status: 404 });
+  }
+
+  if (route === 'simg' && m === 'GET') {
+    const k = parts[2] || '';
+    if (!Object.keys(DEFAULTS.stores).includes(k)) return new Response('Not found', { status: 404 });
+    const v = await env.BLOG.get('simg:' + k);
+    return v ? imgResponse(v) : new Response('Not found', { status: 404 });
   }
 
   if (route === 'posts') {
@@ -246,10 +334,10 @@ async function api(request, env, url) {
   return json({ error: 'not_found' }, 404);
 }
 
-async function sitemap(env) {
+async function sitemap(env, SITE) {
   const idx = env.BLOG ? await getIndex(env) : [];
   const urls = [`<url><loc>${SITE}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`];
-  for (const p of idx) {
+  for (const p of idx.filter((x) => x.type !== 'product')) {
     urls.push(`<url><loc>${SITE}/p/${p.id}</loc><lastmod>${String(p.updated || p.date).slice(0, 10)}</lastmod></url>`);
   }
   return new Response(
@@ -258,7 +346,22 @@ async function sitemap(env) {
   );
 }
 
+async function feed(env, SITE) {
+  const idx = (env.BLOG ? await getIndex(env) : []).filter((x) => x.type !== 'product').slice(0, 30);
+  const items = idx
+    .map(
+      (p) =>
+        `<item><title>${esc(p.title)}</title><link>${SITE}/p/${p.id}</link><guid isPermaLink="true">${SITE}/p/${p.id}</guid><pubDate>${new Date(p.date).toUTCString()}</pubDate><description>${esc(p.excerpt)}</description></item>`
+    )
+    .join('');
+  return new Response(
+    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>${NAME}</title><link>${SITE}/</link><description>Teaching stories, tech blogging and books</description>${items}</channel></rss>`,
+    { headers: { 'content-type': 'application/rss+xml; charset=utf-8', 'cache-control': 'public, max-age=600' } }
+  );
+}
+
 async function postPage(env, url) {
+  const SITE = url.origin;
   const id = url.pathname.split('/')[2] || '';
   const shell = await env.ASSETS.fetch(new Request(new URL('/', url).toString()));
   let html = await shell.text();
@@ -266,6 +369,7 @@ async function postPage(env, url) {
   if (env.BLOG && ID_RE.test(id)) {
     const raw = await env.BLOG.get(`post:${id}`);
     if (raw) post = JSON.parse(raw);
+    if (post && post.type === 'product') post = null;
   }
   const headers = { 'content-type': 'text/html; charset=utf-8' };
   if (!post) {
@@ -305,14 +409,28 @@ async function postPage(env, url) {
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
 
+/* The page and robots.txt say teesher.cloud. Until that domain is connected,
+   swap it for the address the visitor is really on (for example teether.pages.dev). */
+async function withOrigin(request, env, url) {
+  const res = await env.ASSETS.fetch(request);
+  if (!res.ok) return res;
+  const text = (await res.text()).split(DEFAULT_SITE).join(url.origin);
+  const headers = new Headers(res.headers);
+  headers.delete('content-length');
+  headers.delete('etag');
+  return new Response(text, { status: 200, headers });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const p = url.pathname;
     try {
       if (p.startsWith('/api/')) return await api(request, env, url);
-      if (p === '/sitemap.xml') return await sitemap(env);
+      if (p === '/sitemap.xml') return await sitemap(env, url.origin);
+      if (p === '/feed.xml') return await feed(env, url.origin);
       if (p.startsWith('/p/')) return await postPage(env, url);
+      if (p === '/' || p === '/index.html' || p === '/robots.txt') return await withOrigin(request, env, url);
     } catch (e) {
       return json({ error: 'server_error' }, 500);
     }
