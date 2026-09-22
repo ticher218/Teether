@@ -202,11 +202,12 @@ async function savePost(env, body, id, existing) {
     imgCount = imgs.length;
   }
 
-  const post = { id, title, type, content, link, store, price, imgCount, date: existing ? existing.date : now, updated: now };
+  const views = existing ? existing.views || 0 : 0;
+  const post = { id, title, type, content, link, store, price, imgCount, views, date: existing ? existing.date : now, updated: now };
   await env.BLOG.put(`post:${id}`, JSON.stringify(post));
 
   const idx = await getIndex(env);
-  const sum = { id, title, type, excerpt: excerpt(content), imgCount, date: post.date, updated: now };
+  const sum = { id, title, type, excerpt: excerpt(content), imgCount, views, date: post.date, updated: now };
   if (type === 'product') Object.assign(sum, { link, store, price });
   const i = idx.findIndex((p) => p.id === id);
   if (i >= 0) idx[i] = sum;
@@ -311,6 +312,14 @@ async function api(request, env, url) {
       if (m === 'GET') {
         if (!raw) return json({ error: 'not_found' }, 404);
         const p = JSON.parse(raw);
+        p.views = (p.views || 0) + 1;
+        await env.BLOG.put(`post:${id}`, JSON.stringify(p));
+        const idx2 = await getIndex(env);
+        const j = idx2.findIndex((x) => x.id === id);
+        if (j >= 0) {
+          idx2[j].views = p.views;
+          await putIndex(env, idx2);
+        }
         return json({ ...p, html: render(p.content) });
       }
       if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
