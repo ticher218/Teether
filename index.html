@@ -35,6 +35,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!--SEO_HEAD_END-->
 <link rel="alternate" type="application/rss+xml" title="Teesher.cloud" href="/feed.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 124 88'%3E%3Cg fill='%235cb8ff'%3E%3Ccircle cx='40' cy='54' r='18'/%3E%3Ccircle cx='62' cy='40' r='24'/%3E%3Ccircle cx='84' cy='54' r='17'/%3E%3Crect x='40' y='54' width='44' height='18'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
@@ -197,6 +199,20 @@ details.aff summary{cursor:pointer;color:var(--warm);font-weight:600}
 .fform{display:flex;gap:8px}
 .fform input{flex:1;min-width:0;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.float{position:fixed;right:16px;z-index:30;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.wa-wrap{bottom:16px}
+.top-wrap{bottom:82px}
+.fab{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:0;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);color:#fff;font-size:22px}
+.fab.wa{background:#25D366}
+.fab.top{background:#1a73e8;opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fab.top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.wa-menu{background:#0d2447;border:1px solid var(--line);border-radius:14px;padding:8px;display:none;flex-direction:column;gap:6px;min-width:190px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.wa-menu.show{display:flex}
+.wa-menu a{display:flex;align-items:center;gap:8px;color:var(--txt);text-decoration:none;padding:9px 10px;border-radius:9px;font-size:.9rem}
+.wa-menu a:hover{background:rgba(255,255,255,.06)}
+.cookie{position:fixed;left:14px;right:14px;bottom:14px;z-index:40;background:#0d2447;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.cookie p{margin:0;flex:1;min-width:220px;font-size:.88rem;color:var(--mut)}
+.views{color:var(--mut);font-size:.85rem}
 @media(max-width:560px){.two{grid-template-columns:1fr}.hero{padding-top:36px}.brand span{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
@@ -238,22 +254,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="sub" data-i="sub">Publish • Share • Earn • Grow Organically</p>
     <p class="lead" data-i="hero">Teaching stories, tech blogging and books in one place.</p>
     <a class="btn" href="#posts" data-i="cta">Read the latest</a>
-  </div></section>
-
-  <section class="block" id="tilesBlock"><div class="wrap"><div class="tiles">
-    <a class="tile" href="#posts" data-f="blog"><img id="tile0" alt=""><div class="cap"><b data-i="tb_t">Blog</b><span data-i="tb_s"></span></div></a>
-    <a class="tile" href="#posts" data-f="book"><img id="tile1" alt=""><div class="cap"><b data-i="tk_t">Books</b><span data-i="tk_s"></span></div></a>
-    <a class="tile" href="#shop"><img id="tile2" alt=""><div class="cap"><b data-i="ts_t">Products</b><span data-i="ts_s"></span></div></a>
-  </div></div></section>
-
-  <section class="block" id="storesBlock" hidden><div class="wrap">
-    <h2 class="sec" data-i="stores">Recommended Stores</h2>
-    <div class="stores" id="stores"></div>
-  </div></section>
-
-  <section class="block" id="shop" hidden><div class="wrap">
-    <h2 class="sec" data-i="shop">Recommended Products</h2>
-    <div class="grid" id="shopGrid"></div>
+    <div class="share site-share" id="siteShare" style="justify-content:center;margin-top:18px"></div>
   </div></section>
 
   <section class="block" id="posts"><div class="wrap">
@@ -265,6 +266,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button data-f="book" data-i="book">Books</button>
     </div>
     <div class="grid" id="postGrid"></div>
+  </div></section>
+
+  <section class="block" id="tilesBlock"><div class="wrap"><div class="tiles">
+    <a class="tile" href="#posts" data-f="book"><img id="tile0" alt=""><div class="cap"><b data-i="tk_t">Books</b><span data-i="tk_s"></span></div></a>
+    <a class="tile" href="#shop"><img id="tile1" alt=""><div class="cap"><b data-i="ts_t">Products</b><span data-i="ts_s"></span></div></a>
+  </div></div></section>
+
+  <section class="block" id="storesBlock" hidden><div class="wrap">
+    <h2 class="sec" data-i="stores">Recommended Stores</h2>
+    <p class="mut" data-i="store_desc" style="margin:-6px 0 16px"></p>
+    <div class="stores" id="stores"></div>
+  </div></section>
+
+  <section class="block" id="shop" hidden><div class="wrap">
+    <h2 class="sec" data-i="shop">Recommended Products</h2>
+    <div class="grid" id="shopGrid"></div>
   </div></section>
 
   <section class="block" id="follow"><div class="wrap follow">
@@ -416,6 +433,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
+<div class="float wa-wrap">
+  <div class="wa-menu" id="waMenu"></div>
+  <button class="fab wa" id="waBtn" type="button" aria-label="WhatsApp" title="WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.7-.3-1.5-.8-2.1-1.5-.5-.6-.9-1.2-1-1.4-.1-.2 0-.4.1-.5l.4-.5c.1-.1.1-.3.1-.4 0-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.8 1.3-.8 2.1.1 1 .8 2 .9 2.1.1.2 1.9 3 4.7 4.1.7.3 1.2.4 1.6.5.7.2 1.3.2 1.7.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z"/></svg>
+  </button>
+</div>
+<div class="float top-wrap">
+  <button class="fab top" id="topBtn" type="button" aria-label="Top" title="Top">&uarr;</button>
+</div>
+<div class="cookie" id="cookieBar" hidden>
+  <p data-i="cookie_p"></p>
+  <button class="btn sm" type="button" id="cookieOk" data-i="cookie_ok">Got it</button>
+</div>
+
 <script id="app">
 (function(){
 'use strict';
@@ -434,7 +465,7 @@ en:{
  disc:"As an Amazon Associate I earn from qualifying purchases. Some links on this site are affiliate links; they cost you nothing extra.",
  author:"Author: Ticher",
  search:"Search posts",nores:"No posts match your search.",follow_t:"Follow and get new posts",follow_p:"Leave your email. No password and no account. Reading is always free.",f_ph:"Your email",f_btn:"Follow",f_ok:"Thank you! You are now following.",f_err:"Please enter a valid email.",share:"Share",copy:"Copy link",copied:"Link copied",
- tb_t:"Blog",tb_s:"Teaching stories and tech tips",tk_t:"Books",tk_s:"Read, download or buy",ts_t:"Products",ts_s:"Things worth buying",shop:"Recommended Products",buy:"Buy on",deal:"View deal",
+ tb_t:"Blog",tb_s:"Teaching stories and tech tips",tk_t:"Books",tk_s:"Read, download or buy",ts_t:"Products",ts_s:"Things worth buying",shop:"Recommended Products",buy:"Buy on",deal:"View deal",store_desc:"No annoying ads, no scams \u2014 just click one of the links below.",cookie_p:"We use cookies for basic analytics and to remember your language. By using this site you agree to that.",cookie_ok:"Got it",views:"views",wa_chat:"Chat on WhatsApp",
  about:[["Welcome","Teesher.cloud is a home for teaching stories, tech blogging and books. Everything published here stays online permanently, so you can always come back to read it."],
   ["What you will find","Teaching stories and lessons, simple tech tips and guides, books with their download or purchase links, and honest product recommendations through affiliate links."],
   ["Our goal","To share useful knowledge in a clear, simple way that reads well on any phone or computer, with the site menu available in English, Hausa and Arabic."],
@@ -462,7 +493,7 @@ ha:{
  disc:"A matsayina na Abokin Amazon (Amazon Associate), ina samun kuɗi daga sayayya da suka cancanta. Wasu hanyoyin haɗi a wannan shafi na affiliate ne; ba sa ƙara maka farashi.",
  author:"Marubuci: Ticher",
  search:"Nemo rubutu",nores:"Babu rubutun da ya dace da bincikenka.",follow_t:"Bibi ka samu sababbin rubutu",follow_p:"Bar imel ɗinka. Babu kalmar sirri, babu buɗe asusu. Karatu kyauta ne kullum.",f_ph:"Imel ɗinka",f_btn:"Bibi",f_ok:"Na gode! Yanzu kana bibiya.",f_err:"Ka shigar da imel mai inganci.",share:"Raba",copy:"Kwafi link",copied:"An kwafi link ɗin",
- tb_t:"Rubutu",tb_s:"Labaran koyarwa da shawarwarin fasaha",tk_t:"Littattafai",tk_s:"Karanta, sauke ko siya",ts_t:"Kayayyaki",ts_s:"Abubuwan da suka cancanci siya",shop:"Kayayyakin da Muke Ba da Shawara",buy:"Saya a",deal:"Duba tayin",
+ tb_t:"Rubutu",tb_s:"Labaran koyarwa da shawarwarin fasaha",tk_t:"Littattafai",tk_s:"Karanta, sauke ko siya",ts_t:"Kayayyaki",ts_s:"Abubuwan da suka cancanci siya",shop:"Kayayyakin da Muke Ba da Shawara",buy:"Saya a",deal:"Duba tayin",store_desc:"Babu tallace-tallace masu dami\u017ea, babu zamba \u2014 ka danna ɗaya daga cikin hanyoyin ƙasa kawai.",cookie_p:"Muna amfani da cookies don ƙididdiga da tuna harshenka. Ta amfani da wannan shafi, ka amince da haka.",cookie_ok:"Na gane",views:"kallo",wa_chat:"Tattauna a WhatsApp",
  about:[["Barka da zuwa","Teesher.cloud gida ne na labaran koyarwa, rubutun fasaha da littattafai. Duk abin da aka wallafa a nan yana nan har abada, don haka za ka iya dawowa ka karanta a kowane lokaci."],
   ["Abin da za ka samu","Labaran koyarwa da darussa, shawarwari da jagorori masu sauƙi kan fasaha, littattafai da hanyoyin saukewa ko siyansu, da shawarwari kan kayayyaki ta hanyar affiliate."],
   ["Manufarmu","Mu raba ilimi mai amfani a hanya mai sauƙi da bayyananna, wadda ake iya karantawa cikin sauƙi a waya ko kwamfuta, tare da menu na shafi cikin Turanci, Hausa da Larabci."],
@@ -490,7 +521,7 @@ ar:{
  disc:"بصفتي شريكًا في Amazon، أحصل على عمولة من المشتريات المؤهلة. بعض الروابط في هذا الموقع روابط تابعة ولا تكلفك أي مبلغ إضافي.",
  author:"الكاتب: Ticher",
  search:"ابحث في المنشورات",nores:"لا توجد منشورات مطابقة لبحثك.",follow_t:"تابعنا لتصلك المنشورات الجديدة",follow_p:"اترك بريدك الإلكتروني. لا كلمة مرور ولا حساب. القراءة مجانية دائمًا.",f_ph:"بريدك الإلكتروني",f_btn:"تابع",f_ok:"شكرًا لك! أنت الآن تتابعنا.",f_err:"يرجى إدخال بريد صحيح.",share:"شارك",copy:"انسخ الرابط",copied:"تم نسخ الرابط",
- tb_t:"المدونة",tb_s:"قصص تعليمية ونصائح تقنية",tk_t:"الكتب",tk_s:"اقرأ أو حمّل أو اشترِ",ts_t:"المنتجات",ts_s:"أشياء تستحق الشراء",shop:"منتجات موصى بها",buy:"اشترِ من",deal:"شاهد العرض",
+ tb_t:"المدونة",tb_s:"قصص تعليمية ونصائح تقنية",tk_t:"الكتب",tk_s:"اقرأ أو حمّل أو اشترِ",ts_t:"المنتجات",ts_s:"أشياء تستحق الشراء",shop:"منتجات موصى بها",buy:"اشترِ من",deal:"شاهد العرض",store_desc:"بدون إعلانات مزعجة وبدون احتيال \u2014 فقط اضغط على أحد الروابط أدناه.",cookie_p:"نستخدم ملفات تعريف الارتباط لإحصاءات أساسية ولتذكر لغتك. باستخدامك هذا الموقع فإنك توافق على ذلك.",cookie_ok:"حسنًا",views:"مشاهدة",wa_chat:"تحدث عبر واتساب",
  about:[["أهلًا بك","Teesher.cloud بيت للقصص التعليمية والتدوين التقني والكتب. كل ما يُنشر هنا يبقى على الإنترنت بشكل دائم، فيمكنك العودة لقراءته في أي وقت."],
   ["ماذا ستجد","قصصًا ودروسًا تعليمية، ونصائح وأدلة تقنية بسيطة، وكتبًا مع روابط تحميلها أو شرائها، وتوصيات صادقة بالمنتجات عبر روابط الشراكة."],
   ["هدفنا","مشاركة المعرفة المفيدة بطريقة واضحة وبسيطة تُقرأ بسهولة على الهاتف والحاسوب، مع قائمة الموقع بالإنجليزية والهوسا والعربية."],
@@ -527,6 +558,7 @@ var STO=[['amazon','Amazon'],['jumia','Jumia'],['konga','Konga']];
 var STORE_NAME={amazon:'Amazon',jumia:'Jumia',konga:'Konga',other:''};
 var DEF_STORES={amazon:{link:'https://www.amazon.com/',id:'',img:0},jumia:{link:'https://www.jumia.com.ng/',id:'',img:0},konga:{link:'https://www.konga.com/',id:'',img:0}};
 var DEF_PHONES=['+2347069444260','+2349017668973'];
+var WA_NUMBERS=['+2347069444260','+2348080335353'];
 
 function toast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},3200)}
 
@@ -569,7 +601,7 @@ function applyLang(){
   var sec=function(a){return a.map(function(x){return '<h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p>'}).join('')};
   $('#aboutBody').innerHTML=sec(T('about'));
   $('#privBody').innerHTML=sec(T('priv'));
-  renderPosts(); renderProducts(); renderStorage();
+  renderPosts(); renderProducts(); renderStorage(); siteShareBar();
   if(S.post) renderPost();
 }
 
@@ -623,7 +655,17 @@ function setFilter(f){
 }
 
 function loadPosts(){
-  return api('posts').then(function(j){S.posts=j.posts||[]}).catch(function(){S.posts=[]}).then(function(){renderPosts();renderProducts();renderMgr()});
+  return api('posts').then(function(j){S.posts=j.posts||[]}).catch(function(){S.posts=[]}).then(function(){renderPosts();renderProducts();renderMgr();injectListSchema()});
+}
+function injectListSchema(){
+  var old=document.getElementById('listSchema');if(old)old.remove();
+  var list=S.posts.filter(function(p){return p.type!=='product'}).slice(0,20);
+  if(!list.length)return;
+  var ld={'@context':'https://schema.org','@type':'ItemList','itemListElement':list.map(function(p,i){
+    return {'@type':'ListItem','position':i+1,'url':location.origin+'/p/'+p.id,'name':p.title};
+  })};
+  var s=document.createElement('script');s.type='application/ld+json';s.id='listSchema';s.textContent=JSON.stringify(ld);
+  document.head.appendChild(s);
 }
 function loadSettings(){
   return api('settings').then(function(j){S.settings=j}).catch(function(){S.settings={social:{},stores:DEF_STORES,phones:DEF_PHONES}}).then(function(){renderStorage();fillSettings()});
@@ -636,10 +678,18 @@ function renderPost(){
   document.title=p.title+' | Teesher.cloud';
   $('#postBody').innerHTML='<a class="back" href="/">'+esc(T('back'))+'</a>'+
     '<div><span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span></div>'+
-    '<h1>'+esc(p.title)+'</h1><div class="meta">'+fmt(p.date)+'</div>'+
+    '<h1>'+esc(p.title)+'</h1><div class="meta">'+fmt(p.date)+' &middot; '+(p.views||0)+' '+esc(T('views'))+'</div>'+
     (imgs?'<div class="gallery">'+imgs+'</div>':'')+
     '<div class="prose">'+p.html+'</div>'+
     (p.link?'<p><a class="aff-btn" href="'+esc(p.link)+'" target="_blank" rel="noopener nofollow">'+esc(T('getbook'))+'</a></p>':'')+shareBar(p);
+}
+function siteShareBar(){
+  var u=encodeURIComponent(location.origin+'/'), t=encodeURIComponent(document.title);
+  $('#siteShare').innerHTML='<span>'+esc(T('share'))+'</span>'+
+    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/?text='+t+'%20'+u+'">WhatsApp</a>'+
+    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+u+'">Facebook</a>'+
+    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+t+'&url='+u+'">X</a>'+
+    '<button class="btn sm ghost" type="button" id="siteCopy">'+esc(T('copy'))+'</button>';
 }
 function shareBar(p){
   var u=encodeURIComponent(location.origin+'/p/'+p.id), t=encodeURIComponent(p.title);
@@ -698,7 +748,7 @@ function renderMgr(){
     var el=$('#mgr-'+k); if(!el) return;
     var list=S.posts.filter(function(p){return p.type===k});
     el.innerHTML=list.length?list.map(function(p){
-      return '<div class="mrow"><span>'+esc(p.title)+'</span><span class="acts"><button class="btn sm ghost" type="button" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn sm danger" type="button" data-act="del" data-id="'+p.id+'">Delete</button></span></div>';
+      return '<div class="mrow"><span>'+esc(p.title)+(p.type!=='product'&&p.views?' <span class="views">('+p.views+' '+esc(T('views'))+')</span>':'')+'</span><span class="acts"><button class="btn sm ghost" type="button" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn sm danger" type="button" data-act="del" data-id="'+p.id+'">Delete</button></span></div>';
     }).join(''):'<p class="mut">Nothing here yet.</p>';
   });
 }
@@ -848,6 +898,11 @@ $('#subCopy').addEventListener('click',function(){
   if(!t){toast('No emails yet');return}
   try{navigator.clipboard.writeText(t).then(function(){toast('Copied '+S.subs.length+' emails')},function(){toast('Could not copy')})}catch(e){toast('Could not copy')}
 });
+$('#siteShare').addEventListener('click',function(e){
+  if(!e.target.closest('#siteCopy')) return;
+  var u=location.origin+'/';
+  try{navigator.clipboard.writeText(u).then(function(){toast(T('copied'))},function(){prompt('',u)})}catch(err){prompt('',u)}
+});
 $('#postBody').addEventListener('click',function(e){
   if(!e.target.closest('[data-copy]')) return;
   var u=location.origin+location.pathname;
@@ -859,7 +914,32 @@ document.addEventListener('click',function(e){
   try{if(typeof gtag==='function')gtag('event','affiliate_click',{link_url:a.href,link_domain:a.hostname,link_text:(a.textContent||'').trim().slice(0,80),page_path:location.pathname})}catch(err){}
 });
 $('#yr').textContent=new Date().getFullYear();
-[0,1,2].forEach(function(i){$('#tile'+i).src=ph(i)});
+[0,1].forEach(function(i){$('#tile'+i).src=ph(i+1)});
+
+/* ---------- floating WhatsApp ---------- */
+function waLink(n,text){return 'https://wa.me/'+n.replace(/\D/g,'')+'?text='+encodeURIComponent(text)}
+function buildWaMenu(){
+  var text=T('wa_chat');
+  $('#waMenu').innerHTML=WA_NUMBERS.map(function(n){
+    return '<a href="'+waLink(n,'')+'" target="_blank" rel="noopener" dir="ltr">'+
+      '<svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>'+n+'</a>';
+  }).join('');
+}
+$('#waBtn').addEventListener('click',function(){buildWaMenu();$('#waMenu').classList.toggle('show')});
+document.addEventListener('click',function(e){if(!e.target.closest('.wa-wrap'))$('#waMenu').classList.remove('show')});
+
+/* ---------- back to top ---------- */
+window.addEventListener('scroll',function(){$('#topBtn').classList.toggle('show',window.scrollY>500)},{passive:true});
+$('#topBtn').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+
+/* ---------- cookie banner ---------- */
+if(!LS.get('cookieOk')){$('#cookieBar').hidden=false}
+$('#cookieOk').addEventListener('click',function(){LS.set('cookieOk','1');$('#cookieBar').hidden=true});
+
+/* ---------- offline app (PWA) ---------- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})});
+}
 
 /* ---------- start ---------- */
 applyLang();
