@@ -213,6 +213,25 @@ details.aff summary{cursor:pointer;color:var(--warm);font-weight:600}
 .cookie{position:fixed;left:14px;right:14px;bottom:14px;z-index:40;background:#0d2447;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 10px 30px rgba(0,0,0,.45)}
 .cookie p{margin:0;flex:1;min-width:220px;font-size:.88rem;color:var(--mut)}
 .views{color:var(--mut);font-size:.85rem}
+.pageed{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px}
+.payed{display:grid;grid-template-columns:120px 1fr auto;gap:8px;align-items:center;margin-top:8px}
+@media(max-width:560px){.payed{grid-template-columns:1fr}}
+.pageed .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:var(--mut);font-size:.85rem}
+.pageed textarea{min-height:110px}
+.reader{max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
+.reader-nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.reader-nav span{color:var(--mut);font-size:.88rem}
+.gate{max-width:480px;margin:0 auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
+.gate input{margin:14px 0}
+.pay{background:rgba(255,159,26,.08);border:1px dashed rgba(255,159,26,.5);border-radius:14px;padding:14px;margin:14px 0;text-align:left}
+.pay b{color:var(--warm)}
+.comments{max-width:720px;margin:30px auto 0}
+.c-item{border-top:1px solid var(--line);padding:12px 0}
+.c-item b{color:var(--acc2)}
+.c-item .cd{color:var(--mut);font-size:.78rem}
+.c-form textarea{min-height:80px}
+.save-btn{background:none;border:1px solid var(--line);color:var(--mut);border-radius:9px;padding:6px 10px;font:inherit;font-size:.8rem;cursor:pointer}
+.save-btn.on{color:var(--warm);border-color:var(--warm)}
 @media(max-width:560px){.two{grid-template-columns:1fr}.hero{padding-top:36px}.brand span{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
 </style>
@@ -284,6 +303,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="grid" id="shopGrid"></div>
   </div></section>
 
+  <section class="block" id="savedBlock" hidden><div class="wrap">
+    <h2 class="sec" data-i="saved_t">Saved for later</h2>
+    <div class="grid" id="savedGrid"></div>
+  </div></section>
+
   <section class="block" id="follow"><div class="wrap follow">
     <h2 class="sec" data-i="follow_t">Follow</h2>
     <p class="mut" data-i="follow_p"></p>
@@ -318,12 +342,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="block" id="admin" hidden><div class="wrap">
     <div class="head-row"><h2 class="sec" style="margin:0">Admin</h2><button class="btn sm ghost" type="button" id="lockBtn">Lock admin</button></div>
+    <p class="mut" id="siteStats" style="margin-top:-8px"></p>
     <div class="tabs" id="atabs">
       <button type="button" class="on" data-t="blog">Blog post</button>
       <button type="button" data-t="book">Book</button>
       <button type="button" data-t="product">Affiliate product</button>
       <button type="button" data-t="links">Links and stores</button>
       <button type="button" data-t="subs">Followers</button>
+      <button type="button" data-t="comments">Comments</button>
     </div>
 
     <div class="panel" id="tab-blog">
@@ -356,14 +382,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <h3 id="book-h">New book</h3>
       <label for="book-title">Book title</label>
       <input type="text" id="book-title" maxlength="200">
-      <label for="book-content">About the book</label>
-      <textarea id="book-content" style="min-height:140px" placeholder="What is the book about?"></textarea>
-      <label for="book-link">Book link (download or buy page)</label>
-      <input type="text" id="book-link" placeholder="https://...">
-      <label for="book-imgs">Cover picture (optional)</label>
+      <label for="book-imgs">Book cover</label>
       <input type="file" id="book-imgs" accept="image/*">
       <div class="prev" id="book-prev"></div>
-      <div class="row"><button class="btn" type="button" id="book-save">Publish</button><button class="btn ghost" type="button" id="book-cancel" hidden>Cancel edit</button></div>
+      <label for="book-price">Price (leave empty for a free book)</label>
+      <input type="text" id="book-price" maxlength="40" placeholder="&#8358;2,000">
+      <label for="book-link">Payment link (optional — leave empty to show your bank account instead)</label>
+      <input type="text" id="book-link" placeholder="https://paystack.com/pay/...">
+      <label>Pages</label>
+      <p class="mut hint" style="margin-top:0">Write your book one page at a time. Add as many pages as you need.</p>
+      <div id="book-pages"></div>
+      <div class="row"><button class="btn sm ghost" type="button" id="book-addpage">+ Add page</button></div>
+      <div class="row">
+        <button class="btn ghost" type="button" id="book-draft">Save as draft</button>
+        <button class="btn" type="button" id="book-save">Publish</button>
+        <button class="btn ghost" type="button" id="book-cancel" hidden>Cancel edit</button>
+      </div>
       <h3 style="margin-top:24px">Your books</h3>
       <div id="mgr-book"></div>
     </div>
@@ -395,12 +429,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div id="subList"></div>
     </div>
 
+    <div class="panel" id="tab-comments" hidden>
+      <h3>Comments</h3>
+      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="cRefresh">Refresh</button></div>
+      <div id="cList"></div>
+    </div>
+
     <div class="panel" id="tab-links" hidden>
       <h3>Social links (link-in-bio)</h3>
       <p class="mut hint" style="margin-top:0">Paste a link or just your handle, like @yourname. Whatever you save here shows on the main page.</p>
       <div class="two" id="setSocial"></div>
       <h3 style="margin-top:22px">Stores</h3>
       <div id="setStores"></div>
+      <h3 style="margin-top:22px">Buy Me a Coffee</h3>
+      <label for="s-coffee">Support link (Buy Me a Coffee, Paystack, etc. — optional)</label>
+      <input type="text" id="s-coffee" placeholder="https://buymeacoffee.com/yourname">
+      <h3 style="margin-top:22px">Ways to get paid (shown on paid books)</h3>
+      <p class="mut hint" style="margin-top:0">Add as many as you like — bank transfer, USSD code, PayPal, Stripe link, crypto wallet, anything. Readers see this list when a book has a price and no direct payment link.</p>
+      <div id="pay-methods"></div>
+      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="pay-add">+ Add payment method</button></div>
       <h3 style="margin-top:22px">Phone numbers</h3>
       <label for="s-phones">One number per line</label>
       <textarea id="s-phones" style="min-height:80px"></textarea>
@@ -409,7 +456,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div></section>
 </main>
 
-<main id="postView" hidden><div class="article" id="postBody"></div></main>
+<main id="postView" hidden><div class="article" id="postBody"></div>
+  <div class="comments" id="commentsWrap" hidden>
+    <h2 class="sec" data-i="comments_t">Comments</h2>
+    <div id="cItems"></div>
+    <div class="c-form panel">
+      <label for="c-name" data-i="c_name">Your name (optional)</label>
+      <input type="text" id="c-name" maxlength="60">
+      <label for="c-text" data-i="c_text">Your comment</label>
+      <textarea id="c-text" maxlength="1000"></textarea>
+      <input type="text" id="c-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="row"><button class="btn sm" type="button" id="c-send" data-i="c_send">Post comment</button></div>
+    </div>
+  </div>
+</main>
 
 <footer><div class="wrap">
   <div class="fl">
@@ -418,6 +478,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="/#contact" data-i="nav_contact">Contact</a>
     <a href="/#privacy" data-i="priv_t">Privacy Policy</a>
   </div>
+  <p class="row" id="coffeeRow" style="justify-content:center" hidden><a class="btn sm" id="coffeeLink" target="_blank" rel="noopener">☕ <span data-i="buyc">Buy me a coffee</span></a></p>
   <p class="disc" data-i="disc"></p>
   <p>&copy; <span id="yr">2026</span> Teesher.cloud. <span data-i="author">Author: Ticher</span></p>
   <button class="adm" id="admLink" type="button">Admin</button>
@@ -465,7 +526,7 @@ en:{
  disc:"As an Amazon Associate I earn from qualifying purchases. Some links on this site are affiliate links; they cost you nothing extra.",
  author:"Author: Ticher",
  search:"Search posts",nores:"No posts match your search.",follow_t:"Follow and get new posts",follow_p:"Leave your email. No password and no account. Reading is always free.",f_ph:"Your email",f_btn:"Follow",f_ok:"Thank you! You are now following.",f_err:"Please enter a valid email.",share:"Share",copy:"Copy link",copied:"Link copied",
- tb_t:"Blog",tb_s:"Teaching stories and tech tips",tk_t:"Books",tk_s:"Read, download or buy",ts_t:"Products",ts_s:"Things worth buying",shop:"Recommended Products",buy:"Buy on",deal:"View deal",store_desc:"No annoying ads, no scams \u2014 just click one of the links below.",cookie_p:"We use cookies for basic analytics and to remember your language. By using this site you agree to that.",cookie_ok:"Got it",views:"views",wa_chat:"Chat on WhatsApp",
+ tb_t:"Blog",tb_s:"Teaching stories and tech tips",tk_t:"Books",tk_s:"Read, download or buy",ts_t:"Products",ts_s:"Things worth buying",shop:"Recommended Products",buy:"Buy on",deal:"View deal",store_desc:"No annoying ads, no scams \u2014 just click one of the links below.",cookie_p:"We use cookies for basic analytics and to remember your language. By using this site you agree to that.",cookie_ok:"Got it",views:"views",wa_chat:"Chat on WhatsApp",gate_t:"Enter your email to read",gate_p:"Free to read \u2014 we\u2019ll just email you when new books come out.",gate_btn:"Unlock and read",gate_err:"Please enter a valid email.",pay_bank:"Bank transfer",pay_ussd:"USSD code",pay_paypal:"PayPal",pay_stripe:"Card / Stripe",pay_wallet:"Crypto wallet",pay_other:"Other",buynow:"Buy now",page_of:"Page {n} of {t}",prev:"Previous",next:"Next",buyc:"Buy me a copy",pay_p:"Send payment to the account below, then message me a screenshot to receive the book.",acct:"Account",listen:"Listen",stop:"Stop",save:"Save for later",saved:"Saved",saved_t:"Saved for later",comments_t:"Comments",c_name:"Your name (optional)",c_text:"Your comment",c_send:"Post comment",c_none:"No comments yet. Be the first!",free:"Free",
  about:[["Welcome","Teesher.cloud is a home for teaching stories, tech blogging and books. Everything published here stays online permanently, so you can always come back to read it."],
   ["What you will find","Teaching stories and lessons, simple tech tips and guides, books with their download or purchase links, and honest product recommendations through affiliate links."],
   ["Our goal","To share useful knowledge in a clear, simple way that reads well on any phone or computer, with the site menu available in English, Hausa and Arabic."],
@@ -493,7 +554,7 @@ ha:{
  disc:"A matsayina na Abokin Amazon (Amazon Associate), ina samun kuɗi daga sayayya da suka cancanta. Wasu hanyoyin haɗi a wannan shafi na affiliate ne; ba sa ƙara maka farashi.",
  author:"Marubuci: Ticher",
  search:"Nemo rubutu",nores:"Babu rubutun da ya dace da bincikenka.",follow_t:"Bibi ka samu sababbin rubutu",follow_p:"Bar imel ɗinka. Babu kalmar sirri, babu buɗe asusu. Karatu kyauta ne kullum.",f_ph:"Imel ɗinka",f_btn:"Bibi",f_ok:"Na gode! Yanzu kana bibiya.",f_err:"Ka shigar da imel mai inganci.",share:"Raba",copy:"Kwafi link",copied:"An kwafi link ɗin",
- tb_t:"Rubutu",tb_s:"Labaran koyarwa da shawarwarin fasaha",tk_t:"Littattafai",tk_s:"Karanta, sauke ko siya",ts_t:"Kayayyaki",ts_s:"Abubuwan da suka cancanci siya",shop:"Kayayyakin da Muke Ba da Shawara",buy:"Saya a",deal:"Duba tayin",store_desc:"Babu tallace-tallace masu dami\u017ea, babu zamba \u2014 ka danna ɗaya daga cikin hanyoyin ƙasa kawai.",cookie_p:"Muna amfani da cookies don ƙididdiga da tuna harshenka. Ta amfani da wannan shafi, ka amince da haka.",cookie_ok:"Na gane",views:"kallo",wa_chat:"Tattauna a WhatsApp",
+ tb_t:"Rubutu",tb_s:"Labaran koyarwa da shawarwarin fasaha",tk_t:"Littattafai",tk_s:"Karanta, sauke ko siya",ts_t:"Kayayyaki",ts_s:"Abubuwan da suka cancanci siya",shop:"Kayayyakin da Muke Ba da Shawara",buy:"Saya a",deal:"Duba tayin",store_desc:"Babu tallace-tallace masu dami\u017ea, babu zamba \u2014 ka danna ɗaya daga cikin hanyoyin ƙasa kawai.",cookie_p:"Muna amfani da cookies don ƙididdiga da tuna harshenka. Ta amfani da wannan shafi, ka amince da haka.",cookie_ok:"Na gane",views:"kallo",wa_chat:"Tattauna a WhatsApp",gate_t:"Shigar da imel don karantawa",gate_p:"Karatu kyauta ne \u2014 za mu turo maka imel ne kawai idan sabon littafi ya fito.",gate_btn:"Buɗe ka karanta",gate_err:"Ka shigar da imel mai inganci.",pay_bank:"Canja wurin banki",pay_ussd:"Lambar USSD",pay_paypal:"PayPal",pay_stripe:"Katin biya / Stripe",pay_wallet:"Wallet na crypto",pay_other:"Wani",buynow:"Saya yanzu",page_of:"Shafi {n} na {t}",prev:"Na baya",next:"Na gaba",buyc:"Saya mini kwafi",pay_p:"Ka aika kuɗi zuwa asusun da ke ƙasa, sannan ka aiko mini screenshot don karɓar littafin.",acct:"Asusun",listen:"Saurara",stop:"Tsaya",save:"Ajiye don baya",saved:"An ajiye",saved_t:"Ajiyayyu don baya",comments_t:"Tsokaci",c_name:"Sunanka (na zaɓi)",c_text:"Tsokacinka",c_send:"Aika tsokaci",c_none:"Babu tsokaci tukuna. Kai ka fara!",free:"Kyauta",
  about:[["Barka da zuwa","Teesher.cloud gida ne na labaran koyarwa, rubutun fasaha da littattafai. Duk abin da aka wallafa a nan yana nan har abada, don haka za ka iya dawowa ka karanta a kowane lokaci."],
   ["Abin da za ka samu","Labaran koyarwa da darussa, shawarwari da jagorori masu sauƙi kan fasaha, littattafai da hanyoyin saukewa ko siyansu, da shawarwari kan kayayyaki ta hanyar affiliate."],
   ["Manufarmu","Mu raba ilimi mai amfani a hanya mai sauƙi da bayyananna, wadda ake iya karantawa cikin sauƙi a waya ko kwamfuta, tare da menu na shafi cikin Turanci, Hausa da Larabci."],
@@ -521,7 +582,7 @@ ar:{
  disc:"بصفتي شريكًا في Amazon، أحصل على عمولة من المشتريات المؤهلة. بعض الروابط في هذا الموقع روابط تابعة ولا تكلفك أي مبلغ إضافي.",
  author:"الكاتب: Ticher",
  search:"ابحث في المنشورات",nores:"لا توجد منشورات مطابقة لبحثك.",follow_t:"تابعنا لتصلك المنشورات الجديدة",follow_p:"اترك بريدك الإلكتروني. لا كلمة مرور ولا حساب. القراءة مجانية دائمًا.",f_ph:"بريدك الإلكتروني",f_btn:"تابع",f_ok:"شكرًا لك! أنت الآن تتابعنا.",f_err:"يرجى إدخال بريد صحيح.",share:"شارك",copy:"انسخ الرابط",copied:"تم نسخ الرابط",
- tb_t:"المدونة",tb_s:"قصص تعليمية ونصائح تقنية",tk_t:"الكتب",tk_s:"اقرأ أو حمّل أو اشترِ",ts_t:"المنتجات",ts_s:"أشياء تستحق الشراء",shop:"منتجات موصى بها",buy:"اشترِ من",deal:"شاهد العرض",store_desc:"بدون إعلانات مزعجة وبدون احتيال \u2014 فقط اضغط على أحد الروابط أدناه.",cookie_p:"نستخدم ملفات تعريف الارتباط لإحصاءات أساسية ولتذكر لغتك. باستخدامك هذا الموقع فإنك توافق على ذلك.",cookie_ok:"حسنًا",views:"مشاهدة",wa_chat:"تحدث عبر واتساب",
+ tb_t:"المدونة",tb_s:"قصص تعليمية ونصائح تقنية",tk_t:"الكتب",tk_s:"اقرأ أو حمّل أو اشترِ",ts_t:"المنتجات",ts_s:"أشياء تستحق الشراء",shop:"منتجات موصى بها",buy:"اشترِ من",deal:"شاهد العرض",store_desc:"بدون إعلانات مزعجة وبدون احتيال \u2014 فقط اضغط على أحد الروابط أدناه.",cookie_p:"نستخدم ملفات تعريف الارتباط لإحصاءات أساسية ولتذكر لغتك. باستخدامك هذا الموقع فإنك توافق على ذلك.",cookie_ok:"حسنًا",views:"مشاهدة",wa_chat:"تحدث عبر واتساب",gate_t:"أدخل بريدك الإلكتروني للقراءة",gate_p:"القراءة مجانية \u2014 سنراسلك فقط عند صدور كتب جديدة.",gate_btn:"افتح واقرأ",gate_err:"يرجى إدخال بريد صحيح.",pay_bank:"تحويل بنكي",pay_ussd:"كود USSD",pay_paypal:"باي بال",pay_stripe:"بطاقة / سترايب",pay_wallet:"محفظة عملات رقمية",pay_other:"أخرى",buynow:"اشترِ الآن",page_of:"صفحة {n} من {t}",prev:"السابق",next:"التالي",buyc:"اشترِ لي نسخة",pay_p:"أرسل المبلغ إلى الحساب أدناه، ثم راسلني بصورة الإيصال لتستلم الكتاب.",acct:"الحساب",listen:"استماع",stop:"إيقاف",save:"احفظ لوقت لاحق",saved:"محفوظ",saved_t:"محفوظ لوقت لاحق",comments_t:"التعليقات",c_name:"اسمك (اختياري)",c_text:"تعليقك",c_send:"أرسل التعليق",c_none:"لا توجد تعليقات بعد. كن أول من يعلّق!",free:"مجانًا",
  about:[["أهلًا بك","Teesher.cloud بيت للقصص التعليمية والتدوين التقني والكتب. كل ما يُنشر هنا يبقى على الإنترنت بشكل دائم، فيمكنك العودة لقراءته في أي وقت."],
   ["ماذا ستجد","قصصًا ودروسًا تعليمية، ونصائح وأدلة تقنية بسيطة، وكتبًا مع روابط تحميلها أو شرائها، وتوصيات صادقة بالمنتجات عبر روابط الشراكة."],
   ["هدفنا","مشاركة المعرفة المفيدة بطريقة واضحة وبسيطة تُقرأ بسهولة على الهاتف والحاسوب، مع قائمة الموقع بالإنجليزية والهوسا والعربية."],
@@ -546,12 +607,14 @@ var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}
 var SS={get:function(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{sessionStorage.setItem(k,v)}catch(e){}},del:function(k){try{sessionStorage.removeItem(k)}catch(e){}}};
 
 var lang=LS.get('tl'); if(!D[lang]) lang='en';
-var S={posts:[],q:'',subs:[],filter:'all',settings:null,key:SS.get('ak')||'',admin:false,editing:{},newImgs:{},storeImgs:{},post:null,tab:'blog'};
+var S={posts:[],q:'',subs:[],comments:[],filter:'all',settings:null,key:SS.get('ak')||'',admin:false,editing:{},newImgs:{},storeImgs:{},post:null,tab:'blog',bookPages:[''],curPage:0,unlocked:false,speaking:false,payMethods:[]};
 var T=function(k){var v=D[lang][k]; return v==null?D.en[k]:v};
 var fmt=function(d){try{return new Date(d).toLocaleDateString(lang==='ar'?'ar':'en-GB',{year:'numeric',month:'short',day:'numeric'})}catch(e){return ''}};
 
 var KINDS=['blog','book','product'];
 var LIM={blog:4,book:1,product:1};
+var SAVED_KEY='savedPosts';
+var PAY_TYPES=['bank','ussd','paypal','stripe','wallet','other'];
 var HEAD={blog:['New blog post','Edit blog post'],book:['New book','Edit book'],product:['New affiliate product','Edit affiliate product']};
 var SOC=[['fb','Facebook'],['wa','WhatsApp'],['ig','Instagram'],['x','X (Twitter)'],['yt','YouTube'],['li','LinkedIn'],['tt','TikTok'],['tg','Telegram']];
 var STO=[['amazon','Amazon'],['jumia','Jumia'],['konga','Konga']];
@@ -560,6 +623,43 @@ var DEF_STORES={amazon:{link:'https://www.amazon.com/',id:'',img:0},jumia:{link:
 var DEF_PHONES=['+2347069444260','+2349017668973'];
 var WA_NUMBERS=['+2347069444260','+2348080335353'];
 
+function getSaved(){try{return JSON.parse(LS.get(SAVED_KEY)||'[]')}catch(e){return []}}
+function isSaved(id){return getSaved().indexOf(id)>=0}
+function loadComments(postId){
+  api('comments/'+postId).then(function(j){renderComments(j.comments||[])}).catch(function(){renderComments([])});
+}
+function renderComments(list){
+  $('#cItems').innerHTML=list.length?list.map(function(c){
+    return '<div class="c-item"><b>'+esc(c.name||'Guest')+'</b><div class="cd">'+fmt(c.date)+'</div><p>'+esc(c.text)+'</p></div>';
+  }).join(''):'<p class="mut">'+esc(T('c_none'))+'</p>';
+}
+function sendComment(){
+  var postId=S.post&&S.post.id; if(!postId)return;
+  var name=$('#c-name').value.trim(), text=$('#c-text').value.trim();
+  if(!text){toast('Write a comment first');return}
+  $('#c-send').disabled=true;
+  api('comments/'+postId,{method:'POST',body:JSON.stringify({name:name,text:text,website:$('#c-hp').value})}).then(function(){
+    $('#c-name').value='';$('#c-text').value='';loadComments(postId);
+  }).catch(function(){toast('Could not post comment')}).then(function(){$('#c-send').disabled=false});
+}
+function toggleSaved(id){
+  var arr=getSaved(),i=arr.indexOf(id);
+  if(i>=0)arr.splice(i,1);else arr.unshift(id);
+  LS.set(SAVED_KEY,JSON.stringify(arr.slice(0,200)));
+  return arr.indexOf(id)>=0;
+}
+function renderSavedSection(){
+  var ids=getSaved(), box=$('#savedGrid');
+  if(!box)return;
+  var list=ids.map(function(id){return S.posts.find(function(p){return p.id===id})}).filter(Boolean);
+  $('#savedBlock').hidden=!list.length;
+  box.innerHTML=list.map(function(p){
+    var img=p.imgCount?imgUrl(p,0):ph(hash(p.id));
+    return '<article class="pc"><a class="pimg" href="/p/'+p.id+'"><img src="'+img+'" alt="" loading="lazy"></a><div class="pb">'+
+      '<span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span><h3><a href="/p/'+p.id+'">'+esc(p.title)+'</a></h3>'+
+      '<div class="pm"><span>'+fmt(p.date)+'</span><a class="more" href="/p/'+p.id+'">'+esc(T('more'))+'</a></div></div></article>';
+  }).join('');
+}
 function toast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},3200)}
 
 function api(path,opts){
@@ -614,6 +714,8 @@ function renderStorage(){
   $('#stores').innerHTML=st; $('#storesBlock').hidden=!st;
   var so=SOC.filter(function(x){return s.social[x[0]]}).map(function(x){return '<a href="'+esc(s.social[x[0]])+'" target="_blank" rel="noopener">'+x[1]+'</a>'}).join('');
   $('#bio').innerHTML=so; $('#connectBlock').hidden=!so;
+  $('#coffeeRow').hidden=!s.social.coffee;
+  if(s.social.coffee)$('#coffeeLink').href=s.social.coffee;
   var h='<li>'+esc(T('email'))+': <a href="mailto:ticher218@gmail.com">ticher218@gmail.com</a></li>';
   (s.phones||[]).forEach(function(p){h+='<li>'+esc(T('phone'))+': <a href="tel:'+esc(p.replace(/[^0-9+]/g,''))+'" dir="ltr">'+esc(p)+'</a></li>'});
   if(s.social.wa) h+='<li>WhatsApp: <a href="'+esc(s.social.wa)+'" target="_blank" rel="noopener" dir="ltr">'+esc(s.social.wa.replace('https://',''))+'</a></li>';
@@ -655,7 +757,7 @@ function setFilter(f){
 }
 
 function loadPosts(){
-  return api('posts').then(function(j){S.posts=j.posts||[]}).catch(function(){S.posts=[]}).then(function(){renderPosts();renderProducts();renderMgr();injectListSchema()});
+  return api('posts').then(function(j){S.posts=j.posts||[]}).catch(function(){S.posts=[]}).then(function(){renderPosts();renderProducts();renderMgr();renderSavedSection();injectListSchema()});
 }
 function injectListSchema(){
   var old=document.getElementById('listSchema');if(old)old.remove();
@@ -673,15 +775,77 @@ function loadSettings(){
 
 /* ---------- single post ---------- */
 function renderPost(){
-  var p=S.post, imgs='';
-  for(var n=0;n<(p.imgCount||0);n++) imgs+='<img src="'+imgUrl(p,n)+'" alt="'+esc(p.title)+'" loading="lazy">';
+  var p=S.post;
   document.title=p.title+' | Teesher.cloud';
-  $('#postBody').innerHTML='<a class="back" href="/">'+esc(T('back'))+'</a>'+
+  var head='<a class="back" href="/">'+esc(T('back'))+'</a>'+
     '<div><span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span></div>'+
-    '<h1>'+esc(p.title)+'</h1><div class="meta">'+fmt(p.date)+' &middot; '+(p.views||0)+' '+esc(T('views'))+'</div>'+
+    '<h1>'+esc(p.title)+'</h1><div class="meta">'+fmt(p.date)+' &middot; '+(p.views||0)+' '+esc(T('views'))+
+    (p.type==='book'?' &middot; '+(p.price?esc(p.price):esc(T('free'))):'')+'</div>';
+  var cover=p.imgCount?'<div class="gallery"><img src="'+imgUrl(p,0)+'" alt="'+esc(p.title)+'" loading="lazy"></div>':'';
+  if(p.type==='book'){
+    if(p.locked && !S.unlocked){renderGate(head,cover);return}
+    renderReader(head,cover);
+    return;
+  }
+  var imgs='';
+  for(var n=1;n<(p.imgCount||0);n++) imgs+='<img src="'+imgUrl(p,n)+'" alt="'+esc(p.title)+'" loading="lazy">';
+  $('#postBody').innerHTML=head+cover+
     (imgs?'<div class="gallery">'+imgs+'</div>':'')+
-    '<div class="prose">'+p.html+'</div>'+
-    (p.link?'<p><a class="aff-btn" href="'+esc(p.link)+'" target="_blank" rel="noopener nofollow">'+esc(T('getbook'))+'</a></p>':'')+shareBar(p);
+    '<div class="prose" id="listenText">'+p.html+'</div>'+
+    listenBtn()+
+    (p.link?'<p><a class="aff-btn" href="'+esc(p.link)+'" target="_blank" rel="noopener nofollow">'+esc(T('getbook'))+'</a></p>':'')+shareBar(p)+saveBtn(p);
+  $('#commentsWrap').hidden=false; loadComments(p.id);
+}
+function listenBtn(){
+  if(!('speechSynthesis' in window)) return '';
+  return '<div class="row" style="margin:14px 0"><button class="btn sm ghost" type="button" id="listenBtn">\u{1F50A} '+esc(T('listen'))+'</button></div>';
+}
+function saveBtn(p){
+  var on=isSaved(p.id);
+  return '<div class="row" style="margin-top:10px"><button class="save-btn'+(on?' on':'')+'" type="button" id="saveToggle" data-id="'+p.id+'">'+(on?'\u2605 ':'\u2606 ')+esc(T(on?'saved':'save'))+'</button></div>';
+}
+function renderGate(head,cover){
+  $('#commentsWrap').hidden=true;
+  var p=S.post;
+  $('#postBody').innerHTML=head+cover+
+    '<div class="gate">'+
+    '<p class="mut">'+esc(p.pageCount||0)+' pages'+(p.price?' &middot; '+esc(p.price):' &middot; '+esc(T('free')))+'</p>'+
+    '<div class="prose">'+(p.previewHtml||'')+'&hellip;</div>'+
+    (p.price?payBox(p):'')+
+    '<h3 style="margin-top:18px">'+esc(T('gate_t'))+'</h3><p class="mut">'+esc(T('gate_p'))+'</p>'+
+    '<input type="email" id="g-email" placeholder="you@example.com">'+
+    '<input type="text" id="g-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">'+
+    '<div class="row" style="justify-content:center"><button class="btn" type="button" id="g-go">'+esc(T('gate_btn'))+'</button></div>'+
+    '<p class="mut" id="g-err" style="min-height:1.4em"></p>'+
+    '</div>';
+}
+function payBox(p){
+  var s=S.settings||{}, list=s.payments||[];
+  var top=p.link?'<a class="aff-btn cta" style="display:inline-block;margin-bottom:10px" href="'+esc(p.link)+'" target="_blank" rel="noopener nofollow">'+esc(T('buynow'))+'</a>':'';
+  if(!list.length) return top?'<div class="pay">'+top+'</div>':'';
+  var rows=list.map(function(pm){
+    return '<div dir="ltr" style="margin:6px 0"><b>'+esc(T('pay_'+(pm.type||'other')))+(pm.label?' \u2014 '+esc(pm.label):'')+':</b> <span class="mut">'+esc(pm.value)+'</span></div>';
+  }).join('');
+  return '<div class="pay">'+top+'<b>'+esc(T('buyc'))+'</b><p class="mut" style="margin:6px 0">'+esc(T('pay_p'))+'</p>'+rows+'</div>';
+}
+function renderReader(head,cover){
+  $('#commentsWrap').hidden=false; loadComments(S.post.id);
+  var p=S.post, pages=p.pageHtml||[], i=Math.min(S.curPage,pages.length-1);
+  $('#postBody').innerHTML=head+cover+
+    (p.price&&!p.locked?payBox(p):'')+
+    '<div class="reader"><div class="prose" id="listenText">'+(pages[i]||'')+'</div>'+
+    listenBtn()+
+    '<div class="reader-nav"><button class="btn sm ghost" type="button" id="pPrev" '+(i<=0?'disabled':'')+'>\u2190 '+esc(T('prev'))+'</button>'+
+    '<span>'+T('page_of').replace('{n}',i+1).replace('{t}',pages.length)+'</span>'+
+    '<button class="btn sm ghost" type="button" id="pNext" '+(i>=pages.length-1?'disabled':'')+'>'+esc(T('next'))+' \u2192</button></div></div>'+
+    shareBar(p)+saveBtn(p);
+}
+function goPage(delta){
+  var pages=(S.post.pageHtml||[]);
+  S.curPage=Math.max(0,Math.min(pages.length-1,S.curPage+delta));
+  stopListen();
+  renderPost();
+  $('.reader').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function siteShareBar(){
   var u=encodeURIComponent(location.origin+'/'), t=encodeURIComponent(document.title);
@@ -701,17 +865,48 @@ function shareBar(p){
 }
 function showPost(id){
   $('#home').hidden=true; $('#postView').hidden=false;
-  api('posts/'+id).then(function(p){S.post=p;renderPost()}).catch(function(){
+  S.curPage=0; S.unlocked=false; stopListen();
+  api('posts/'+id).then(function(p){
+    S.post=p;
+    var savedEmail=LS.get('bookEmail');
+    if(p.type==='book'&&p.locked&&savedEmail){
+      return unlock(id,savedEmail,true).catch(function(){renderPost()});
+    }
+    renderPost();
+  }).catch(function(){
+    $('#commentsWrap').hidden=true;
     $('#postBody').innerHTML='<a class="back" href="/">'+esc(T('back'))+'</a><p>'+esc(T('notfound'))+'</p>';
   }).then(function(){var s=$('#ssr');if(s)s.remove()});
+}
+function unlock(id,email,silent){
+  return api('unlock/'+id,{method:'POST',body:JSON.stringify({email:email})}).then(function(j){
+    S.post=Object.assign({},S.post,{locked:false,pageHtml:j.pageHtml});
+    S.unlocked=true; LS.set('bookEmail',email);
+    renderPost();
+  }).catch(function(e){
+    if(!silent){$('#g-err').textContent=T('gate_err')}
+    throw e;
+  });
 }
 
 /* ---------- admin ---------- */
 function setTab(t){
   S.tab=t;
   $$('#atabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===t)});
-  ['blog','book','product','links','subs'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
+  ['blog','book','product','links','subs','comments'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
   if(t==='subs') loadSubs();
+  if(t==='comments') loadAllComments();
+}
+function loadStats(){
+  api('stats').then(function(j){$('#siteStats').textContent='Total site views: '+j.views}).catch(function(){});
+}
+function loadAllComments(){
+  api('allcomments').then(function(j){S.comments=j.comments||[];renderAdminComments()}).catch(function(){toast('Could not load comments')});
+}
+function renderAdminComments(){
+  $('#cList').innerHTML=S.comments.length?S.comments.map(function(c){
+    return '<div class="mrow"><span>'+(c.name?'<b>'+esc(c.name)+'</b>: ':'')+esc(c.text)+' <span class="views">on "'+esc(c.postTitle)+'"</span></span><span class="acts"><button class="btn sm danger" type="button" data-act="rmcomment" data-post="'+esc(c.postId)+'" data-cid="'+esc(c.id)+'">Delete</button></span></div>';
+  }).join(''):'<p class="mut">No comments yet.</p>';
 }
 function loadSubs(){
   api('subscribers').then(function(j){S.subs=j.subscribers||[];renderSubs()}).catch(function(){toast('Could not load followers')});
@@ -736,9 +931,35 @@ function follow(){
   }).catch(function(){msg.textContent=T('f_err')}).then(function(){$('#f-btn').disabled=false});
 }
 function val(k,f){var e=$('#'+k+'-'+f);return e?e.value.trim():''}
+function renderPayMethods(){
+  var el=$('#pay-methods');
+  el.innerHTML=S.payMethods.map(function(pm,i){
+    var opts=PAY_TYPES.map(function(t){return '<option value="'+t+'"'+(pm.type===t?' selected':'')+'>'+esc(T('pay_'+t))+'</option>'}).join('');
+    return '<div class="payed" data-i="'+i+'">'+
+      '<select class="fld" data-pf="type" data-pi="'+i+'">'+opts+'</select>'+
+      '<input type="text" data-pf="value" data-pi="'+i+'" value="'+esc(pm.value)+'" placeholder="Account number, USSD code, PayPal.me link, wallet address...">'+
+      '<button class="btn sm danger" type="button" data-rmpay="'+i+'">Remove</button></div>';
+  }).join('')||'<p class="mut">No payment methods yet.</p>';
+}
+function syncPayMethods(){
+  $$('#pay-methods [data-pf]').forEach(function(el){
+    var i=+el.getAttribute('data-pi'), f=el.getAttribute('data-pf');
+    if(!S.payMethods[i])return; S.payMethods[i][f]=el.value;
+  });
+}
+function renderBookPages(){
+  var el=$('#book-pages');
+  el.innerHTML=S.bookPages.map(function(txt,i){
+    return '<div class="pageed" data-i="'+i+'"><div class="ph"><span>Page '+(i+1)+'</span>'+(S.bookPages.length>1?'<button class="btn sm ghost" type="button" data-rmpage="'+i+'">Remove</button>':'')+'</div><textarea data-page="'+i+'" placeholder="Write page '+(i+1)+' here...">'+esc(txt)+'</textarea></div>';
+  }).join('');
+}
+function syncBookPages(){
+  $$('#book-pages textarea').forEach(function(t){S.bookPages[+t.getAttribute('data-page')]=t.value});
+}
 function resetForm(k){
   S.editing[k]=null;S.newImgs[k]=null;
   ['title','content','link','price'].forEach(function(f){var e=$('#'+k+'-'+f);if(e)e.value=''});
+  if(k==='book'){S.bookPages=[''];renderBookPages()}
   var st=$('#'+k+'-store');if(st)st.value='amazon';
   $('#'+k+'-imgs').value='';$('#'+k+'-prev').innerHTML='';
   $('#'+k+'-h').textContent=HEAD[k][0];$('#'+k+'-save').textContent='Publish';$('#'+k+'-cancel').hidden=true;
@@ -748,11 +969,12 @@ function renderMgr(){
     var el=$('#mgr-'+k); if(!el) return;
     var list=S.posts.filter(function(p){return p.type===k});
     el.innerHTML=list.length?list.map(function(p){
-      return '<div class="mrow"><span>'+esc(p.title)+(p.type!=='product'&&p.views?' <span class="views">('+p.views+' '+esc(T('views'))+')</span>':'')+'</span><span class="acts"><button class="btn sm ghost" type="button" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn sm danger" type="button" data-act="del" data-id="'+p.id+'">Delete</button></span></div>';
+      var badge=p.status==='draft'?' <span class="views" style="color:var(--warm)">(draft)</span>':'';
+      return '<div class="mrow"><span>'+esc(p.title)+badge+(p.type!=='product'&&p.views?' <span class="views">('+p.views+' '+esc(T('views'))+')</span>':'')+'</span><span class="acts"><button class="btn sm ghost" type="button" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn sm danger" type="button" data-act="del" data-id="'+p.id+'">Delete</button></span></div>';
     }).join(''):'<p class="mut">Nothing here yet.</p>';
   });
 }
-function showAdmin(){$('#admin').hidden=false;setTab(S.tab);renderMgr();fillSettings()}
+function showAdmin(){$('#admin').hidden=false;setTab(S.tab);renderMgr();fillSettings();loadStats();renderBookPages()}
 
 function buildSettingsForm(){
   if($('#setSocial').children.length) return;
@@ -777,11 +999,31 @@ function fillSettings(){
     if(o.img){pv.innerHTML='<img src="/api/simg/'+k+'?v='+o.img+'" alt=""> <button class="btn sm ghost" type="button" data-rm="'+k+'">Remove picture</button>'}
   });
   $('#s-phones').value=(s.phones||[]).join('\n');
+  $('#s-coffee').value=(s.social&&s.social.coffee)||'';
+  S.payMethods=(s.payments||[]).map(function(p){return {type:p.type,label:p.label,value:p.value}});
+  renderPayMethods();
 }
 
 function unlock(key){
   S.key=key;
   return api('login',{method:'POST'}).then(function(){S.admin=true;SS.set('ak',key);showAdmin();return true}).catch(function(e){S.key='';S.admin=false;SS.del('ak');throw e});
+}
+function stopListen(){
+  try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}
+  S.speaking=false;
+  var b=$('#listenBtn');if(b)b.innerHTML='\u{1F50A} '+esc(T('listen'));
+}
+function toggleListen(){
+  if(!('speechSynthesis' in window))return;
+  if(S.speaking){stopListen();return}
+  var el=$('#listenText');if(!el)return;
+  var u=new SpeechSynthesisUtterance(el.textContent||'');
+  u.lang=lang==='ar'?'ar-SA':lang==='ha'?'ha-NG':'en-US';
+  u.onend=stopListen; u.onerror=stopListen;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+  S.speaking=true;
+  var b=$('#listenBtn');if(b)b.innerHTML='\u23F9 '+esc(T('stop'));
 }
 function insertAt(el,s){
   var a=typeof el.selectionStart==='number'?el.selectionStart:el.value.length, b=typeof el.selectionEnd==='number'?el.selectionEnd:a;
@@ -811,19 +1053,23 @@ function onImgs(k){
     S.newImgs[k]=arr; arr.forEach(function(d){var i=document.createElement('img');i.src=d;i.alt='';prev.appendChild(i)});
   }).catch(function(){toast('Could not read that photo');S.newImgs[k]=null});
 }
-function save(k){
+function save(k,status){
   var title=val(k,'title'), content=val(k,'content'), link=val(k,'link');
+  if(k==='book') syncBookPages();
+  var pages=k==='book'?S.bookPages.map(function(t){return t.trim()}).filter(Boolean):null;
   if(!title){toast('Add a title');return}
   if(k==='blog'&&!content){toast('Add the content');return}
   if(k==='product'&&!link){toast('Add the product link');return}
-  var body={type:k,title:title,content:content,link:link};
+  if(k==='book'&&!pages.length&&status!=='draft'){toast('Add at least one page, or save as draft');return}
+  var body={type:k,title:title,content:content,link:link,status:status||'published'};
   if(k==='product'){body.store=val(k,'store');body.price=val(k,'price')}
+  if(k==='book'){body.pages=pages;body.price=val(k,'price')}
   if(S.newImgs[k]!=null) body.images=S.newImgs[k];
-  var btn=$('#'+k+'-save');btn.disabled=true;
+  var btns=[$('#'+k+'-save'),$('#'+k+'-draft')].filter(Boolean);btns.forEach(function(b){b.disabled=true});
   var editing=S.editing[k];
   api(editing?'posts/'+editing:'posts',{method:editing?'PUT':'POST',body:JSON.stringify(body)}).then(function(){
-    toast(editing?'Saved':'Published'); resetForm(k); return loadPosts();
-  }).catch(function(e){toast(e.status===401?'Wrong or missing password. Unlock admin again.':'Could not save ('+(e.code||'error')+')')}).then(function(){btn.disabled=false});
+    toast(status==='draft'?'Saved as draft':(editing?'Saved':'Published')); resetForm(k); return loadPosts();
+  }).catch(function(e){toast(e.status===401?'Wrong or missing password. Unlock admin again.':'Could not save ('+(e.code||'error')+')')}).then(function(){btns.forEach(function(b){b.disabled=false})});
 }
 function edit(id){
   api('posts/'+id).then(function(p){
@@ -832,6 +1078,7 @@ function edit(id){
     $('#'+k+'-title').value=p.title;$('#'+k+'-content').value=p.content||'';
     if($('#'+k+'-link'))$('#'+k+'-link').value=p.link||'';
     if(k==='product'){$('#product-store').value=p.store||'amazon';$('#product-price').value=p.price||''}
+    if(k==='book'){$('#book-price').value=p.price||'';S.bookPages=(p.pages&&p.pages.length?p.pages.slice():['']);renderBookPages()}
     $('#'+k+'-imgs').value='';
     var pv=$('#'+k+'-prev');pv.innerHTML='';
     if(p.imgCount){pv.innerHTML='<span>'+p.imgCount+' photo(s) kept. Choose new photos to replace them.</span> ';
@@ -845,8 +1092,10 @@ function del(id){
   api('posts/'+id,{method:'DELETE'}).then(function(){toast('Deleted');KINDS.forEach(function(k){if(S.editing[k]===id)resetForm(k)});return loadPosts()}).catch(function(){toast('Could not delete')});
 }
 function saveSettings(){
-  var b={social:{},stores:{},phones:$('#s-phones').value.split('\n').map(function(x){return x.trim()}).filter(Boolean),storeImgs:S.storeImgs};
+  syncPayMethods();
+  var b={social:{},stores:{},phones:$('#s-phones').value.split('\n').map(function(x){return x.trim()}).filter(Boolean),storeImgs:S.storeImgs,payments:S.payMethods};
   SOC.forEach(function(x){b.social[x[0]]=$('#s-'+x[0]).value.trim()});
+  b.social.coffee=$('#s-coffee').value.trim();
   STO.forEach(function(x){b.stores[x[0]]={link:$('#st-'+x[0]+'-link').value.trim(),id:$('#st-'+x[0]+'-id').value.trim()}});
   api('settings',{method:'PUT',body:JSON.stringify(b)}).then(function(j){S.settings=j;S.storeImgs={};renderStorage();fillSettings();toast('Saved. It is now on the main page.')}).catch(function(e){toast(e.status===401?'Unlock admin again':'Could not save settings')});
 }
@@ -889,7 +1138,45 @@ KINDS.forEach(function(k){
 $('#a-btn').addEventListener('click',function(){affiliate('btn')});
 $('#a-lnk').addEventListener('click',function(){affiliate('lnk')});
 $('#saveSet').addEventListener('click',saveSettings);
+$('#postBody').addEventListener('click',function(e){
+  var g=e.target.closest('#g-go');
+  if(g){
+    var em=$('#g-email').value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){$('#g-err').textContent=T('gate_err');return}
+    if($('#g-hp').value){return}
+    g.disabled=true;
+    unlock(S.post.id,em,false).catch(function(){}).then(function(){g.disabled=false});
+    return;
+  }
+  var pp=e.target.closest('#pPrev'); if(pp&&!pp.disabled){goPage(-1);return}
+  var pn=e.target.closest('#pNext'); if(pn&&!pn.disabled){goPage(1);return}
+  var lb=e.target.closest('#listenBtn'); if(lb){toggleListen();return}
+  var sv=e.target.closest('#saveToggle');
+  if(sv){var on=toggleSaved(sv.getAttribute('data-id'));sv.classList.toggle('on',on);sv.innerHTML=(on?'\u2605 ':'\u2606 ')+esc(T(on?'saved':'save'));renderSavedSection();return}
+});
+$('#c-send').addEventListener('click',sendComment);
 $('#q').addEventListener('input',function(){S.q=this.value;renderPosts()});
+$('#pay-add').addEventListener('click',function(){syncPayMethods();S.payMethods.push({type:'bank',label:'',value:''});renderPayMethods()});
+$('#pay-methods').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-rmpay]');if(!b)return;
+  syncPayMethods();S.payMethods.splice(+b.getAttribute('data-rmpay'),1);renderPayMethods();
+});
+$('#book-addpage').addEventListener('click',function(){syncBookPages();S.bookPages.push('');renderBookPages()});
+$('#book-pages').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-rmpage]');if(!b)return;
+  syncBookPages();S.bookPages.splice(+b.getAttribute('data-rmpage'),1);if(!S.bookPages.length)S.bookPages=[''];renderBookPages();
+});
+$('#book-pages').addEventListener('input',function(e){
+  var t=e.target.closest('textarea[data-page]');if(!t)return;S.bookPages[+t.getAttribute('data-page')]=t.value;
+});
+$('#book-save').addEventListener('click',function(){save('book','published')});
+$('#book-draft').addEventListener('click',function(){save('book','draft')});
+$('#cRefresh').addEventListener('click',loadAllComments);
+$('#cList').addEventListener('click',function(e){
+  var b=e.target.closest('button[data-act="rmcomment"]');if(!b)return;
+  if(!confirm('Delete this comment?'))return;
+  api('comments/'+b.getAttribute('data-post')+'/'+b.getAttribute('data-cid'),{method:'DELETE'}).then(loadAllComments).catch(function(){toast('Could not delete')});
+});
 $('#f-btn').addEventListener('click',follow);
 $('#f-email').addEventListener('keydown',function(e){if(e.key==='Enter')follow()});
 $('#subRefresh').addEventListener('click',loadSubs);
@@ -940,6 +1227,8 @@ $('#cookieOk').addEventListener('click',function(){LS.set('cookieOk','1');$('#co
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})});
 }
+
+try{api('hit',{method:'POST'})}catch(e){}
 
 /* ---------- start ---------- */
 applyLang();
