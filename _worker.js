@@ -4,10 +4,12 @@
 const DEFAULT_SITE = 'https://teesher.cloud'; // links use whatever address the visitor is on
 const NAME = 'Teesher.cloud';
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,90}$/;
+function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
 const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
 
 const DEFAULTS = {
-  social: { fb: '', wa: '', ig: '', x: '', yt: '', li: '', tt: '', tg: '' },
+  social: { fb: '', wa: '', ig: '', x: '', yt: '', li: '', tt: '', tg: '', coffee: '' },
+  payments: [],
   stores: {
     amazon: { link: 'https://www.amazon.com/', id: '', img: 0 },
     jumia: { link: 'https://www.jumia.com.ng/', id: '', img: 0 },
@@ -66,6 +68,8 @@ function render(text) {
 }
 
 const excerpt = (t, n = 160) =>
+  Array.isArray(t) ? excerptText(t[0] || '', n) : excerptText(t, n);
+const excerptText = (t, n = 160) =>
   String(t || '')
     .replace(/\[\[btn:[^\]]*\]\]/g, '')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
@@ -115,10 +119,16 @@ async function getSettings(env) {
     if (typeof v === 'string') v = { link: v };
     stores[k] = { ...DEFAULTS.stores[k], ...(v || {}) };
   }
+  let payments = Array.isArray(s.payments) ? s.payments : [];
+  if (!payments.length && s.bank && s.bank.number) {
+    // migrate an old single bank-account setting the first time it's read
+    payments = [{ type: 'bank', label: s.bank.bankName || 'Bank transfer', value: [s.bank.number, s.bank.name].filter(Boolean).join(' \u2014 ') }];
+  }
   return {
     social: { ...DEFAULTS.social, ...(s.social || {}) },
     stores,
-    phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones
+    phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones,
+    payments
   };
 }
 
@@ -139,6 +149,8 @@ function cleanSettings(b, existing) {
     const v = String(src[k] || '').trim().slice(0, 300);
     if (!v) {
       out.social[k] = '';
+    } else if (k === 'coffee') {
+      out.social[k] = normUrl(v);
     } else if (k === 'wa' && !/^https?:\/\//i.test(v) && /^[+\d\s()-]{6,}$/.test(v)) {
       out.social[k] = 'https://wa.me/' + v.replace(/\D/g, '');
     } else if (
@@ -165,6 +177,15 @@ function cleanSettings(b, existing) {
   }
   const ph = (b && Array.isArray(b.phones) ? b.phones : []).slice(0, 5);
   out.phones = ph.map((p) => String(p).replace(/[^0-9+ ()-]/g, '').trim().slice(0, 20)).filter(Boolean);
+  const PAY_TYPES = ['bank','ussd','paypal','stripe','wallet','other'];
+  out.payments = (Array.isArray(b.payments) ? b.payments : [])
+    .slice(0, 12)
+    .map((p) => ({
+      type: PAY_TYPES.includes(p && p.type) ? p.type : 'other',
+      label: String((p && p.label) || '').trim().slice(0, 60),
+      value: String((p && p.value) || '').trim().slice(0, 300)
+    }))
+    .filter((p) => p.label || p.value);
   return out;
 }
 
@@ -181,14 +202,25 @@ function imgResponse(v) {
 
 async function savePost(env, body, id, existing) {
   const title = String(body.title || '').trim().slice(0, 200);
-  const content = String(body.content || '').replace(/\r\n?/g, '\n').trim().slice(0, 50000);
   const type = body.type === 'book' || body.type === 'product' ? body.type : 'blog';
+  const status = body.status === 'draft' ? 'draft' : 'published';
+  let content = '';
+  let pages = [];
+  if (type === 'book') {
+    pages = (Array.isArray(body.pages) ? body.pages : [])
+      .map((pg) => String(pg || '').replace(/\r\n?/g, '\n').trim().slice(0, 20000))
+      .filter((pg) => pg.length)
+      .slice(0, 300);
+  } else {
+    content = String(body.content || '').replace(/\r\n?/g, '\n').trim().slice(0, 50000);
+  }
   const link = body.link ? normUrl(body.link) : '';
   if (!title) return { error: 'missing_fields' };
   if (type === 'blog' && !content) return { error: 'missing_fields' };
   if (type === 'product' && !link) return { error: 'missing_fields' };
+  if (type === 'book' && !pages.length && status === 'published') return { error: 'missing_fields' };
   const store = type === 'product' && ['amazon', 'jumia', 'konga', 'other'].includes(body.store) ? body.store : '';
-  const price = type === 'product' ? String(body.price || '').trim().slice(0, 40) : '';
+  const price = type === 'product' || type === 'book' ? String(body.price || '').trim().slice(0, 40) : '';
   const now = new Date().toISOString();
   id = id || makeId(title);
 
@@ -203,17 +235,18 @@ async function savePost(env, body, id, existing) {
   }
 
   const views = existing ? existing.views || 0 : 0;
-  const post = { id, title, type, content, link, store, price, imgCount, views, date: existing ? existing.date : now, updated: now };
+  const post = { id, title, type, content, pages, link, store, price, status, imgCount, views, date: existing ? existing.date : now, updated: now };
   await env.BLOG.put(`post:${id}`, JSON.stringify(post));
 
   const idx = await getIndex(env);
-  const sum = { id, title, type, excerpt: excerpt(content), imgCount, views, date: post.date, updated: now };
+  const sum = { id, title, type, status, excerpt: excerpt(type === 'book' ? pages : content), imgCount, views, date: post.date, updated: now };
   if (type === 'product') Object.assign(sum, { link, store, price });
+  if (type === 'book') Object.assign(sum, { price, pageCount: pages.length });
   const i = idx.findIndex((p) => p.id === id);
   if (i >= 0) idx[i] = sum;
   else idx.push(sum);
   await putIndex(env, idx);
-  return { post: { ...post, html: render(content) } };
+  return { post: { ...post, html: type === 'book' ? undefined : render(content), pageHtml: type === 'book' ? pages.map(render) : undefined } };
 }
 
 async function api(request, env, url) {
@@ -280,6 +313,95 @@ async function api(request, env, url) {
     }
   }
 
+  if (route === 'hit' && m === 'POST') {
+    const cur = parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0;
+    await env.BLOG.put('stat:site', String(cur + 1));
+    return json({ ok: true });
+  }
+
+  if (route === 'stats' && m === 'GET') {
+    if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
+    return json({ views: parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0 });
+  }
+
+  if (route === 'unlock') {
+    const bookId = parts[2] || '';
+    if (m === 'POST' && ID_RE.test(bookId)) {
+      const b = await request.json().catch(() => null);
+      if (!b || b.website) return json({ error: 'bad_request' }, 400);
+      const email = String(b.email || '').trim().toLowerCase();
+      if (email.length > 200 || !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(email)) return json({ error: 'bad_email' }, 400);
+      const raw = await env.BLOG.get(`post:${bookId}`);
+      if (!raw) return json({ error: 'not_found' }, 404);
+      const p = JSON.parse(raw);
+      if (p.type !== 'book' || p.status === 'draft') return json({ error: 'not_found' }, 404);
+      await env.BLOG.put('sub:' + email, '1', { metadata: { d: new Date().toISOString(), via: 'book:' + bookId } });
+      return json({ ok: true, pageHtml: (p.pages || []).map(render) });
+    }
+  }
+
+  if (route === 'comments') {
+    const postId = parts[2] || '';
+    if (!ID_RE.test(postId)) return json({ error: 'not_found' }, 404);
+    if (m === 'GET') {
+      let list = [];
+      try {
+        list = JSON.parse((await env.BLOG.get(`comments:${postId}`)) || '[]');
+      } catch (e) {}
+      return json({ comments: list });
+    }
+    if (m === 'POST') {
+      const b = await request.json().catch(() => null);
+      if (!b || b.website) return json({ ok: true, comment: null }); // honeypot
+      const name = String(b.name || '').trim().slice(0, 60) || 'Guest';
+      const text = String(b.text || '').trim().slice(0, 1000);
+      if (!text) return json({ error: 'missing_text' }, 400);
+      let list = [];
+      try {
+        list = JSON.parse((await env.BLOG.get(`comments:${postId}`)) || '[]');
+      } catch (e) {}
+      const c = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name, text, date: new Date().toISOString() };
+      list.push(c);
+      if (list.length > 300) list = list.slice(list.length - 300);
+      await env.BLOG.put(`comments:${postId}`, JSON.stringify(list));
+      return json({ ok: true, comment: c });
+    }
+    if (m === 'DELETE') {
+      if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
+      const cid = parts[3] || '';
+      let list = [];
+      try {
+        list = JSON.parse((await env.BLOG.get(`comments:${postId}`)) || '[]');
+      } catch (e) {}
+      list = list.filter((c) => c.id !== cid);
+      await env.BLOG.put(`comments:${postId}`, JSON.stringify(list));
+      return json({ ok: true });
+    }
+  }
+
+  if (route === 'allcomments' && m === 'GET') {
+    if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
+    const idx = await getIndex(env);
+    const titleOf = {};
+    idx.forEach((p) => (titleOf[p.id] = p.title));
+    const out = [];
+    let cursor;
+    do {
+      const r = await env.BLOG.list({ prefix: 'comments:', cursor, limit: 1000 });
+      for (const k of r.keys) {
+        const postId = k.name.slice('comments:'.length);
+        let list = [];
+        try {
+          list = JSON.parse((await env.BLOG.get(k.name)) || '[]');
+        } catch (e) {}
+        list.forEach((c) => out.push({ ...c, postId, postTitle: titleOf[postId] || '(deleted post)' }));
+      }
+      cursor = r.list_complete ? undefined : r.cursor;
+    } while (cursor);
+    out.sort((a, b) => (a.date < b.date ? 1 : -1));
+    return json({ comments: out.slice(0, 200) });
+  }
+
   if (route === 'img' && m === 'GET') {
     const id = parts[2] || '';
     const n = parseInt(parts[3], 10);
@@ -298,7 +420,11 @@ async function api(request, env, url) {
   if (route === 'posts') {
     const id = parts[2];
     if (!id) {
-      if (m === 'GET') return json({ posts: await getIndex(env) });
+      if (m === 'GET') {
+        const all = await getIndex(env);
+        const posts = authed(request, env) ? all : all.filter((p) => p.status !== 'draft');
+        return json({ posts });
+      }
       if (m === 'POST') {
         if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
         const b = await request.json().catch(() => null);
@@ -312,15 +438,29 @@ async function api(request, env, url) {
       if (m === 'GET') {
         if (!raw) return json({ error: 'not_found' }, 404);
         const p = JSON.parse(raw);
-        p.views = (p.views || 0) + 1;
-        await env.BLOG.put(`post:${id}`, JSON.stringify(p));
-        const idx2 = await getIndex(env);
-        const j = idx2.findIndex((x) => x.id === id);
-        if (j >= 0) {
-          idx2[j].views = p.views;
-          await putIndex(env, idx2);
+        const isAdmin = authed(request, env);
+        if (p.status === 'draft' && !isAdmin) return json({ error: 'not_found' }, 404);
+        if (!isAdmin) {
+          p.views = (p.views || 0) + 1;
+          await env.BLOG.put(`post:${id}`, JSON.stringify(p));
+          const idx2 = await getIndex(env);
+          const j = idx2.findIndex((x) => x.id === id);
+          if (j >= 0) {
+            idx2[j].views = p.views;
+            await putIndex(env, idx2);
+          }
         }
-        return json({ ...p, html: render(p.content) });
+        if (p.type === 'book' && !isAdmin) {
+          const first = (p.pages && p.pages[0]) || '';
+          return json({
+            ...p,
+            pages: undefined,
+            locked: true,
+            pageCount: (p.pages || []).length,
+            previewHtml: render(first.slice(0, 500))
+          });
+        }
+        return json({ ...p, html: p.type === 'book' ? undefined : render(p.content), pageHtml: p.type === 'book' ? (p.pages || []).map(render) : undefined });
       }
       if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
       if (!raw) return json({ error: 'not_found' }, 404);
@@ -334,6 +474,8 @@ async function api(request, env, url) {
       if (m === 'DELETE') {
         for (let n = 0; n < (existing.imgCount || 0); n++) await env.BLOG.delete(`img:${id}:${n}`);
         await env.BLOG.delete(`post:${id}`);
+        await env.BLOG.delete(`comments:${id}`);
+        await env.BLOG.delete(`comments:${id}`);
         const idx = (await getIndex(env)).filter((p) => p.id !== id);
         await putIndex(env, idx);
         return json({ ok: true });
@@ -381,13 +523,15 @@ async function postPage(env, url) {
     if (post && post.type === 'product') post = null;
   }
   const headers = { 'content-type': 'text/html; charset=utf-8' };
+  if (post && post.status === 'draft') post = null;
   if (!post) {
     html = html.replace(HEAD_RE, () => `<title>Not found | ${NAME}</title><meta name="robots" content="noindex">`);
     return new Response(html, { status: 404, headers });
   }
   const link = `${SITE}/p/${post.id}`;
   const desc = excerpt(post.content, 160);
-  const img = post.imgCount ? `${SITE}/api/img/${post.id}/0?v=${encodeURIComponent(post.updated || post.date)}` : '';
+  const OG_N = (hashStr(post.id) % 3) + 1;
+  const img = post.imgCount ? `${SITE}/api/img/${post.id}/0?v=${encodeURIComponent(post.updated || post.date)}` : `${SITE}/og-${OG_N}.png`;
   const ld = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -398,7 +542,7 @@ async function postPage(env, url) {
     publisher: { '@type': 'Organization', name: NAME },
     mainEntityOfPage: link
   };
-  if (img) ld.image = img;
+  ld.image = img;
   const head = [
     `<title>${esc(post.title)} | ${NAME}</title>`,
     `<meta name="description" content="${esc(desc)}">`,
@@ -409,11 +553,13 @@ async function postPage(env, url) {
     `<meta property="og:title" content="${esc(post.title)}">`,
     `<meta property="og:description" content="${esc(desc)}">`,
     `<meta property="og:url" content="${link}">`,
-    img ? `<meta property="og:image" content="${img}">` : '',
-    `<meta name="twitter:card" content="${img ? 'summary_large_image' : 'summary'}">`,
+    `<meta property="og:image" content="${img}">`,
+    `<meta name="twitter:card" content="summary_large_image">`,
+    `<meta name="twitter:image" content="${img}">`,
     `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`
   ].join('\n');
-  const body = `<article><h1>${esc(post.title)}</h1>${render(post.content)}</article>`;
+  const bodyHtml = post.type === 'book' ? render((post.pages && post.pages[0]) || '') : render(post.content);
+  const body = `<article><h1>${esc(post.title)}</h1>${bodyHtml}</article>`;
   html = html.replace(HEAD_RE, () => head).replace('<!--SEO_BODY-->', () => body);
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
