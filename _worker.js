@@ -10,6 +10,7 @@ const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
 const DEFAULTS = {
   social: { fb: '', wa: '', ig: '', x: '', yt: '', li: '', tt: '', tg: '', coffee: '' },
   payments: [],
+  customCode: { css: '', head: '', bodyJs: '' },
   stores: {
     amazon: { link: 'https://www.amazon.com/', id: '', img: 0 },
     jumia: { link: 'https://www.jumia.com.ng/', id: '', img: 0 },
@@ -128,7 +129,8 @@ async function getSettings(env) {
     social: { ...DEFAULTS.social, ...(s.social || {}) },
     stores,
     phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones,
-    payments
+    payments,
+    customCode: { ...DEFAULTS.customCode, ...(s.customCode || {}) }
   };
 }
 
@@ -186,6 +188,12 @@ function cleanSettings(b, existing) {
       value: String((p && p.value) || '').trim().slice(0, 300)
     }))
     .filter((p) => p.label || p.value);
+  const cc = b.customCode || {};
+  out.customCode = {
+    css: String(cc.css || '').slice(0, 20000),
+    head: String(cc.head || '').slice(0, 20000),
+    bodyJs: String(cc.bodyJs || '').slice(0, 20000)
+  };
   return out;
 }
 
@@ -336,7 +344,73 @@ async function api(request, env, url) {
       const p = JSON.parse(raw);
       if (p.type !== 'book' || p.status === 'draft') return json({ error: 'not_found' }, 404);
       await env.BLOG.put('sub:' + email, '1', { metadata: { d: new Date().toISOString(), via: 'book:' + bookId } });
-      return json({ ok: true, pageHtml: (p.pages || []).map(render) });
+      if (!p.price) {
+        return json({ ok: true, pageHtml: (p.pages || []).map(render) });
+      }
+      let paid = [];
+      try {
+        paid = JSON.parse((await env.BLOG.get(`paid:${bookId}`)) || '[]');
+      } catch (e) {}
+      if (paid.includes(email)) {
+        return json({ ok: true, pageHtml: (p.pages || []).map(render) });
+      }
+      let claims = [];
+      try {
+        claims = JSON.parse((await env.BLOG.get(`claims:${bookId}`)) || '[]');
+      } catch (e) {}
+      if (!claims.some((c) => c.email === email)) {
+        claims.push({ email, date: new Date().toISOString() });
+        if (claims.length > 500) claims = claims.slice(claims.length - 500);
+        await env.BLOG.put(`claims:${bookId}`, JSON.stringify(claims));
+      }
+      return json({ ok: true, pending: true });
+    }
+  }
+
+  if (route === 'claims') {
+    if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
+    if (m === 'GET') {
+      const idx = await getIndex(env);
+      const titleOf = {};
+      idx.forEach((p) => (titleOf[p.id] = p.title));
+      const out = [];
+      let cursor;
+      do {
+        const r = await env.BLOG.list({ prefix: 'claims:', cursor, limit: 1000 });
+        for (const k of r.keys) {
+          const bookId = k.name.slice('claims:'.length);
+          let list = [];
+          try {
+            list = JSON.parse((await env.BLOG.get(k.name)) || '[]');
+          } catch (e) {}
+          list.forEach((c) => out.push({ ...c, bookId, bookTitle: titleOf[bookId] || '(deleted book)' }));
+        }
+        cursor = r.list_complete ? undefined : r.cursor;
+      } while (cursor);
+      out.sort((a, b) => (a.date < b.date ? 1 : -1));
+      return json({ claims: out.slice(0, 300) });
+    }
+    if (m === 'POST') {
+      const b = await request.json().catch(() => null);
+      const bookId = b && b.bookId,
+        email = b && String(b.email || '').trim().toLowerCase(),
+        approve = !!(b && b.approve);
+      if (!ID_RE.test(bookId || '') || !email) return json({ error: 'bad_request' }, 400);
+      let claims = [];
+      try {
+        claims = JSON.parse((await env.BLOG.get(`claims:${bookId}`)) || '[]');
+      } catch (e) {}
+      claims = claims.filter((c) => c.email !== email);
+      await env.BLOG.put(`claims:${bookId}`, JSON.stringify(claims));
+      if (approve) {
+        let paid = [];
+        try {
+          paid = JSON.parse((await env.BLOG.get(`paid:${bookId}`)) || '[]');
+        } catch (e) {}
+        if (!paid.includes(email)) paid.push(email);
+        await env.BLOG.put(`paid:${bookId}`, JSON.stringify(paid));
+      }
+      return json({ ok: true });
     }
   }
 
@@ -561,15 +635,24 @@ async function postPage(env, url) {
   const bodyHtml = post.type === 'book' ? render((post.pages && post.pages[0]) || '') : render(post.content);
   const body = `<article><h1>${esc(post.title)}</h1>${bodyHtml}</article>`;
   html = html.replace(HEAD_RE, () => head).replace('<!--SEO_BODY-->', () => body);
+  html = injectCustom(html, env.BLOG ? await getSettings(env) : null);
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
 
 /* The page and robots.txt say teesher.cloud. Until that domain is connected,
    swap it for the address the visitor is really on (for example teether.pages.dev). */
+function injectCustom(html, settings) {
+  const cc = (settings && settings.customCode) || {};
+  const head = (cc.css ? `<style>${cc.css}</style>` : '') + (cc.head || '');
+  const bodyEnd = cc.bodyJs ? `<script>${cc.bodyJs}<\/script>` : '';
+  return html.replace('<!--CUSTOM_HEAD-->', head).replace('<!--CUSTOM_BODY_END-->', bodyEnd);
+}
+
 async function withOrigin(request, env, url) {
   const res = await env.ASSETS.fetch(request);
   if (!res.ok) return res;
-  const text = (await res.text()).split(DEFAULT_SITE).join(url.origin);
+  const settings = env.BLOG ? await getSettings(env) : null;
+  const text = injectCustom((await res.text()).split(DEFAULT_SITE).join(url.origin), settings);
   const headers = new Headers(res.headers);
   headers.delete('content-length');
   headers.delete('etag');
