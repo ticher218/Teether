@@ -353,6 +353,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="head-row"><h2 class="sec" style="margin:0">Admin</h2><button class="btn sm ghost" type="button" id="lockBtn">Lock admin</button></div>
     <p class="mut" id="siteStats" style="margin-top:-8px"></p>
     <div class="tabs" id="atabs">
+      <button type="button" data-t="ai">AI Studio</button>
       <button type="button" class="on" data-t="blog">Blog post</button>
       <button type="button" data-t="book">Book</button>
       <button type="button" data-t="product">Affiliate product</button>
@@ -361,6 +362,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button type="button" data-t="comments">Comments</button>
       <button type="button" data-t="claims">Purchases</button>
       <button type="button" data-t="code">Custom Code</button>
+    </div>
+
+    <div class="panel" id="tab-ai" hidden>
+      <h3>Teach the AI</h3>
+      <p class="mut hint" style="margin-top:0">Standing instructions the AI follows every time it writes or answers — your tone, topics to focus on, things to always mention.</p>
+      <textarea id="ai-notes" style="min-height:90px" placeholder="e.g. Write in a warm, simple tone. Focus on health, tech and money topics. Always end blog posts by inviting readers to follow."></textarea>
+      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="ai-notes-save">Save instructions</button></div>
+
+      <h3 style="margin-top:24px">Generate a draft</h3>
+      <label for="ai-kind">What to write</label>
+      <select id="ai-kind" class="fld"><option value="blog">Blog post</option><option value="book">Book</option></select>
+      <label for="ai-topic">Topic / idea</label>
+      <textarea id="ai-topic" style="min-height:80px" placeholder="e.g. 5 signs your phone battery is dying"></textarea>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="ai-image" style="width:auto"> Also generate a cover image</label>
+      <div class="row"><button class="btn" type="button" id="ai-generate">Generate as draft</button></div>
+      <p class="mut" id="ai-genmsg" style="min-height:1.4em"></p>
+
+      <h3 style="margin-top:24px">Ask the AI</h3>
+      <textarea id="ai-question" style="min-height:70px" placeholder="Ask anything — for ideas, help, or a second opinion"></textarea>
+      <div class="row" style="margin-top:0"><button class="btn sm" type="button" id="ai-ask">Ask</button></div>
+      <div class="panel" id="ai-answer" style="margin-top:10px;display:none"></div>
     </div>
 
     <div class="panel" id="tab-blog">
@@ -939,7 +961,7 @@ function unlock(id,email,silent){
 function setTab(t){
   S.tab=t;
   $$('#atabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===t)});
-  ['blog','book','product','links','subs','comments','claims','code'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
+  ['blog','book','product','links','subs','comments','claims','code','ai'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
   if(t==='subs') loadSubs();
   if(t==='comments') loadAllComments();
   if(t==='claims') loadClaims();
@@ -1059,6 +1081,7 @@ function fillSettings(){
   renderPayMethods();
   var cc=s.customCode||{};
   $('#cc-head').value=cc.head||'';$('#cc-css').value=cc.css||'';$('#cc-js').value=cc.bodyJs||'';
+  $('#ai-notes').value=s.aiNotes||'';
 }
 
 function unlock(key){
@@ -1229,6 +1252,32 @@ $('#book-pages').addEventListener('input',function(e){
 });
 $('#book-save').addEventListener('click',function(){save('book','published')});
 $('#book-draft').addEventListener('click',function(){save('book','draft')});
+$('#ai-notes-save').addEventListener('click',function(){
+  var btn=$('#ai-notes-save');btn.disabled=true;
+  var body={social:S.settings?S.settings.social:{},stores:S.settings?S.settings.stores:{},phones:(S.settings&&S.settings.phones)||[],payments:(S.settings&&S.settings.payments)||[],customCode:(S.settings&&S.settings.customCode)||{},aiNotes:$('#ai-notes').value};
+  api('settings',{method:'PUT',body:JSON.stringify(body)}).then(function(j){S.settings=j;toast('Saved')}).catch(function(){toast('Could not save')}).then(function(){btn.disabled=false});
+});
+$('#ai-generate').addEventListener('click',function(){
+  var topic=$('#ai-topic').value.trim();
+  if(!topic){toast('Type a topic first');return}
+  var btn=$('#ai-generate');btn.disabled=true;$('#ai-genmsg').textContent='Writing\u2026 this can take a little while.';
+  api('ai/generate',{method:'POST',body:JSON.stringify({kind:$('#ai-kind').value,topic:topic,image:$('#ai-image').checked})}).then(function(j){
+    $('#ai-genmsg').textContent='Saved as draft: \u201c'+j.post.title+'\u201d. Open the '+(j.post.type==='book'?'Book':'Blog post')+' tab to review and publish.';
+    $('#ai-topic').value='';$('#ai-image').checked=false;
+    return loadPosts();
+  }).catch(function(e){
+    $('#ai-genmsg').textContent=e.code==='ai_missing'?'The AI binding is not connected yet. Add an "AI" binding named AI in Cloudflare, then redeploy.':'Could not generate that. Try again.';
+  }).then(function(){btn.disabled=false});
+});
+$('#ai-ask').addEventListener('click',function(){
+  var q=$('#ai-question').value.trim();
+  if(!q){toast('Type a question first');return}
+  var btn=$('#ai-ask');btn.disabled=true;
+  var box=$('#ai-answer');box.style.display='block';box.textContent='Thinking\u2026';
+  api('ai/chat',{method:'POST',body:JSON.stringify({message:q})}).then(function(j){box.textContent=j.answer||'(no answer)'}).catch(function(e){
+    box.textContent=e.code==='ai_missing'?'The AI binding is not connected yet. Add an "AI" binding named AI in Cloudflare, then redeploy.':'Could not get an answer. Try again.';
+  }).then(function(){btn.disabled=false});
+});
 $('#cc-save').addEventListener('click',function(){
   var btn=$('#cc-save');btn.disabled=true;
   var body={social:S.settings?S.settings.social:{},stores:S.settings?S.settings.stores:{},phones:(S.settings&&S.settings.phones)||[],payments:(S.settings&&S.settings.payments)||[],
