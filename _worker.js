@@ -11,6 +11,7 @@ const DEFAULTS = {
   social: { fb: '', wa: '', ig: '', x: '', yt: '', li: '', tt: '', tg: '', coffee: '' },
   payments: [],
   customCode: { css: '', head: '', bodyJs: '' },
+  aiNotes: '',
   stores: {
     amazon: { link: 'https://www.amazon.com/', id: '', img: 0 },
     jumia: { link: 'https://www.jumia.com.ng/', id: '', img: 0 },
@@ -130,7 +131,8 @@ async function getSettings(env) {
     stores,
     phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones,
     payments,
-    customCode: { ...DEFAULTS.customCode, ...(s.customCode || {}) }
+    customCode: { ...DEFAULTS.customCode, ...(s.customCode || {}) },
+    aiNotes: typeof s.aiNotes === 'string' ? s.aiNotes : DEFAULTS.aiNotes
   };
 }
 
@@ -194,6 +196,7 @@ function cleanSettings(b, existing) {
     head: String(cc.head || '').slice(0, 20000),
     bodyJs: String(cc.bodyJs || '').slice(0, 20000)
   };
+  out.aiNotes = String(b.aiNotes || '').slice(0, 4000);
   return out;
 }
 
@@ -318,6 +321,93 @@ async function api(request, env, url) {
       const e = (url.searchParams.get('email') || '').trim().toLowerCase();
       if (e) await env.BLOG.delete('sub:' + e);
       return json({ ok: true });
+    }
+  }
+
+  if (route === 'ai') {
+    if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
+    if (!env.AI) return json({ error: 'ai_missing' }, 503);
+    const sub = parts[2] || '';
+    const b = await request.json().catch(() => null);
+    if (!b) return json({ error: 'bad_json' }, 400);
+    const settings = await getSettings(env);
+    const persona =
+      'You write for Teesher.cloud, a Nigerian blog about teaching stories, tech and books, in a clear, warm, honest voice. ' +
+      'Never invent facts, statistics or claims you are not sure of; keep things simple and practical.' +
+      (settings.aiNotes ? '\n\nAdditional instructions from the site owner:\n' + settings.aiNotes : '');
+
+    if (sub === 'chat' && m === 'POST') {
+      const question = String(b.message || '').trim().slice(0, 2000);
+      if (!question) return json({ error: 'missing_fields' }, 400);
+      try {
+        const r = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+          messages: [
+            { role: 'system', content: persona },
+            { role: 'user', content: question }
+          ]
+        });
+        return json({ answer: (r && r.response) || '' });
+      } catch (e) {
+        return json({ error: 'ai_error' }, 502);
+      }
+    }
+
+    if (sub === 'generate' && m === 'POST') {
+      const kind = b.kind === 'book' ? 'book' : 'blog';
+      const topic = String(b.topic || '').trim().slice(0, 500);
+      const wantImage = !!b.image;
+      if (!topic) return json({ error: 'missing_fields' }, 400);
+
+      const instructions =
+        kind === 'book'
+          ? 'Write a short original book. First line: "TITLE: " followed by the title. Then write the book split into pages, each page starting on its own line with "---PAGE---" before it, 4 to 8 pages, each page a few short paragraphs.'
+          : 'Write an original blog post. First line: "TITLE: " followed by the title. Then the full article body, a few hundred words, in short paragraphs. Use "## " at the start of a line for a subheading.';
+
+      let text;
+      try {
+        const r = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+          messages: [
+            { role: 'system', content: persona + '\n\n' + instructions },
+            { role: 'user', content: topic }
+          ]
+        });
+        text = (r && r.response) || '';
+      } catch (e) {
+        return json({ error: 'ai_error' }, 502);
+      }
+      if (!text) return json({ error: 'ai_empty' }, 502);
+
+      const titleMatch = text.match(/TITLE:\s*(.+)/i);
+      const title = titleMatch ? titleMatch[1].trim().slice(0, 200) : topic.slice(0, 80);
+      const rest = text.replace(/TITLE:\s*.+/i, '').trim();
+
+      const body = { type: kind, title, status: 'draft' };
+      if (kind === 'book') {
+        body.pages = rest
+          .split('---PAGE---')
+          .map((p) => p.trim())
+          .filter(Boolean);
+      } else {
+        body.content = rest;
+      }
+
+      if (wantImage) {
+        try {
+          const imgResp = await env.AI.run('@cf/black-forest-labs/flux-1-schnell', {
+            prompt: 'Flat vector illustration, blue gradient background, for a blog cover, about: ' + topic.slice(0, 200)
+          });
+          let b64 = imgResp && imgResp.image;
+          if (b64) {
+            body.images = ['data:image/png;base64,' + b64];
+          }
+        } catch (e) {
+          // image generation is optional; continue without it if it fails
+        }
+      }
+
+      const result = await savePost(env, body, null, null);
+      if (result.error) return json(result, 400);
+      return json({ ok: true, post: result.post });
     }
   }
 
