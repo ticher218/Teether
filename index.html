@@ -278,6 +278,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="share site-share" id="siteShare" style="justify-content:center;margin-top:18px"></div>
   </div></section>
 
+  <section class="block" id="trendingBlock" hidden><div class="wrap">
+    <h2 class="sec" data-i="trending">Trending</h2>
+    <div class="grid" id="trendingGrid"></div>
+  </div></section>
+
   <section class="block" id="posts"><div class="wrap">
     <h2 class="sec" data-i="latest">Latest Posts</h2>
     <input type="search" id="q" class="search" data-ph="search" autocomplete="off">
@@ -353,7 +358,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="head-row"><h2 class="sec" style="margin:0">Admin</h2><button class="btn sm ghost" type="button" id="lockBtn">Lock admin</button></div>
     <p class="mut" id="siteStats" style="margin-top:-8px"></p>
     <div class="tabs" id="atabs">
-      <button type="button" data-t="ai">AI Studio</button>
       <button type="button" class="on" data-t="blog">Blog post</button>
       <button type="button" data-t="book">Book</button>
       <button type="button" data-t="product">Affiliate product</button>
@@ -362,27 +366,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <button type="button" data-t="comments">Comments</button>
       <button type="button" data-t="claims">Purchases</button>
       <button type="button" data-t="code">Custom Code</button>
-    </div>
-
-    <div class="panel" id="tab-ai" hidden>
-      <h3>Teach the AI</h3>
-      <p class="mut hint" style="margin-top:0">Standing instructions the AI follows every time it writes or answers — your tone, topics to focus on, things to always mention.</p>
-      <textarea id="ai-notes" style="min-height:90px" placeholder="e.g. Write in a warm, simple tone. Focus on health, tech and money topics. Always end blog posts by inviting readers to follow."></textarea>
-      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="ai-notes-save">Save instructions</button></div>
-
-      <h3 style="margin-top:24px">Generate a draft</h3>
-      <label for="ai-kind">What to write</label>
-      <select id="ai-kind" class="fld"><option value="blog">Blog post</option><option value="book">Book</option></select>
-      <label for="ai-topic">Topic / idea</label>
-      <textarea id="ai-topic" style="min-height:80px" placeholder="e.g. 5 signs your phone battery is dying"></textarea>
-      <label style="display:flex;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="ai-image" style="width:auto"> Also generate a cover image</label>
-      <div class="row"><button class="btn" type="button" id="ai-generate">Generate as draft</button></div>
-      <p class="mut" id="ai-genmsg" style="min-height:1.4em"></p>
-
-      <h3 style="margin-top:24px">Ask the AI</h3>
-      <textarea id="ai-question" style="min-height:70px" placeholder="Ask anything — for ideas, help, or a second opinion"></textarea>
-      <div class="row" style="margin-top:0"><button class="btn sm" type="button" id="ai-ask">Ask</button></div>
-      <div class="panel" id="ai-answer" style="margin-top:10px;display:none"></div>
     </div>
 
     <div class="panel" id="tab-blog">
@@ -403,6 +386,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <p class="mut hint">The link stays hidden behind the text. Visitors never see the raw URL.</p>
       </details>
+      <label for="blog-tags">Tags (comma separated, optional)</label>
+      <input type="text" id="blog-tags" placeholder="health, tech, money">
       <label for="blog-imgs">Photos (optional, up to 4)</label>
       <input type="file" id="blog-imgs" accept="image/*" multiple>
       <div class="prev" id="blog-prev"></div>
@@ -422,6 +407,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <input type="text" id="book-price" maxlength="40" placeholder="&#8358;2,000">
       <label for="book-link">Payment link (optional — leave empty to show your bank account instead)</label>
       <input type="text" id="book-link" placeholder="https://paystack.com/pay/...">
+      <label for="book-tags">Tags (comma separated, optional)</label>
+      <input type="text" id="book-tags" placeholder="health, tech, money">
       <label>Pages</label>
       <p class="mut hint" style="margin-top:0">Write your book one page at a time. Add as many pages as you need.</p>
       <div id="book-pages"></div>
@@ -493,6 +480,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="two" id="setSocial"></div>
       <h3 style="margin-top:22px">Stores</h3>
       <div id="setStores"></div>
+      <h3 style="margin-top:22px">Author bio</h3>
+      <label for="s-authorbio">Shown at the end of your posts and books</label>
+      <textarea id="s-authorbio" style="min-height:70px" placeholder="Ticher builds teesher.cloud from his phone."></textarea>
       <h3 style="margin-top:22px">Buy Me a Coffee</h3>
       <label for="s-coffee">Support link (Buy Me a Coffee, Paystack, etc. — optional)</label>
       <input type="text" id="s-coffee" placeholder="https://buymeacoffee.com/yourname">
@@ -794,8 +784,21 @@ function renderPosts(){
     return '<article class="pc"><a class="pimg" href="/p/'+p.id+'"><img src="'+img+'" alt="" loading="lazy"></a><div class="pb">'+
       '<span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span>'+
       '<h3><a href="/p/'+p.id+'">'+esc(p.title)+'</a></h3>'+(p.excerpt?'<p>'+esc(p.excerpt)+'</p>':'')+
+      tagPills(p.tags)+
       '<div class="pm"><span>'+fmt(p.date)+'</span><a class="more" href="/p/'+p.id+'">'+esc(T('more'))+'</a></div></div></article>';
   }).join('');
+}
+function tagPills(tags,clickable){
+  if(!tags||!tags.length)return '';
+  return '<div class="tagset">'+tags.map(function(t){
+    return clickable?'<button type="button" data-tag="'+esc(t)+'"'+(S.tag===t?' class="active"':'')+'>#'+esc(t)+'</button>':'<span style="color:var(--mut);font-size:.8rem">#'+esc(t)+'</span>';
+  }).join('')+'</div>';
+}
+function renderTagBar(){
+  var bar=document.getElementById('tagBar');
+  if(!S.tag){if(bar)bar.remove();return}
+  if(!bar){bar=document.createElement('div');bar.id='tagBar';bar.className='tagbar wrap';$('#posts .wrap').insertBefore(bar,$('#tabs').nextSibling)}
+  bar.innerHTML='<span>#'+esc(S.tag)+'</span><button type="button" class="btn sm ghost" id="tagClear">\u2715</button>';
 }
 
 function renderProducts(){
@@ -961,7 +964,7 @@ function unlock(id,email,silent){
 function setTab(t){
   S.tab=t;
   $$('#atabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===t)});
-  ['blog','book','product','links','subs','comments','claims','code','ai'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
+  ['blog','book','product','links','subs','comments','claims','code'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
   if(t==='subs') loadSubs();
   if(t==='comments') loadAllComments();
   if(t==='claims') loadClaims();
@@ -1081,7 +1084,6 @@ function fillSettings(){
   renderPayMethods();
   var cc=s.customCode||{};
   $('#cc-head').value=cc.head||'';$('#cc-css').value=cc.css||'';$('#cc-js').value=cc.bodyJs||'';
-  $('#ai-notes').value=s.aiNotes||'';
 }
 
 function unlock(key){
@@ -1252,32 +1254,6 @@ $('#book-pages').addEventListener('input',function(e){
 });
 $('#book-save').addEventListener('click',function(){save('book','published')});
 $('#book-draft').addEventListener('click',function(){save('book','draft')});
-$('#ai-notes-save').addEventListener('click',function(){
-  var btn=$('#ai-notes-save');btn.disabled=true;
-  var body={social:S.settings?S.settings.social:{},stores:S.settings?S.settings.stores:{},phones:(S.settings&&S.settings.phones)||[],payments:(S.settings&&S.settings.payments)||[],customCode:(S.settings&&S.settings.customCode)||{},aiNotes:$('#ai-notes').value};
-  api('settings',{method:'PUT',body:JSON.stringify(body)}).then(function(j){S.settings=j;toast('Saved')}).catch(function(){toast('Could not save')}).then(function(){btn.disabled=false});
-});
-$('#ai-generate').addEventListener('click',function(){
-  var topic=$('#ai-topic').value.trim();
-  if(!topic){toast('Type a topic first');return}
-  var btn=$('#ai-generate');btn.disabled=true;$('#ai-genmsg').textContent='Writing\u2026 this can take a little while.';
-  api('ai/generate',{method:'POST',body:JSON.stringify({kind:$('#ai-kind').value,topic:topic,image:$('#ai-image').checked})}).then(function(j){
-    $('#ai-genmsg').textContent='Saved as draft: \u201c'+j.post.title+'\u201d. Open the '+(j.post.type==='book'?'Book':'Blog post')+' tab to review and publish.';
-    $('#ai-topic').value='';$('#ai-image').checked=false;
-    return loadPosts();
-  }).catch(function(e){
-    $('#ai-genmsg').textContent=e.code==='ai_missing'?'The AI binding is not connected yet. Add an "AI" binding named AI in Cloudflare, then redeploy.':'Could not generate that. Try again.';
-  }).then(function(){btn.disabled=false});
-});
-$('#ai-ask').addEventListener('click',function(){
-  var q=$('#ai-question').value.trim();
-  if(!q){toast('Type a question first');return}
-  var btn=$('#ai-ask');btn.disabled=true;
-  var box=$('#ai-answer');box.style.display='block';box.textContent='Thinking\u2026';
-  api('ai/chat',{method:'POST',body:JSON.stringify({message:q})}).then(function(j){box.textContent=j.answer||'(no answer)'}).catch(function(e){
-    box.textContent=e.code==='ai_missing'?'The AI binding is not connected yet. Add an "AI" binding named AI in Cloudflare, then redeploy.':'Could not get an answer. Try again.';
-  }).then(function(){btn.disabled=false});
-});
 $('#cc-save').addEventListener('click',function(){
   var btn=$('#cc-save');btn.disabled=true;
   var body={social:S.settings?S.settings.social:{},stores:S.settings?S.settings.stores:{},phones:(S.settings&&S.settings.phones)||[],payments:(S.settings&&S.settings.payments)||[],
