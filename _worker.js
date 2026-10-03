@@ -1,8 +1,8 @@
-/* Teesher.cloud - Cloudflare Pages worker
+/* Allarbaa.cloud - Cloudflare Pages worker
    Needs: KV binding named BLOG, and variable ADMIN_PASSWORD (Pages > Settings). */
 
-const DEFAULT_SITE = 'https://teesher.cloud'; // links use whatever address the visitor is on
-const NAME = 'Teesher.cloud';
+const DEFAULT_SITE = 'https://allarbaa.cloud'; // links use whatever address the visitor is on
+const NAME = 'Allarbaa.cloud';
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,90}$/;
 function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
 const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
@@ -649,8 +649,8 @@ async function postPage(env, url) {
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
 
-/* The page and robots.txt say teesher.cloud. Until that domain is connected,
-   swap it for the address the visitor is really on (for example teether.pages.dev). */
+/* The page and robots.txt say allarbaa.cloud. Until that domain is connected,
+   swap it for the address the visitor is really on (for example allarbaa.pages.dev). */
 function injectCustom(html, settings) {
   const cc = (settings && settings.customCode) || {};
   const head = (cc.css ? `<style>${cc.css}</style>` : '') + (cc.head || '');
