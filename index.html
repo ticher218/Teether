@@ -1,1381 +1,324 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang=en dir=ltr>
 <head>
-<!-- Google Tag Manager -->
-<script data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-NWPRQRLR');</script>
-<!-- End Google Tag Manager -->
-<!-- Google Analytics (GA4) -->
-<script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-HD01MF5SL9"></script>
-<script data-cfasync="false">
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HD01MF5SL9');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1f3a">
-<!--SEO_HEAD_START-->
+<script data-cfasync=false>!function(e,t,a,n,g){e[n]=e[n]||[],e[n].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var m=t.getElementsByTagName(a)[0],r=t.createElement(a);r.async=!0,r.src="https://www.googletagmanager.com/gtm.js?id=GTM-NWPRQRLR",m.parentNode.insertBefore(r,m)}(window,document,"script","dataLayer")</script>
+<script data-cfasync=false async src="https://www.googletagmanager.com/gtag/js?id=G-HD01MF5SL9"></script>
+<script data-cfasync=false>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-HD01MF5SL9")</script>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=theme-color content=#0b1f3a>
 <title>Allarbaa.cloud | Blog & Book Publishing</title>
-<meta name="description" content="Allarbaa.cloud: Tech blogging, digital articles, and book publishing with honest product recommendations. Publish, share and grow organically.">
-<link rel="canonical" href="https://allarbaa.cloud/">
-<meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="googlebot" content="index,follow">
-<meta name="bingbot" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Allarbaa.cloud">
-<meta property="og:title" content="Allarbaa.cloud | Blog & Book Publishing">
-<meta property="og:description" content="Tech blogging, insightful articles, and digital books in one place.">
-<meta property="og:url" content="https://allarbaa.cloud/">
-<meta name="twitter:card" content="summary">
-<!--SEO_HEAD_END-->
-<link rel="alternate" type="application/rss+xml" title="Allarbaa.cloud" href="/feed.xml">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 124 88'%3E%3Cg fill='%235cb8ff'%3E%3Ccircle cx='40' cy='54' r='18'/%3E%3Ccircle cx='62' cy='40' r='24'/%3E%3Ccircle cx='84' cy='54' r='17'/%3E%3Crect x='40' y='54' width='44' height='18'/%3E%3C/g%3E%3C/svg%3E">
-<link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#07152b; --bg2:#0b1f3a; --card:rgba(255,255,255,.06); --line:rgba(255,255,255,.11);
-  --txt:#eef6ff; --mut:#9bb7e5; --acc:#3b9cff; --acc2:#6ee7ff; --warm:#ff9f1a;
-  --ui:'Inter','Noto Sans Arabic',system-ui,-apple-system,Segoe UI,Arial,sans-serif;
-  --ser:'Source Serif 4','Noto Sans Arabic',Georgia,'Times New Roman',serif;
-}
-*{box-sizing:border-box}
-[hidden]{display:none!important}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:var(--ui);color:var(--txt);line-height:1.6;
-  background:radial-gradient(900px 500px at 50% -80px,rgba(59,156,255,.28),transparent 65%),linear-gradient(180deg,var(--bg2),var(--bg)) fixed;
-  min-height:100vh;overflow-x:hidden}
-a{color:var(--acc2)}
-img{max-width:100%}
-:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
-section{scroll-margin-top:76px}
-
-/* header */
-.top{position:sticky;top:0;z-index:20;background:rgba(7,21,43,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;gap:14px;height:60px}
-.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--txt);font-weight:700;letter-spacing:-.3px;flex:none}
-.brand svg, .brand img{width:34px;height:25px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(110,231,255,.6))}
-nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-nav a{color:var(--mut);text-decoration:none;padding:8px 12px;border-radius:10px;font-size:.92rem;white-space:nowrap}
-nav a:hover{color:var(--txt);background:var(--card)}
-select{background:#0f2a52;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:.88rem}
-
-/* hero */
-.hero{text-align:center;padding:52px 0 34px}
-.logo-ring{width:156px;height:156px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;overflow:hidden;
-  background:radial-gradient(circle at 30% 22%,#1b4478,#0a1c38 70%);border:2px solid rgba(110,231,255,.55);
-  box-shadow:0 0 0 9px rgba(59,156,255,.09),0 0 60px rgba(59,156,255,.5),inset 0 0 28px rgba(110,231,255,.18);
-  animation:bob 6s ease-in-out infinite}
-.logo-ring svg{width:104px;height:74px;filter:drop-shadow(0 0 14px rgba(110,231,255,.85))}
-.logo-ring img{width:100%;height:100%;object-fit:cover}
-@keyframes bob{50%{transform:translateY(-7px)}}
-.hero h1{font-family:var(--ser);font-size:clamp(2.3rem,7vw,3.6rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;
-  background:linear-gradient(90deg,#fff,#8fd3ff 60%,#6ee7ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.sub{color:var(--acc2);font-weight:600;margin:0 0 12px}
-.lead{max-width:560px;margin:0 auto 24px;color:var(--mut);font-size:1.05rem}
-.btn{display:inline-block;border:0;border-radius:12px;padding:12px 20px;font:inherit;font-weight:600;color:#04101f;cursor:pointer;text-decoration:none;
-  background:linear-gradient(135deg,#7fd6ff,#3b9cff)}
-.btn:hover{filter:brightness(1.08)}
-.btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
-.btn.danger{background:#ff5d6c;color:#fff}
-.btn.sm{padding:7px 12px;font-size:.85rem;border-radius:9px}
-.btn:disabled{opacity:.55;cursor:wait}
-
-/* blocks */
-h2.sec{font-family:var(--ser);font-size:1.7rem;margin:0 0 16px;letter-spacing:-.01em}
-.block{padding:30px 0}
-.stores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
-.store{display:block;text-align:center;text-decoration:none;color:#0b1f3a;background:#fff;font-weight:700;padding:14px;border-radius:14px}
-.store:hover{transform:translateY(-2px)}
-.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-.tabs button{background:var(--card);border:1px solid var(--line);color:var(--mut);padding:8px 16px;border-radius:999px;font:inherit;cursor:pointer}
-.tabs button.on{background:var(--acc);color:#04101f;border-color:var(--acc);font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
-.pc{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
-.pimg{display:block;aspect-ratio:16/10;background:#0a1c38}
-.pimg img{width:100%;height:100%;object-fit:cover;display:block}
-.pb{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.pb h3{font-family:var(--ser);font-size:1.22rem;line-height:1.25;margin:0}
-.pb h3 a{color:var(--txt);text-decoration:none}
-.pb p{margin:0;color:var(--mut);font-size:.94rem}
-.pm{display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:.85rem;color:var(--mut)}
-.more{font-weight:600}
-.pa{display:flex;gap:8px;padding-top:8px;border-top:1px solid var(--line)}
-.badge{align-self:flex-start;font-size:.78rem;font-weight:600;color:var(--acc2);border:1px solid rgba(110,231,255,.4);border-radius:999px;padding:2px 10px}
-.mut{color:var(--mut)}
-
-/* link in bio */
-.bio{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
-.bio a{display:block;text-align:center;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);padding:14px;border-radius:14px;font-weight:600}
-.bio a:hover{border-color:var(--acc2)}
-
-/* text sections */
-.text{max-width:720px}
-.text h3{font-family:var(--ser);font-size:1.15rem;margin:22px 0 4px;color:#fff}
-.text p{margin:0 0 6px;color:#cfe0f7;font-family:var(--ser);font-size:1.05rem;line-height:1.75}
-.contact-list{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:8px}
-.contact-list a{color:var(--txt);font-weight:600}
-details.pol{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;max-width:760px}
-details.pol summary{cursor:pointer;font-family:var(--ser);font-size:1.25rem;font-weight:600}
-
-/* post page */
-.article{max-width:720px;margin:0 auto;padding:30px 18px 50px}
-.article h1{font-family:var(--ser);font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.15;margin:12px 0 6px;letter-spacing:-.01em}
-.meta{color:var(--mut);font-size:.9rem;margin-bottom:18px}
-.gallery{display:grid;gap:10px;margin:0 0 20px}
-.gallery img{width:100%;border-radius:14px;display:block}
-.prose{font-family:var(--ser);font-size:1.13rem;line-height:1.85;color:#e3eefc}
-.prose p{margin:0 0 1.1em}
-.prose h3{font-size:1.35rem;margin:1.5em 0 .5em}
-.aff-btn{display:inline-block;background:linear-gradient(135deg,#ffb733,#ff8a00);color:#1b1000!important;font-family:var(--ui);font-weight:700;text-decoration:none;padding:12px 20px;border-radius:12px;box-shadow:0 6px 18px rgba(255,138,0,.28)}
-.aff-btn:hover{filter:brightness(1.07)}
-.code-btn{display:inline-block;background:linear-gradient(135deg,#3b9cff,#6ee7ff);color:#04101f!important;font-family:var(--ui);font-weight:700;text-decoration:none;padding:10px 16px;border-radius:10px;margin:10px 0}
-.code-btn:hover{filter:brightness(1.08)}
-.back{display:inline-block;color:var(--mut);text-decoration:none;font-size:.92rem}
-#ssr article{max-width:720px;margin:0 auto;padding:30px 18px;font-family:var(--ser)}
-
-/* footer */
-footer{margin-top:30px;border-top:1px solid var(--line);padding:28px 0 40px;text-align:center;color:var(--mut);font-size:.88rem}
-footer .fl{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}
-footer .fl a{color:var(--mut)}
-.disc{max-width:640px;margin:0 auto 10px}
-.adm{background:none;border:0;color:var(--mut);opacity:.4;font:inherit;font-size:.82rem;cursor:pointer;text-decoration:none;padding:4px 8px;border-radius:6px}
-.adm:hover{opacity:1;background:var(--card)}
-
-/* admin */
-.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:18px}
-.panel h3{margin:0 0 12px;font-family:var(--ser);font-size:1.25rem}
-label{display:block;font-size:.85rem;color:var(--mut);margin:10px 0 4px}
-input[type=text],input[type=password],input[type=url],input[type=email],textarea,select.fld{width:100%;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit;font-size:.95rem}
-textarea{min-height:190px;resize:vertical}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.aff{background:rgba(255,159,26,.08);border:1px dashed rgba(255,159,26,.5);border-radius:12px;padding:12px;margin-top:12px}
-.aff strong{color:var(--warm)}
-.prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center;color:var(--mut);font-size:.88rem}
-.prev img{width:76px;height:76px;object-fit:cover;border-radius:10px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal{position:fixed;inset:0;background:rgba(3,10,22,.75);display:flex;align-items:center;justify-content:center;z-index:50;padding:18px}
-.mbox{background:#0d2447;border:1px solid var(--line);border-radius:18px;padding:20px;width:100%;max-width:340px}
-.mbox h3{margin:0 0 10px;font-family:var(--ser)}
-.err{color:#ff8b95;font-size:.88rem;margin:8px 0 0}
-.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#e9f6ff;color:#06182f;padding:11px 18px;border-radius:12px;font-weight:600;z-index:60;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:90vw}
-
-.langs{display:flex;gap:4px;flex:none}
-.langs button{background:var(--card);color:var(--mut);border:1px solid var(--line);border-radius:9px;padding:6px 9px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
-.langs button.on{background:var(--acc);color:#04101f;border-color:var(--acc)}
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
-.tile{position:relative;display:block;border-radius:18px;overflow:hidden;aspect-ratio:16/10;text-decoration:none;color:#fff;border:1px solid var(--line);background:#0a1c38}
-.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
-.tile:hover img{transform:scale(1.04)}
-.tile .cap{position:absolute;left:0;right:0;bottom:0;padding:16px;background:linear-gradient(180deg,transparent,rgba(3,10,22,.88))}
-.tile .cap b{display:block;font-family:var(--ser);font-size:1.35rem}
-.tile .cap span{font-size:.88rem;color:#cfe0f7}
-.store img{display:block;height:46px;max-width:100%;object-fit:contain;margin:0 auto 6px}
-.price{color:var(--acc2);font-weight:700}
-.aff-btn.cta{text-align:center;margin-top:auto}
-.mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
-.mrow>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.acts{display:flex;gap:8px;flex:none}
-.storebox{border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}
-.hint{font-size:.82rem;margin:6px 0 0}
-details.aff summary{cursor:pointer;color:var(--warm);font-weight:600}
-.head-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
-
-.search{width:100%;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit;font-size:.95rem;margin-bottom:14px}
-.share{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-family:var(--ui)}
-.share a{text-decoration:none}
-.follow{max-width:540px;text-align:center}
-.fform{display:flex;gap:8px}
-.fform input{flex:1;min-width:0;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit}
-.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.float{position:fixed;right:16px;z-index:30;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-.wa-wrap{bottom:16px}
-.top-wrap{bottom:82px}
-.fab{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:0;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);color:#fff;font-size:22px}
-.fab.wa{background:#25D366}
-.fab.top{background:#1a73e8;opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
-.fab.top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
-.wa-menu{background:#0d2447;border:1px solid var(--line);border-radius:14px;padding:8px;display:none;flex-direction:column;gap:6px;min-width:190px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-.wa-menu.show{display:flex}
-.wa-menu a{display:flex;align-items:center;gap:8px;color:var(--txt);text-decoration:none;padding:9px 10px;border-radius:9px;font-size:.9rem}
-.wa-menu a:hover{background:rgba(255,255,255,.06)}
-.cookie{position:fixed;left:14px;right:14px;bottom:14px;z-index:40;background:#0d2447;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 10px 30px rgba(0,0,0,.45)}
-.cookie p{margin:0;flex:1;min-width:220px;font-size:.88rem;color:var(--mut)}
-.views{color:var(--mut);font-size:.85rem}
-.pageed{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px}
-.payed{display:grid;grid-template-columns:120px 1fr auto;gap:8px;align-items:center;margin-top:8px}
-@media(max-width:560px){.payed{grid-template-columns:1fr}}
-.pageed .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:var(--mut);font-size:.85rem}
-.pageed textarea{min-height:110px}
-.reader{max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}
-.reader-nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
-.reader-nav span{color:var(--mut);font-size:.88rem}
-.gate{max-width:480px;margin:0 auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}
-.gate input{margin:14px 0}
-.pay{background:rgba(255,159,26,.08);border:1px dashed rgba(255,159,26,.5);border-radius:14px;padding:14px;margin:14px 0;text-align:left}
-.pay summary{cursor:pointer;color:var(--warm);font-weight:700;list-style:revert}
-.pay .payrow{margin-top:10px}
-.comments{max-width:720px;margin:30px auto 0}
-.c-item{border-top:1px solid var(--line);padding:12px 0}
-.c-item b{color:var(--acc2)}
-.c-item .cd{color:var(--mut);font-size:.78rem}
-.c-form textarea{min-height:80px}
-.save-btn{background:none;border:1px solid var(--line);color:var(--mut);border-radius:9px;padding:6px 10px;font:inherit;font-size:.8rem;cursor:pointer}
-.save-btn.on{color:var(--warm);border-color:var(--warm)}
-@media(max-width:560px){.two{grid-template-columns:1fr}.hero{padding-top:36px}.brand span{display:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
-</style>
+<meta name=description content="Allarbaa.cloud: Tech blogging, digital articles, and book publishing with honest product recommendations. Publish, share and grow organically.">
+<link rel=canonical href=https://allarbaa.cloud/ >
+<meta name=robots content=index,follow,max-image-preview:large>
+<meta name=googlebot content=index,follow>
+<meta name=bingbot content=index,follow>
+<meta property=og:type content=website>
+<meta property=og:site_name content=Allarbaa.cloud>
+<meta property=og:title content="Allarbaa.cloud | Blog & Book Publishing">
+<meta property=og:description content="Tech blogging, insightful articles, and digital books in one place.">
+<meta property=og:url content=https://allarbaa.cloud/ >
+<meta name=twitter:card content=summary>
+<link rel=alternate type=application/rss+xml title=Allarbaa.cloud href=/feed.xml>
+<link rel=icon href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 124 88'%3E%3Cg fill='%235cb8ff'%3E%3Ccircle cx='40' cy='54' r='18'/%3E%3Ccircle cx='62' cy='40' r='24'/%3E%3Ccircle cx='84' cy='54' r='17'/%3E%3Crect x='40' y='54' width='44' height='18'/%3E%3C/g%3E%3C/svg%3E">
+<link rel=manifest href=/manifest.json>
+<link rel=apple-touch-icon href=/icon-192.png>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel=stylesheet>
+<style>:root{--bg:#07152b;--bg2:#0b1f3a;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.11);--txt:#eef6ff;--mut:#9bb7e5;--acc:#3b9cff;--acc2:#6ee7ff;--warm:#ff9f1a;--ui:'Inter','Noto Sans Arabic',system-ui,-apple-system,Segoe UI,Arial,sans-serif;--ser:'Source Serif 4','Noto Sans Arabic',Georgia,'Times New Roman',serif}*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth}body{margin:0;font-family:var(--ui);color:var(--txt);line-height:1.6;background:radial-gradient(900px 500px at 50% -80px,rgba(59,156,255,.28),transparent 65%),linear-gradient(180deg,var(--bg2),var(--bg)) fixed;min-height:100vh;overflow-x:hidden}a{color:var(--acc2)}img{max-width:100%}:focus-visible{outline:2px solid var(--acc2);outline-offset:2px}.wrap{max-width:1120px;margin:0 auto;padding:0 18px}section{scroll-margin-top:76px}.top{position:sticky;top:0;z-index:20;background:rgba(7,21,43,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.top .wrap{display:flex;align-items:center;gap:14px;height:60px}.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--txt);font-weight:700;letter-spacing:-.3px;flex:none}.brand img,.brand svg{width:34px;height:25px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(110,231,255,.6))}nav{display:flex;gap:4px;overflow-x:auto;flex:1;scrollbar-width:none}nav::-webkit-scrollbar{display:none}nav a{color:var(--mut);text-decoration:none;padding:8px 12px;border-radius:10px;font-size:.92rem;white-space:nowrap}nav a:hover{color:var(--txt);background:var(--card)}select{background:#0f2a52;color:var(--txt);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:.88rem}.hero{text-align:center;padding:52px 0 34px}.logo-ring{width:156px;height:156px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:radial-gradient(circle at 30% 22%,#1b4478,#0a1c38 70%);border:2px solid rgba(110,231,255,.55);box-shadow:0 0 0 9px rgba(59,156,255,.09),0 0 60px rgba(59,156,255,.5),inset 0 0 28px rgba(110,231,255,.18);animation:bob 6s ease-in-out infinite}.logo-ring svg{width:104px;height:74px;filter:drop-shadow(0 0 14px rgba(110,231,255,.85))}.logo-ring img{width:100%;height:100%;object-fit:cover}@keyframes bob{50%{transform:translateY(-7px)}}.hero h1{font-family:var(--ser);font-size:clamp(2.3rem,7vw,3.6rem);line-height:1.05;margin:0 0 10px;letter-spacing:-.02em;background:linear-gradient(90deg,#fff,#8fd3ff 60%,#6ee7ff);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}.sub{color:var(--acc2);font-weight:600;margin:0 0 12px}.lead{max-width:560px;margin:0 auto 24px;color:var(--mut);font-size:1.05rem}.btn{display:inline-block;border:0;border-radius:12px;padding:12px 20px;font:inherit;font-weight:600;color:#04101f;cursor:pointer;text-decoration:none;background:linear-gradient(135deg,#7fd6ff,#3b9cff)}.btn:hover{filter:brightness(1.08)}.btn.ghost{background:0 0;color:var(--txt);border:1px solid var(--line)}.btn.danger{background:#ff5d6c;color:#fff}.btn.sm{padding:7px 12px;font-size:.85rem;border-radius:9px}.btn:disabled{opacity:.55;cursor:wait}h2.sec{font-family:var(--ser);font-size:1.7rem;margin:0 0 16px;letter-spacing:-.01em}.block{padding:30px 0}.stores{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.store{display:block;text-align:center;text-decoration:none;color:#0b1f3a;background:#fff;font-weight:700;padding:14px;border-radius:14px}.store:hover{transform:translateY(-2px)}.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tabs button{background:var(--card);border:1px solid var(--line);color:var(--mut);padding:8px 16px;border-radius:999px;font:inherit;cursor:pointer}.tabs button.on{background:var(--acc);color:#04101f;border-color:var(--acc);font-weight:600}.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}.pc{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}.pimg{display:block;aspect-ratio:16/10;background:#0a1c38}.pimg img{width:100%;height:100%;object-fit:cover;display:block}.pb{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}.pb h3{font-family:var(--ser);font-size:1.22rem;line-height:1.25;margin:0}.pb h3 a{color:var(--txt);text-decoration:none}.pb p{margin:0;color:var(--mut);font-size:.94rem}.pm{display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:.85rem;color:var(--mut)}.more{font-weight:600}.pa{display:flex;gap:8px;padding-top:8px;border-top:1px solid var(--line)}.badge{align-self:flex-start;font-size:.78rem;font-weight:600;color:var(--acc2);border:1px solid rgba(110,231,255,.4);border-radius:999px;padding:2px 10px}.mut{color:var(--mut)}.bio{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:10px}.bio a{display:block;text-align:center;text-decoration:none;color:var(--txt);background:var(--card);border:1px solid var(--line);padding:14px;border-radius:14px;font-weight:600}.bio a:hover{border-color:var(--acc2)}.text{max-width:720px}.text h3{font-family:var(--ser);font-size:1.15rem;margin:22px 0 4px;color:#fff}.text p{margin:0 0 6px;color:#cfe0f7;font-family:var(--ser);font-size:1.05rem;line-height:1.75}.contact-list{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:8px}.contact-list a{color:var(--txt);font-weight:600}details.pol{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;max-width:760px}details.pol summary{cursor:pointer;font-family:var(--ser);font-size:1.25rem;font-weight:600}.article{max-width:720px;margin:0 auto;padding:30px 18px 50px}.article h1{font-family:var(--ser);font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.15;margin:12px 0 6px;letter-spacing:-.01em}.meta{color:var(--mut);font-size:.9rem;margin-bottom:18px}.gallery{display:grid;gap:10px;margin:0 0 20px}.gallery img{width:100%;border-radius:14px;display:block}.prose{font-family:var(--ser);font-size:1.13rem;line-height:1.85;color:#e3eefc}.prose p{margin:0 0 1.1em}.prose h3{font-size:1.35rem;margin:1.5em 0 .5em}.aff-btn{display:inline-block;background:linear-gradient(135deg,#ffb733,#ff8a00);color:#1b1000!important;font-family:var(--ui);font-weight:700;text-decoration:none;padding:12px 20px;border-radius:12px;box-shadow:0 6px 18px rgba(255,138,0,.28)}.aff-btn:hover{filter:brightness(1.07)}.code-btn{display:inline-block;background:linear-gradient(135deg,#3b9cff,#6ee7ff);color:#04101f!important;font-family:var(--ui);font-weight:700;text-decoration:none;padding:10px 16px;border-radius:10px;margin:10px 0}.code-btn:hover{filter:brightness(1.08)}.back{display:inline-block;color:var(--mut);text-decoration:none;font-size:.92rem}#ssr article{max-width:720px;margin:0 auto;padding:30px 18px;font-family:var(--ser)}footer{margin-top:30px;border-top:1px solid var(--line);padding:28px 0 40px;text-align:center;color:var(--mut);font-size:.88rem}footer .fl{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:12px}footer .fl a{color:var(--mut)}.disc{max-width:640px;margin:0 auto 10px}.adm{background:0 0;border:0;color:var(--mut);opacity:.4;font:inherit;font-size:.82rem;cursor:pointer;text-decoration:none;padding:4px 8px;border-radius:6px}.adm:hover{opacity:1;background:var(--card)}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:18px}.panel h3{margin:0 0 12px;font-family:var(--ser);font-size:1.25rem}label{display:block;font-size:.85rem;color:var(--mut);margin:10px 0 4px}input[type=email],input[type=password],input[type=text],input[type=url],select.fld,textarea{width:100%;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit;font-size:.95rem}textarea{min-height:190px;resize:vertical}.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.aff{background:rgba(255,159,26,.08);border:1px dashed rgba(255,159,26,.5);border-radius:12px;padding:12px;margin-top:12px}.aff strong{color:var(--warm)}.prev{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center;color:var(--mut);font-size:.88rem}.prev img{width:76px;height:76px;object-fit:cover;border-radius:10px}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.modal{position:fixed;inset:0;background:rgba(3,10,22,.75);display:flex;align-items:center;justify-content:center;z-index:50;padding:18px}.mbox{background:#0d2447;border:1px solid var(--line);border-radius:18px;padding:20px;width:100%;max-width:340px}.mbox h3{margin:0 0 10px;font-family:var(--ser)}.err{color:#ff8b95;font-size:.88rem;margin:8px 0 0}.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#e9f6ff;color:#06182f;padding:11px 18px;border-radius:12px;font-weight:600;z-index:60;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:90vw}.langs{display:flex;gap:4px;flex:none}.langs button{background:var(--card);color:var(--mut);border:1px solid var(--line);border-radius:9px;padding:6px 9px;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer}.langs button.on{background:var(--acc);color:#04101f;border-color:var(--acc)}.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}.tile{position:relative;display:block;border-radius:18px;overflow:hidden;aspect-ratio:16/10;text-decoration:none;color:#fff;border:1px solid var(--line);background:#0a1c38}.tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}.tile:hover img{transform:scale(1.04)}.tile .cap{position:absolute;left:0;right:0;bottom:0;padding:16px;background:linear-gradient(180deg,transparent,rgba(3,10,22,.88))}.tile .cap b{display:block;font-family:var(--ser);font-size:1.35rem}.tile .cap span{font-size:.88rem;color:#cfe0f7}.store img{display:block;height:46px;max-width:100%;object-fit:contain;margin:0 auto 6px}.price{color:var(--acc2);font-weight:700}.aff-btn.cta{text-align:center;margin-top:auto}.mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}.mrow>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}.acts{display:flex;gap:8px;flex:none}.storebox{border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}.hint{font-size:.82rem;margin:6px 0 0}details.aff summary{cursor:pointer;color:var(--warm);font-weight:600}.head-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}.search{width:100%;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit;font-size:.95rem;margin-bottom:14px}.share{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-family:var(--ui)}.share a{text-decoration:none}.follow{max-width:540px;text-align:center}.fform{display:flex;gap:8px}.fform input{flex:1;min-width:0;background:#0b2144;color:var(--txt);border:1px solid #27467a;border-radius:11px;padding:11px 12px;font:inherit}.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}.float{position:fixed;right:16px;z-index:30;display:flex;flex-direction:column;align-items:flex-end;gap:10px}.wa-wrap{bottom:16px}.top-wrap{bottom:82px}.fab{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:0;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.4);color:#fff;font-size:22px}.fab.wa{background:#25d366}.fab.top{background:#1a73e8;opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}.fab.top.show{opacity:1;pointer-events:auto;transform:translateY(0)}.wa-menu{background:#0d2447;border:1px solid var(--line);border-radius:14px;padding:8px;display:none;flex-direction:column;gap:6px;min-width:190px;box-shadow:0 10px 30px rgba(0,0,0,.4)}.wa-menu.show{display:flex}.wa-menu a{display:flex;align-items:center;gap:8px;color:var(--txt);text-decoration:none;padding:9px 10px;border-radius:9px;font-size:.9rem}.wa-menu a:hover{background:rgba(255,255,255,.06)}.cookie{position:fixed;left:14px;right:14px;bottom:14px;z-index:40;background:#0d2447;border:1px solid var(--line);border-radius:16px;padding:16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;box-shadow:0 10px 30px rgba(0,0,0,.45)}.cookie p{margin:0;flex:1;min-width:220px;font-size:.88rem;color:var(--mut)}.views{color:var(--mut);font-size:.85rem}.pageed{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px}.payed{display:grid;grid-template-columns:120px 1fr auto;gap:8px;align-items:center;margin-top:8px}@media(max-width:560px){.payed{grid-template-columns:1fr}}.pageed .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;color:var(--mut);font-size:.85rem}.pageed textarea{min-height:110px}.reader{max-width:720px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px}.reader-nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}.reader-nav span{color:var(--mut);font-size:.88rem}.gate{max-width:480px;margin:0 auto;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px}.gate input{margin:14px 0}.pay{background:rgba(255,159,26,.08);border:1px dashed rgba(255,159,26,.5);border-radius:14px;padding:14px;margin:14px 0;text-align:left}.pay summary{cursor:pointer;color:var(--warm);font-weight:700;list-style:revert}.pay .payrow{margin-top:10px}.comments{max-width:720px;margin:30px auto 0}.c-item{border-top:1px solid var(--line);padding:12px 0}.c-item b{color:var(--acc2)}.c-item .cd{color:var(--mut);font-size:.78rem}.c-form textarea{min-height:80px}.save-btn{background:0 0;border:1px solid var(--line);color:var(--mut);border-radius:9px;padding:6px 10px;font:inherit;font-size:.8rem;cursor:pointer}.save-btn.on{color:var(--warm);border-color:var(--warm)}@media(max-width:560px){.two{grid-template-columns:1fr}.hero{padding-top:36px}.brand span{display:none}}@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important;transition:none!important}}</style>
 <script src="/_aistudio-iframe.js?v=2c34bde1"></script></head>
 <body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWPRQRLR"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4f5ff"/><stop offset=".5" stop-color="#5cb8ff"/><stop offset="1" stop-color="#5b6cff"/></linearGradient>
-<symbol id="cloud" viewBox="0 0 124 88">
-  <g fill="url(#cg)"><circle cx="40" cy="54" r="18"/><circle cx="62" cy="40" r="24"/><circle cx="84" cy="54" r="17"/><rect x="40" y="54" width="44" height="18"/></g>
-  <ellipse cx="57" cy="27" rx="14" ry="6" fill="#fff" opacity=".4" transform="rotate(-22 57 27)"/>
-  <path d="M40 66h46" stroke="#fff" stroke-opacity=".28" stroke-width="2.5" stroke-linecap="round"/>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NWPRQRLR" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript>
+<svg width=0 height=0 style=position:absolute aria-hidden=true focusable=false><defs>
+<linearGradient id=cg x1=0 y1=0 x2=1 y2=1><stop offset=0 stop-color=#c4f5ff /><stop offset=.5 stop-color=#5cb8ff /><stop offset=1 stop-color=#5b6cff /></linearGradient>
+<symbol id=cloud viewBox="0 0 124 88">
+<g fill=url(#cg)><circle cx=40 cy=54 r=18 /><circle cx=62 cy=40 r=24 /><circle cx=84 cy=54 r=17 /><rect x=40 y=54 width=44 height=18 /></g>
+<ellipse cx=57 cy=27 rx=14 ry=6 fill=#fff opacity=.4 transform="rotate(-22 57 27)"/>
+<path d="M40 66h46" stroke=#fff stroke-opacity=.28 stroke-width=2.5 stroke-linecap=round />
 </symbol></defs></svg>
-
-<header class="top"><div class="wrap">
-  <a class="brand" href="/" id="headerBrand">
-    <img id="navLogoImg" src="/logo.png" alt="Allarbaa.cloud" style="display:none" onerror="this.style.display='none'">
-    <svg id="navCloudSvg" viewBox="0 0 124 88" aria-hidden="true"><use href="#cloud" width="124" height="88"/></svg>
-    <span>allarbaa.cloud</span>
-  </a>
-  <nav>
-    <a href="/#top" data-i="nav_home">Home</a>
-    <a href="/#posts" data-i="nav_posts">Posts</a>
-    <a href="/#about" data-i="nav_about">About</a>
-    <a href="/#contact" data-i="nav_contact">Contact</a>
-  </nav>
-  <div class="langs" id="langs"><button type="button" data-l="en" title="English">EN</button><button type="button" data-l="ha" title="Hausa">HA</button><button type="button" data-l="ar" title="العربية">AR</button></div>
+<header class=top><div class=wrap>
+<a class=brand href=/ id=headerBrand>
+<img id=navLogoImg src=/logo.png alt=Allarbaa.cloud style=display:none onerror='this.style.display="none"'>
+<svg id=navCloudSvg viewBox="0 0 124 88" aria-hidden=true><use href=#cloud width=124 height=88 /></svg>
+<span>allarbaa.cloud</span>
+</a>
+<nav>
+<a href=/#top data-i=nav_home>Home</a>
+<a href=/#posts data-i=nav_posts>Posts</a>
+<a href=/#about data-i=nav_about>About</a>
+<a href=/#contact data-i=nav_contact>Contact</a>
+</nav>
+<div class=langs id=langs><button type=button data-l=en title=English>EN</button><button type=button data-l=ha title=Hausa>HA</button><button type=button data-l=ar title=العربية>AR</button></div>
 </div></header>
-
-<div id="ssr"><!--SEO_BODY--></div>
-
-<main id="home">
-  <section class="hero" id="top"><div class="wrap">
-    <div class="logo-ring">
-      <img id="logoImg" src="/logo.png" alt="Allarbaa.cloud logo" style="display:none" onload="this.style.display='block';document.getElementById('cloudSvg').style.display='none'" onerror="this.style.display='none'">
-      <svg id="cloudSvg" viewBox="0 0 124 88" role="img" aria-label="Allarbaa.cloud"><use href="#cloud" width="124" height="88"/></svg>
-    </div>
-    <h1>allarbaa.cloud</h1>
-    <p class="sub" data-i="sub">Publish • Share • Earn • Grow Organically</p>
-    <p class="lead" data-i="hero">Tech blogging, insightful articles, and digital books in one place.</p>
-    <a class="btn" href="#posts" data-i="cta">Read the latest</a>
-    <div class="share site-share" id="siteShare" style="justify-content:center;margin-top:18px"></div>
-  </div></section>
-
-  <section class="block" id="trendingBlock" hidden><div class="wrap">
-    <h2 class="sec" data-i="trending">Trending</h2>
-    <div class="grid" id="trendingGrid"></div>
-  </div></section>
-
-  <section class="block" id="posts"><div class="wrap">
-    <h2 class="sec" data-i="latest">Latest Posts</h2>
-    <input type="search" id="q" class="search" data-ph="search" autocomplete="off">
-    <div class="tabs" id="tabs">
-      <button class="on" data-f="all" data-i="all">All</button>
-      <button data-f="blog" data-i="blog">Blog</button>
-      <button data-f="book" data-i="book">Books</button>
-    </div>
-    <div class="grid" id="postGrid"></div>
-  </div></section>
-
-  <section class="block" id="supportCta" hidden><div class="wrap">
-    <div class="pay" style="max-width:640px;margin:0 auto"><b data-i="support_t">Support this work</b>
-      <p class="mut" style="margin:6px 0" data-i="support_p"></p>
-      <div class="row" id="supportLinks"></div>
-    </div>
-  </div></section>
-
-  <section class="block" id="tilesBlock"><div class="wrap"><div class="tiles">
-    <a class="tile" href="#posts" data-f="book"><img id="tile0" alt=""><div class="cap"><b data-i="tk_t">Books</b><span data-i="tk_s"></span></div></a>
-    <a class="tile" href="#shop"><img id="tile1" alt=""><div class="cap"><b data-i="ts_t">Products</b><span data-i="ts_s"></span></div></a>
-  </div></div></section>
-
-  <section class="block" id="storesBlock" hidden><div class="wrap">
-    <h2 class="sec" data-i="stores">Recommended Stores</h2>
-    <p class="mut" data-i="store_desc" style="margin:-6px 0 16px"></p>
-    <div class="stores" id="stores"></div>
-  </div></section>
-
-  <section class="block" id="shop" hidden><div class="wrap">
-    <h2 class="sec" data-i="shop">Recommended Products</h2>
-    <div class="grid" id="shopGrid"></div>
-  </div></section>
-
-  <section class="block" id="savedBlock" hidden><div class="wrap">
-    <h2 class="sec" data-i="saved_t">Saved for later</h2>
-    <div class="grid" id="savedGrid"></div>
-  </div></section>
-
-  <section class="block" id="follow"><div class="wrap follow">
-    <h2 class="sec" data-i="follow_t">Follow</h2>
-    <p class="mut" data-i="follow_p"></p>
-    <div class="fform"><input type="email" id="f-email" data-ph="f_ph" autocomplete="email"><button class="btn" type="button" id="f-btn" data-i="f_btn">Follow</button></div>
-    <input type="text" id="f-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <p class="mut" id="f-msg" style="min-height:1.5em;margin:10px 0 0"></p>
-  </div></section>
-
-  <section class="block" id="connectBlock" hidden><div class="wrap">
-    <h2 class="sec" style="text-align:center" data-i="connect">Connect With Me</h2>
-    <div class="bio" id="bio"></div>
-  </div></section>
-
-  <section class="block" id="about"><div class="wrap text">
-    <h2 class="sec" data-i="about_t">About</h2>
-    <div id="aboutBody"></div>
-  </div></section>
-
-  <section class="block" id="contact"><div class="wrap text">
-    <h2 class="sec" data-i="contact_t">Contact</h2>
-    <p data-i="contact_p"></p>
-    <ul class="contact-list" id="contactList"></ul>
-  </div></section>
-
-  <section class="block" id="privacy"><div class="wrap">
-    <details class="pol">
-      <summary data-i="priv_t">Privacy Policy</summary>
-      <div class="text" id="privBody"></div>
-      <p class="mut" data-i="updated"></p>
-    </details>
-  </div></section>
-
-  <section class="block" id="admin" hidden><div class="wrap">
-    <div class="head-row"><h2 class="sec" style="margin:0">Taska (Dashboard)</h2><button class="btn sm ghost" type="button" id="lockBtn">Rufe</button></div>
-    <p class="mut" id="siteStats" style="margin-top:-8px"></p>
-    <div class="tabs" id="atabs">
-      <button type="button" class="on" data-t="blog">Blog post</button>
-      <button type="button" data-t="book">Book</button>
-      <button type="button" data-t="product">Affiliate product</button>
-      <button type="button" data-t="links">Settings & Logo</button>
-      <button type="button" data-t="subs">Followers</button>
-      <button type="button" data-t="comments">Comments</button>
-      <button type="button" data-t="claims">Purchases</button>
-      <button type="button" data-t="code">Custom Code</button>
-    </div>
-
-    <div class="panel" id="tab-blog">
-      <h3 id="blog-h">New blog post</h3>
-      <label for="blog-title">Title</label>
-      <input type="text" id="blog-title" maxlength="200">
-      <label for="blog-link">Optional URL / External Link (optional)</label>
-      <input type="url" id="blog-link" placeholder="https://...">
-      <label for="blog-content">Content</label>
-      <textarea id="blog-content" placeholder="Write here. Leave a blank line between paragraphs. Use ## at the start of a line for a heading and **words** for bold."></textarea>
-      <details class="aff" style="margin-top:12px">
-        <summary>Add an affiliate button inside this post (optional)</summary>
-        <div class="two">
-          <div><label for="a-text">Text people will see</label><input type="text" id="a-text" placeholder="Buy on Jumia"></div>
-          <div><label for="a-url">Affiliate link</label><input type="text" id="a-url" placeholder="https://..."></div>
-        </div>
-        <div class="row">
-          <button class="btn sm" type="button" id="a-btn">Insert as button</button>
-          <button class="btn sm ghost" type="button" id="a-lnk">Insert as text link</button>
-        </div>
-        <p class="mut hint">The link stays hidden behind the text. Visitors never see the raw URL.</p>
-      </details>
-      <label for="blog-tags">Tags (comma separated, optional)</label>
-      <input type="text" id="blog-tags" placeholder="health, tech, money, blogging">
-      <label for="blog-imgs">Photos (optional, up to 4)</label>
-      <input type="file" id="blog-imgs" accept="image/*" multiple>
-      <div class="prev" id="blog-prev"></div>
-      <div class="row"><button class="btn" type="button" id="blog-save">Publish</button><button class="btn ghost" type="button" id="blog-cancel" hidden>Cancel edit</button></div>
-      <h3 style="margin-top:24px">Your blog posts</h3>
-      <div id="mgr-blog"></div>
-    </div>
-
-    <div class="panel" id="tab-book" hidden>
-      <h3 id="book-h">New book</h3>
-      <label for="book-title">Book title</label>
-      <input type="text" id="book-title" maxlength="200">
-      <label for="book-code-link">Code / Project / Resource Link (optional)</label>
-      <input type="url" id="book-code-link" placeholder="https://github.com/... or download link">
-      <label for="book-imgs">Book cover</label>
-      <input type="file" id="book-imgs" accept="image/*">
-      <div class="prev" id="book-prev"></div>
-      <label for="book-price">Price (leave empty for a free book)</label>
-      <input type="text" id="book-price" maxlength="40" placeholder="&#8358;2,000">
-      <label for="book-link">Payment link (optional — leave empty to show your bank account instead)</label>
-      <input type="text" id="book-link" placeholder="https://paystack.com/pay/...">
-      <label for="book-tags">Tags (comma separated, optional)</label>
-      <input type="text" id="book-tags" placeholder="tech, tutorial, novel, business">
-      <label>Pages</label>
-      <p class="mut hint" style="margin-top:0">Write your book one page at a time. Add as many pages as you need.</p>
-      <div id="book-pages"></div>
-      <div class="row"><button class="btn sm ghost" type="button" id="book-addpage">+ Add page</button></div>
-      <div class="row">
-        <button class="btn ghost" type="button" id="book-draft">Save as draft</button>
-        <button class="btn" type="button" id="book-save">Publish</button>
-        <button class="btn ghost" type="button" id="book-cancel" hidden>Cancel edit</button>
-      </div>
-      <h3 style="margin-top:24px">Your books</h3>
-      <div id="mgr-book"></div>
-    </div>
-
-    <div class="panel" id="tab-product" hidden>
-      <h3 id="product-h">New affiliate product</h3>
-      <label for="product-store">Store</label>
-      <select id="product-store" class="fld"><option value="amazon">Amazon</option><option value="jumia">Jumia</option><option value="konga">Konga</option><option value="other">Other store</option></select>
-      <label for="product-title">Product name</label>
-      <input type="text" id="product-title" maxlength="200">
-      <label for="product-link">Affiliate link</label>
-      <input type="text" id="product-link" placeholder="https://...">
-      <label for="product-price">Price (optional)</label>
-      <input type="text" id="product-price" maxlength="40" placeholder="&#8358;25,000">
-      <label for="product-content">Short description (optional)</label>
-      <textarea id="product-content" style="min-height:90px"></textarea>
-      <label for="product-imgs">Product picture (optional)</label>
-      <input type="file" id="product-imgs" accept="image/*">
-      <div class="prev" id="product-prev"></div>
-      <div class="row"><button class="btn" type="button" id="product-save">Publish</button><button class="btn ghost" type="button" id="product-cancel" hidden>Cancel edit</button></div>
-      <h3 style="margin-top:24px">Your products</h3>
-      <div id="mgr-product"></div>
-    </div>
-
-    <div class="panel" id="tab-subs" hidden>
-      <h3>Followers (<span id="subCount">0</span>)</h3>
-      <p class="mut hint" style="margin-top:0">People who followed with their email. To email them, press Copy all emails, open Gmail and paste them in the BCC box.</p>
-      <div class="row" style="margin-top:0"><button class="btn sm" type="button" id="subCopy">Copy all emails</button><button class="btn sm ghost" type="button" id="subRefresh">Refresh</button></div>
-      <div id="subList"></div>
-    </div>
-
-    <div class="panel" id="tab-comments" hidden>
-      <h3>Comments</h3>
-      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="cRefresh">Refresh</button></div>
-      <div id="cList"></div>
-    </div>
-
-    <div class="panel" id="tab-claims" hidden>
-      <h3>Pending purchases</h3>
-      <p class="mut hint" style="margin-top:0">Someone entered their email to read a paid book. Once you confirm the payment came in, press Approve.</p>
-      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="clRefresh">Refresh</button></div>
-      <div id="clList"></div>
-    </div>
-
-    <div class="panel" id="tab-code" hidden>
-      <h3>Custom Code</h3>
-      <p class="mut hint" style="margin-top:0">Paste snippets here — Google AdSense, verification tags, analytics, or any script or style you want on every page.</p>
-      <label for="cc-head">Head snippets (Google AdSense, meta tags, verification)</label>
-      <textarea id="cc-head" style="min-height:140px;font-family:monospace;font-size:.85rem" placeholder="&lt;script async src=&quot;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;"></textarea>
-      <label for="cc-css">Custom CSS</label>
-      <textarea id="cc-css" style="min-height:100px;font-family:monospace;font-size:.85rem" placeholder="body { }"></textarea>
-      <label for="cc-js">Custom JavaScript</label>
-      <textarea id="cc-js" style="min-height:100px;font-family:monospace;font-size:.85rem"></textarea>
-      <div class="row"><button class="btn" type="button" id="cc-save">Save custom code</button></div>
-    </div>
-
-    <div class="panel" id="tab-links" hidden>
-      <h3>Website Branding & Logo</h3>
-      <p class="mut hint" style="margin-top:0">Upload your custom picture/logo. It will instantly show on the website header and main hero circle.</p>
-      <label for="s-logo">Custom Logo Picture (PNG, JPG, WebP)</label>
-      <input type="file" id="s-logo" accept="image/*">
-      <div class="prev" id="s-logo-prev" style="margin:8px 0"></div>
-
-      <h3 style="margin-top:22px">Contact Information</h3>
-      <label for="s-email">Contact Email (shown in Contact & Privacy)</label>
-      <input type="email" id="s-email" placeholder="ticher218@gmail.com">
-      <label for="s-phones">Phone numbers (one number per line)</label>
-      <textarea id="s-phones" style="min-height:80px" placeholder="+2347069444260&#10;+2349017668973"></textarea>
-
-      <h3 style="margin-top:22px">Social links (link-in-bio)</h3>
-      <div class="two" id="setSocial"></div>
-
-      <h3 style="margin-top:22px">Stores</h3>
-      <div id="setStores"></div>
-
-      <h3 style="margin-top:22px">Author bio</h3>
-      <label for="s-authorbio">Shown at the end of your posts and books</label>
-      <textarea id="s-authorbio" style="min-height:70px" placeholder="Allarbaa.cloud: Tech blogging, stories, and book publishing."></textarea>
-
-      <h3 style="margin-top:22px">Buy Me a Coffee</h3>
-      <label for="s-coffee">Support link (Buy Me a Coffee, Paystack, etc. — optional)</label>
-      <input type="text" id="s-coffee" placeholder="https://buymeacoffee.com/yourname">
-
-      <h3 style="margin-top:22px">Ways to get paid (shown on paid books)</h3>
-      <div id="pay-methods"></div>
-      <div class="row" style="margin-top:0"><button class="btn sm ghost" type="button" id="pay-add">+ Add payment method</button></div>
-
-      <div class="row" style="margin-top:20px"><button class="btn" type="button" id="saveSet">Save and show on main page</button></div>
-    </div>
-  </div></section>
-</main>
-
-<main id="postView" hidden><div class="article" id="postBody"></div>
-  <div class="comments" id="commentsWrap" hidden>
-    <h2 class="sec" data-i="comments_t">Comments</h2>
-    <div id="cItems"></div>
-    <div class="c-form panel">
-      <label for="c-name" data-i="c_name">Your name (optional)</label>
-      <input type="text" id="c-name" maxlength="60">
-      <label for="c-text" data-i="c_text">Your comment</label>
-      <textarea id="c-text" maxlength="1000"></textarea>
-      <input type="text" id="c-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <div class="row"><button class="btn sm" type="button" id="c-send" data-i="c_send">Post comment</button></div>
-    </div>
-  </div>
-</main>
-
-<footer><div class="wrap">
-  <div class="fl">
-    <a href="/#posts" data-i="nav_posts">Posts</a>
-    <a href="/#about" data-i="nav_about">About</a>
-    <a href="/#contact" data-i="nav_contact">Contact</a>
-    <a href="/#privacy" data-i="priv_t">Privacy Policy</a>
-  </div>
-  <p class="row" id="coffeeRow" style="justify-content:center" hidden><a class="btn sm" id="coffeeLink" target="_blank" rel="noopener">☕ <span data-i="buyc">Buy me a coffee</span></a></p>
-  <p class="disc" data-i="disc"></p>
-  <p>&copy; <span id="yr">2026</span> Allarbaa.cloud. <span data-i="author">Author: Ticher</span> &middot; <button class="adm" id="admLink" type="button" title="Taska">●</button></p>
-</div></footer>
-
-<div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="mTitle">
-  <div class="mbox">
-    <h3 id="mTitle">Taska</h3>
-    <label for="pw">Kalmar Sirri (Password)</label>
-    <input type="password" id="pw" autocomplete="off" name="admin-key-0">
-    <div class="row"><button class="btn" type="button" id="pwOk">Buɗe</button><button class="btn ghost" type="button" id="pwNo">Soke</button></div>
-    <p class="err" id="pwErr"></p>
-  </div>
+<div id=ssr></div>
+<main id=home>
+<section class=hero id=top><div class=wrap>
+<div class=logo-ring>
+<img id=logoImg src=/logo.png alt="Allarbaa.cloud logo" style=display:none onload='this.style.display="block",document.getElementById("cloudSvg").style.display="none"' onerror='this.style.display="none"'>
+<svg id=cloudSvg viewBox="0 0 124 88" role=img aria-label=Allarbaa.cloud><use href=#cloud width=124 height=88 /></svg>
 </div>
-
+<h1>allarbaa.cloud</h1>
+<p class=sub data-i=sub>Publish • Share • Earn • Grow Organically</p>
+<p class=lead data-i=hero>Tech blogging, insightful articles, and digital books in one place.</p>
+<a class=btn href=#posts data-i=cta>Read the latest</a>
+<div class="share site-share" id=siteShare style=justify-content:center;margin-top:18px></div>
+</div></section>
+<section class=block id=trendingBlock hidden><div class=wrap>
+<h2 class=sec data-i=trending>Trending</h2>
+<div class=grid id=trendingGrid></div>
+</div></section>
+<section class=block id=posts><div class=wrap>
+<h2 class=sec data-i=latest>Latest Posts</h2>
+<input type=search id=q class=search data-ph=search autocomplete=off>
+<div class=tabs id=tabs>
+<button class=on data-f=all data-i=all>All</button>
+<button data-f=blog data-i=blog>Blog</button>
+<button data-f=book data-i=book>Books</button>
+</div>
+<div class=grid id=postGrid></div>
+</div></section>
+<section class=block id=supportCta hidden><div class=wrap>
+<div class=pay style="max-width:640px;margin:0 auto"><b data-i=support_t>Support this work</b>
+<p class=mut style="margin:6px 0" data-i=support_p></p>
+<div class=row id=supportLinks></div>
+</div>
+</div></section>
+<section class=block id=tilesBlock><div class=wrap><div class=tiles>
+<a class=tile href=#posts data-f=book><img id=tile0 alt=""><div class=cap><b data-i=tk_t>Books</b><span data-i=tk_s></span></div></a>
+<a class=tile href=#shop><img id=tile1 alt=""><div class=cap><b data-i=ts_t>Products</b><span data-i=ts_s></span></div></a>
+</div></div></section>
+<section class=block id=storesBlock hidden><div class=wrap>
+<h2 class=sec data-i=stores>Recommended Stores</h2>
+<p class=mut data-i=store_desc style="margin:-6px 0 16px"></p>
+<div class=stores id=stores></div>
+</div></section>
+<section class=block id=shop hidden><div class=wrap>
+<h2 class=sec data-i=shop>Recommended Products</h2>
+<div class=grid id=shopGrid></div>
+</div></section>
+<section class=block id=savedBlock hidden><div class=wrap>
+<h2 class=sec data-i=saved_t>Saved for later</h2>
+<div class=grid id=savedGrid></div>
+</div></section>
+<section class=block id=follow><div class="wrap follow">
+<h2 class=sec data-i=follow_t>Follow</h2>
+<p class=mut data-i=follow_p></p>
+<div class=fform><input type=email id=f-email data-ph=f_ph autocomplete=email><button class=btn type=button id=f-btn data-i=f_btn>Follow</button></div>
+<input id=f-hp class=hp tabindex=-1 autocomplete=off aria-hidden=true>
+<p class=mut id=f-msg style="min-height:1.5em;margin:10px 0 0"></p>
+</div></section>
+<section class=block id=connectBlock hidden><div class=wrap>
+<h2 class=sec style=text-align:center data-i=connect>Connect With Me</h2>
+<div class=bio id=bio></div>
+</div></section>
+<section class=block id=about><div class="wrap text">
+<h2 class=sec data-i=about_t>About</h2>
+<div id=aboutBody></div>
+</div></section>
+<section class=block id=contact><div class="wrap text">
+<h2 class=sec data-i=contact_t>Contact</h2>
+<p data-i=contact_p></p>
+<ul class=contact-list id=contactList></ul>
+</div></section>
+<section class=block id=privacy><div class=wrap>
+<details class=pol>
+<summary data-i=priv_t>Privacy Policy</summary>
+<div class=text id=privBody></div>
+<p class=mut data-i=updated></p>
+</details>
+</div></section>
+<section class=block id=admin hidden><div class=wrap>
+<div class=head-row><h2 class=sec style=margin:0>Taska (Dashboard)</h2><button class="btn sm ghost" type=button id=lockBtn>Rufe</button></div>
+<p class=mut id=siteStats style=margin-top:-8px></p>
+<div class=tabs id=atabs>
+<button type=button class=on data-t=blog>Blog post</button>
+<button type=button data-t=book>Book</button>
+<button type=button data-t=product>Affiliate product</button>
+<button type=button data-t=links>Settings & Logo</button>
+<button type=button data-t=subs>Followers</button>
+<button type=button data-t=comments>Comments</button>
+<button type=button data-t=claims>Purchases</button>
+<button type=button data-t=code>Custom Code</button>
+</div>
+<div class=panel id=tab-blog>
+<h3 id=blog-h>New blog post</h3>
+<label for=blog-title>Title</label>
+<input id=blog-title maxlength=200>
+<label for=blog-link>Optional URL / External Link (optional)</label>
+<input type=url id=blog-link placeholder=https://...>
+<label for=blog-content>Content</label>
+<textarea id=blog-content placeholder="Write here. Leave a blank line between paragraphs. Use ## at the start of a line for a heading and **words** for bold."></textarea>
+<details class=aff style=margin-top:12px>
+<summary>Add an affiliate button inside this post (optional)</summary>
+<div class=two>
+<div><label for=a-text>Text people will see</label><input id=a-text placeholder="Buy on Jumia"></div>
+<div><label for=a-url>Affiliate link</label><input id=a-url placeholder=https://...></div>
+</div>
+<div class=row>
+<button class="btn sm" type=button id=a-btn>Insert as button</button>
+<button class="btn sm ghost" type=button id=a-lnk>Insert as text link</button>
+</div>
+<p class="mut hint">The link stays hidden behind the text. Visitors never see the raw URL.</p>
+</details>
+<label for=blog-tags>Tags (comma separated, optional)</label>
+<input id=blog-tags placeholder="health, tech, money, blogging">
+<label for=blog-imgs>Photos (optional, up to 4)</label>
+<input type=file id=blog-imgs accept=image/* multiple>
+<div class=prev id=blog-prev></div>
+<div class=row><button class=btn type=button id=blog-save>Publish</button><button class="btn ghost" type=button id=blog-cancel hidden>Cancel edit</button></div>
+<h3 style=margin-top:24px>Your blog posts</h3>
+<div id=mgr-blog></div>
+</div>
+<div class=panel id=tab-book hidden>
+<h3 id=book-h>New book</h3>
+<label for=book-title>Book title</label>
+<input id=book-title maxlength=200>
+<label for=book-code-link>Code / Project / Resource Link (optional)</label>
+<input type=url id=book-code-link placeholder="https://github.com/... or download link">
+<label for=book-imgs>Book cover</label>
+<input type=file id=book-imgs accept=image/*>
+<div class=prev id=book-prev></div>
+<label for=book-price>Price (leave empty for a free book)</label>
+<input id=book-price maxlength=40 placeholder=&#8358;2,000>
+<label for=book-link>Payment link (optional — leave empty to show your bank account instead)</label>
+<input id=book-link placeholder=https://paystack.com/pay/...>
+<label for=book-tags>Tags (comma separated, optional)</label>
+<input id=book-tags placeholder="tech, tutorial, novel, business">
+<label>Pages</label>
+<p class="mut hint" style=margin-top:0>Write your book one page at a time. Add as many pages as you need.</p>
+<div id=book-pages></div>
+<div class=row><button class="btn sm ghost" type=button id=book-addpage>+ Add page</button></div>
+<div class=row>
+<button class="btn ghost" type=button id=book-draft>Save as draft</button>
+<button class=btn type=button id=book-save>Publish</button>
+<button class="btn ghost" type=button id=book-cancel hidden>Cancel edit</button>
+</div>
+<h3 style=margin-top:24px>Your books</h3>
+<div id=mgr-book></div>
+</div>
+<div class=panel id=tab-product hidden>
+<h3 id=product-h>New affiliate product</h3>
+<label for=product-store>Store</label>
+<select id=product-store class=fld><option value=amazon>Amazon</option><option value=jumia>Jumia</option><option value=konga>Konga</option><option value=other>Other store</option></select>
+<label for=product-title>Product name</label>
+<input id=product-title maxlength=200>
+<label for=product-link>Affiliate link</label>
+<input id=product-link placeholder=https://...>
+<label for=product-price>Price (optional)</label>
+<input id=product-price maxlength=40 placeholder=&#8358;25,000>
+<label for=product-content>Short description (optional)</label>
+<textarea id=product-content style=min-height:90px></textarea>
+<label for=product-imgs>Product picture (optional)</label>
+<input type=file id=product-imgs accept=image/*>
+<div class=prev id=product-prev></div>
+<div class=row><button class=btn type=button id=product-save>Publish</button><button class="btn ghost" type=button id=product-cancel hidden>Cancel edit</button></div>
+<h3 style=margin-top:24px>Your products</h3>
+<div id=mgr-product></div>
+</div>
+<div class=panel id=tab-subs hidden>
+<h3>Followers (<span id=subCount>0</span>)</h3>
+<p class="mut hint" style=margin-top:0>People who followed with their email. To email them, press Copy all emails, open Gmail and paste them in the BCC box.</p>
+<div class=row style=margin-top:0><button class="btn sm" type=button id=subCopy>Copy all emails</button><button class="btn sm ghost" type=button id=subRefresh>Refresh</button></div>
+<div id=subList></div>
+</div>
+<div class=panel id=tab-comments hidden>
+<h3>Comments</h3>
+<div class=row style=margin-top:0><button class="btn sm ghost" type=button id=cRefresh>Refresh</button></div>
+<div id=cList></div>
+</div>
+<div class=panel id=tab-claims hidden>
+<h3>Pending purchases</h3>
+<p class="mut hint" style=margin-top:0>Someone entered their email to read a paid book. Once you confirm the payment came in, press Approve.</p>
+<div class=row style=margin-top:0><button class="btn sm ghost" type=button id=clRefresh>Refresh</button></div>
+<div id=clList></div>
+</div>
+<div class=panel id=tab-code hidden>
+<h3>Custom Code</h3>
+<p class="mut hint" style=margin-top:0>Paste snippets here — Google AdSense, verification tags, analytics, or any script or style you want on every page.</p>
+<label for=cc-head>Head snippets (Google AdSense, meta tags, verification)</label>
+<textarea id=cc-head style=min-height:140px;font-family:monospace;font-size:.85rem placeholder="&lt;script async src=&quot;https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;"></textarea>
+<label for=cc-css>Custom CSS</label>
+<textarea id=cc-css style=min-height:100px;font-family:monospace;font-size:.85rem placeholder="body { }"></textarea>
+<label for=cc-js>Custom JavaScript</label>
+<textarea id=cc-js style=min-height:100px;font-family:monospace;font-size:.85rem></textarea>
+<div class=row><button class=btn type=button id=cc-save>Save custom code</button></div>
+</div>
+<div class=panel id=tab-links hidden>
+<h3>Website Branding & Logo</h3>
+<p class="mut hint" style=margin-top:0>Upload your custom picture/logo. It will instantly show on the website header and main hero circle.</p>
+<label for=s-logo>Custom Logo Picture (PNG, JPG, WebP)</label>
+<input type=file id=s-logo accept=image/*>
+<div class=prev id=s-logo-prev style="margin:8px 0"></div>
+<h3 style=margin-top:22px>Contact Information</h3>
+<label for=s-email>Contact Email (shown in Contact & Privacy)</label>
+<input type=email id=s-email placeholder=ticher218@gmail.com>
+<label for=s-phones>Phone numbers (one number per line)</label>
+<textarea id=s-phones style=min-height:80px placeholder=+2347069444260&#10;+2349017668973></textarea>
+<h3 style=margin-top:22px>Social links (link-in-bio)</h3>
+<div class=two id=setSocial></div>
+<h3 style=margin-top:22px>Stores</h3>
+<div id=setStores></div>
+<h3 style=margin-top:22px>Author bio</h3>
+<label for=s-authorbio>Shown at the end of your posts and books</label>
+<textarea id=s-authorbio style=min-height:70px placeholder="Allarbaa.cloud: Tech blogging, stories, and book publishing."></textarea>
+<h3 style=margin-top:22px>Buy Me a Coffee</h3>
+<label for=s-coffee>Support link (Buy Me a Coffee, Paystack, etc. — optional)</label>
+<input id=s-coffee placeholder=https://buymeacoffee.com/yourname>
+<h3 style=margin-top:22px>Ways to get paid (shown on paid books)</h3>
+<div id=pay-methods></div>
+<div class=row style=margin-top:0><button class="btn sm ghost" type=button id=pay-add>+ Add payment method</button></div>
+<div class=row style=margin-top:20px><button class=btn type=button id=saveSet>Save and show on main page</button></div>
+</div>
+</div></section>
+</main>
+<main id=postView hidden><div class=article id=postBody></div>
+<div class=comments id=commentsWrap hidden>
+<h2 class=sec data-i=comments_t>Comments</h2>
+<div id=cItems></div>
+<div class="c-form panel">
+<label for=c-name data-i=c_name>Your name (optional)</label>
+<input id=c-name maxlength=60>
+<label for=c-text data-i=c_text>Your comment</label>
+<textarea id=c-text maxlength=1000></textarea>
+<input id=c-hp class=hp tabindex=-1 autocomplete=off aria-hidden=true>
+<div class=row><button class="btn sm" type=button id=c-send data-i=c_send>Post comment</button></div>
+</div>
+</div>
+</main>
+<footer><div class=wrap>
+<div class=fl>
+<a href=/#posts data-i=nav_posts>Posts</a>
+<a href=/#about data-i=nav_about>About</a>
+<a href=/#contact data-i=nav_contact>Contact</a>
+<a href=/#privacy data-i=priv_t>Privacy Policy</a>
+</div>
+<p class=row id=coffeeRow style=justify-content:center hidden><a class="btn sm" id=coffeeLink target=_blank rel=noopener>☕ <span data-i=buyc>Buy me a coffee</span></a></p>
+<p class=disc data-i=disc></p>
+<p>&copy; <span id=yr>2026</span> Allarbaa.cloud. <span data-i=author>Author: Ticher</span> &middot; <button class=adm id=admLink type=button title=Taska>●</button></p>
+</div></footer>
+<div class=modal id=modal hidden role=dialog aria-modal=true aria-labelledby=mTitle>
+<div class=mbox>
+<h3 id=mTitle>Taska</h3>
+<label for=pw>Kalmar Sirri (Password)</label>
+<input type=password id=pw autocomplete=off name=admin-key-0>
+<div class=row><button class=btn type=button id=pwOk>Buɗe</button><button class="btn ghost" type=button id=pwNo>Soke</button></div>
+<p class=err id=pwErr></p>
+</div>
+</div>
 <div class="float wa-wrap">
-  <div class="wa-menu" id="waMenu"></div>
-  <button class="fab wa" id="waBtn" type="button" aria-label="WhatsApp" title="WhatsApp">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.7-.3-1.5-.8-2.1-1.5-.5-.6-.9-1.2-1-1.4-.1-.2 0-.4.1-.5l.4-.5c.1-.1.1-.3.1-.4 0-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.8 1.3-.8 2.1.1 1 .8 2 .9 2.1.1.2 1.9 3 4.7 4.1.7.3 1.2.4 1.6.5.7.2 1.3.2 1.7.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z"/></svg>
-  </button>
+<div class=wa-menu id=waMenu></div>
+<button class="fab wa" id=waBtn type=button aria-label=WhatsApp title=WhatsApp>
+<svg width=26 height=26 viewBox="0 0 24 24" fill=#fff><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Zm4.4-6c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.7-.3-1.5-.8-2.1-1.5-.5-.6-.9-1.2-1-1.4-.1-.2 0-.4.1-.5l.4-.5c.1-.1.1-.3.1-.4 0-.1-.5-1.3-.7-1.8-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.6.3-.6.6-.8 1.3-.8 2.1.1 1 .8 2 .9 2.1.1.2 1.9 3 4.7 4.1.7.3 1.2.4 1.6.5.7.2 1.3.2 1.7.1.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3Z"/></svg>
+</button>
 </div>
 <div class="float top-wrap">
-  <button class="fab top" id="topBtn" type="button" aria-label="Top" title="Top">&uarr;</button>
+<button class="fab top" id=topBtn type=button aria-label=Top title=Top>&uarr;</button>
 </div>
-<div class="cookie" id="cookieBar" hidden>
-  <p data-i="cookie_p"></p>
-  <button class="btn sm" type="button" id="cookieOk" data-i="cookie_ok">Got it</button>
+<div class=cookie id=cookieBar hidden>
+<p data-i=cookie_p></p>
+<button class="btn sm" type=button id=cookieOk data-i=cookie_ok>Got it</button>
 </div>
-<script id="app">
-(function(){
-'use strict';
-
-/* ---------- translations ---------- */
-var D={
-en:{
- nav_home:"Home",nav_posts:"Posts",nav_about:"About",nav_contact:"Contact",
- sub:"Publish • Share • Earn • Grow Organically",
- hero:"Tech blogging, insightful articles, and digital books, all in one place and easy to read on any device.",
- cta:"Read the latest",stores:"Recommended Stores",connect:"Connect With Me",latest:"Latest Posts",
- all:"All",blog:"Blog",book:"Books",bt:"Blog",bk:"Book",more:"Read more",none:"No posts yet.",
- back:"\u2190 Back to home",getbook:"Get the book",notfound:"This post could not be found.",
- about_t:"About",contact_t:"Contact",contact_p:"Questions, feedback or partnership ideas? Reach out.",
- email:"Email",phone:"Phone",priv_t:"Privacy Policy",updated:"Last updated: 2026",
- disc:"As an Amazon Associate I earn from qualifying purchases. Some links on this site are affiliate links; they cost you nothing extra.",
- author:"Author: Ticher",
- search:"Search posts",nores:"No posts match your search.",follow_t:"Follow and get new posts",follow_p:"Leave your email. No password and no account. Reading is always free.",f_ph:"Your email",f_btn:"Follow",f_ok:"Thank you! You are now following.",f_err:"Please enter a valid email.",share:"Share",copy:"Copy link",copied:"Link copied",
- tb_t:"Blog",tb_s:"Tech tips, programming & articles",tk_t:"Books",tk_s:"Read, download or buy",ts_t:"Products",ts_s:"Things worth buying",shop:"Recommended Products",buy:"Buy on",deal:"View deal",store_desc:"Curated stores and recommended products \u2014 click any link below.",cookie_p:"We use cookies for basic analytics and to remember your language.",cookie_ok:"Got it",views:"views",wa_chat:"Chat on WhatsApp",gate_t:"Enter your email to read",gate_p:"Free to read \u2014 we\u2019ll just email you when new books come out.",gate_btn:"Unlock and read",gate_err:"Please enter a valid email.",pay_bank:"Bank transfer",pay_ussd:"USSD code",pay_paypal:"PayPal",pay_stripe:"Card / Stripe",pay_wallet:"Crypto wallet",pay_other:"Other",buynow:"Buy now",gate_pending:"Thanks! Once your payment is confirmed, this book will unlock automatically the next time you open it \u2014 no need to pay again.",support_t:"Support this work",support_p:"If you\u2019ve enjoyed reading, you can support with a small donation.",page_of:"Page {n} of {t}",prev:"Previous",next:"Next",buyc:"Buy me a copy",pay_p:"Send payment to the account below, then message me a screenshot to receive the book.",acct:"Account",listen:"Listen",stop:"Stop",save:"Save for later",saved:"Saved",saved_t:"Saved for later",comments_t:"Comments",c_name:"Your name (optional)",c_text:"Your comment",c_send:"Post comment",c_none:"No comments yet. Be the first!",free:"Free",
- about:[["What you will find","Insightful tech articles, programming tutorials, guides on creating and hosting digital websites, rich educational books, and trusted product recommendations through affiliate links that support this platform."],
-  ["Why this website?","Allarbaa.cloud was built to make digital knowledge, books, and blogging accessible and permanent for everyone."],
-  ["The author","Allarbaa.cloud is created and published by Ticher, dedicated to open knowledge, tech sharing, and creative publishing."]],
- priv:[["Overview","Your privacy matters. This policy explains what information Allarbaa.cloud (allarbaa.cloud) collects, how it is used and the choices you have. By using this site you agree to this policy."],
-  ["Information we collect","We do not ask visitors to create accounts. We use standard privacy-respecting analytics to understand site visits. If you follow by email, we only use it to notify you about new posts, and you can unsubscribe at any time."],
-  ["Cookies","Analytics tools and affiliate partners may set cookies to measure traffic and record visits from this site."],
-  ["Affiliate links","Some links are affiliate links (Amazon, Jumia, Konga). If you purchase through them, we may receive a small commission at no extra cost to you."],
-  ["Third-party websites","Our posts may link to external websites whose policies we do not control."],
-  ["Contact","Questions? Reach out using the contact information provided."]]
-},
-ha:{
- nav_home:"Farko",nav_posts:"Rubutu",nav_about:"Game da mu",nav_contact:"Tuntuɓa",
- sub:"Wallafa • Rabawa • Samun Riba • Ci Gaba",
- hero:"Rubutun fasaha, labarai masu ilmantarwa da wallafa littattafai a wuri ɗaya, masu sauƙin karantawa a kowace na'ura.",
- cta:"Karanta sababbi",stores:"Shagunan da Muke Ba da Shawara",connect:"Haɗa da Ni",latest:"Sababbin Rubutu",
- all:"Duka",blog:"Rubutu",book:"Littattafai",bt:"Rubutu",bk:"Littafi",more:"Karanta ƙari",none:"Babu rubutu tukuna.",
- back:"\u2190 Koma shafin farko",getbook:"Sami littafin",notfound:"Ba a sami wannan rubutu ba.",
- about_t:"Game da mu",contact_t:"Tuntuɓa",contact_p:"Tambaya, shawara ko ra'ayin haɗin gwiwa? Ka tuntuɓe mu.",
- email:"Imel",phone:"Waya",priv_t:"Manufar Sirri",updated:"An sabunta: 2026",
- disc:"A matsayina na Abokin Amazon (Amazon Associate), ina samun kuɗi daga sayayya da suka cancanta. Wasu hanyoyin haɗi na affiliate ne; ba sa ƙara maka farashi.",
- author:"Marubuci: Ticher",
- search:"Nemo rubutu",nores:"Babu rubutun da ya dace da bincikenka.",follow_t:"Bibi ka samu sababbin rubutu",follow_p:"Bar imel ɗinka. Babu kalmar sirri, babu buɗe asusu. Karatu kyauta ne kullum.",f_ph:"Imel ɗinka",f_btn:"Bibi",f_ok:"Na gode! Yanzu kana bibiya.",f_err:"Ka shigar da imel mai inganci.",share:"Raba",copy:"Kwafi link",copied:"An kwafi link ɗin",
- tb_t:"Rubutu",tb_s:"Fasahar kwamfuta, tutorials da labarai",tk_t:"Littattafai",tk_s:"Karanta, sauke ko saya",ts_t:"Kayayyaki",ts_s:"Abubuwan da suka cancanci saya",shop:"Kayayyakin da Muke Ba da Shawara",buy:"Saya a",deal:"Duba tayin",store_desc:"Zaɓaɓɓun kayayyaki masu inganci \u2014 danna ko wane link a ƙasa.",cookie_p:"Muna amfani da cookies don ƙididdiga da tuna harshenka.",cookie_ok:"Na gane",views:"kallo",wa_chat:"Tattauna a WhatsApp",gate_t:"Shigar da imel don karantawa",gate_p:"Karatu kyauta ne \u2014 za mu turo maka imel ne kawai idan sabon littafi ya fito.",gate_btn:"Buɗe ka karanta",gate_err:"Ka shigar da imel mai inganci.",pay_bank:"Canja wurin banki",pay_ussd:"Lambar USSD",pay_paypal:"PayPal",pay_stripe:"Katin biya / Stripe",pay_wallet:"Wallet na crypto",pay_other:"Wani",buynow:"Saya yanzu",gate_pending:"Na gode! Da zarar an tabbatar da biyanka, littafin zai buɗe kansa nan take.",support_t:"Taimaka wa wannan aiki",support_p:"Idan karatun ya yi maka daɗi, za ka iya taimakawa da ɗan gudunmawa.",page_of:"Shafi {n} na {t}",prev:"Na baya",next:"Na gaba",buyc:"Saya mini kwafi",pay_p:"Ka aika kuɗi zuwa asusun da ke ƙasa don karɓar littafin.",acct:"Asusun",listen:"Saurara",stop:"Tsaya",save:"Ajiye don baya",saved:"An ajiye",saved_t:"Ajiyayyu don baya",comments_t:"Tsokaci",c_name:"Sunanka (na zaɓi)",c_text:"Tsokacinka",c_send:"Aika tsokaci",c_none:"Babu tsokaci tukuna.",free:"Kyauta",
- about:[["Abin da za ka samu","Rubutun fasaha mai ma'ana, darussan coding, labarai masu ilmantarwa, da littattafai na musamman tare da affiliate links masu inganci."],
-  ["Me ya sa aka kirkirar shafi?","Allarbaa.cloud an gina shi ne domin ilimi da wallafa littattafai su kasance kyauta kuma a sauƙaƙe ga kowa."],
-  ["Marubuci","Ticher ne ke rubutawa da kula da Allarbaa.cloud."]],
- priv:[["Gabaɗaya","Sirrinka yana da muhimmanci a Allarbaa.cloud."],
-  ["Bayanan da muke tattarawa","Ba ma neman buɗe asusu. Ana amfani da cookies don tuna yare da ƙididdigar shafi kawai."],
-  ["Affiliate links","Wasu links na affiliate ne (Amazon, Jumia, Konga) don tallafa wa ci gaban shafin."],
-  ["Tuntuɓa","Za a iya tuntuɓar mu ta hanyoyin sadarwa da ke shafin nan."]]
-},
-ar:{
- nav_home:"الرئيسية",nav_posts:"المنشورات",nav_about:"من نحن",nav_contact:"اتصل بنا",
- sub:"انشر • شارك • اربح • انمُ",
- hero:"مدونة تقنية، مقالات مفيدة، ونشر الكتب الرقمية في مكان واحد وبسهولة.",
- cta:"اقرأ الجديد",stores:"متاجر موصى بها",connect:"تواصل معي",latest:"أحدث المنشورات",
- all:"الكل",blog:"مدونة",book:"كتب",bt:"مدونة",bk:"كتاب",more:"اقرأ المزيد",none:"لا توجد منشورات بعد.",
- back:"\u2192 العودة إلى الرئيسية",getbook:"احصل على الكتاب",notfound:"تعذر العثور على هذا المنشور.",
- about_t:"من نحن",contact_t:"اتصل بنا",contact_p:"أسئلة أو ملاحظات أو أفكار للتعاون؟ تواصل معنا.",
- email:"البريد الإلكتروني",phone:"الهاتف",priv_t:"سياسة الخصوصية",updated:"آخر تحديث: 2026",
- disc:"بصفتي شريكًا في Amazon، أحصل على عمولة من المشتريات المؤهلة.",
- author:"الكاتب: Ticher",
- search:"ابحث في المنشورات",nores:"لا توجد منشورات مطابقة.",follow_t:"تابعنا لتصلك المنشورات الجديدة",follow_p:"اترك بريدك الإلكتروني. القراءة مجانية دائمًا.",f_ph:"بريدك الإلكتروني",f_btn:"تابع",f_ok:"شكرًا لك! أنت الآن تتابعنا.",f_err:"يرجى إدخال بريد صحيح.",share:"شارك",copy:"انسخ الرابط",copied:"تم نسخ الرابط",
- tb_t:"المدونة",tb_s:"مقالات تقنية وشروحات",tk_t:"الكتب",tk_s:"اقرأ أو حمّل أو اشترِ",ts_t:"المنتجات",ts_s:"أشياء تستحق الشراء",shop:"منتجات موصى بها",buy:"اشترِ من",deal:"شاهد العرض",store_desc:"منتجات مختارة \u2014 اضغط على أحد الروابط أدناه.",cookie_p:"نستخدم ملفات تعريف الارتباط لإحصاءات أساسية ولتذكر لغتك.",cookie_ok:"حسنًا",views:"مشاهدة",wa_chat:"تحدث عبر واتساب",gate_t:"أدخل بريدك الإلكتروني للقراءة",gate_p:"القراءة مجانية.",gate_btn:"افتح واقرأ",gate_err:"يرجى إدخال بريد صحيح.",pay_bank:"تحويل بنكي",pay_ussd:"كود USSD",pay_paypal:"باي بال",pay_stripe:"بطاقة / سترايب",pay_wallet:"محفظة عملات",pay_other:"أخرى",buynow:"اشترِ الآن",gate_pending:"شكرًا لك! بمجرد تأكيد الدفع سيُفتح الكتاب.",support_t:"ادعم هذا العمل",support_p:"يمكنك الدعم بتبرع بسيط.",page_of:"صفحة {n} من {t}",prev:"السابق",next:"التالي",buyc:"اشترِ لي نسخة",pay_p:"أرسل المبلغ إلى الحساب أدناه.",acct:"الحساب",listen:"استماع",stop:"إيقاف",save:"احفظ لوقت لاحق",saved:"محفوظ",saved_t:"محفوظ لوقت لاحق",comments_t:"التعليقات",c_name:"اسمك (اختياري)",c_text:"تعليقك",c_send:"أرسل التعليق",c_none:"لا توجد تعليقات بعد.",free:"مجانًا",
- about:[["ماذا ستجد","مقالات تقنية وشروحات برمجية، كتب رقمية، وتوصيات بالمنتجات."],
-  ["لماذا هذا الموقع؟","نشر المعرفة والكتب بطريقة حرة ومستدامة."],
-  ["الكاتب","Allarbaa.cloud يُنشر بواسطة Ticher."]],
- priv:[["نظرة عامة","خصوصيتك تهمنا في Allarbaa.cloud."],
-  ["المعلومات التي نجمعها","بيانات تصفح مجهولة الهوية لتحسين الموقع."],
-  ["روابط الشراكة","بعض الروابط روابط تابعة لدعم الموقع."],
-  ["التواصل","راسلنا عبر بيانات الاتصال الموضحة."]]
-}};
-
-/* ---------- helpers ---------- */
-var $=function(s){return document.querySelector(s)};
-var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
-var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
-var SS={get:function(k){try{return sessionStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{sessionStorage.setItem(k,v)}catch(e){}},del:function(k){try{sessionStorage.removeItem(k)}catch(e){}}};
-
-var lang=LS.get('tl'); if(!D[lang]) lang='en';
-var S={posts:[],q:'',subs:[],comments:[],claimsList:[],filter:'all',settings:null,key:SS.get('ak')||'',admin:false,editing:{},newImgs:{},storeImgs:{},post:null,tab:'blog',bookPages:[''],curPage:0,unlocked:false,speaking:false,payMethods:[]};
-var T=function(k){var v=D[lang][k]; return v==null?D.en[k]:v};
-var fmt=function(d){try{return new Date(d).toLocaleDateString(lang==='ar'?'ar':'en-GB',{year:'numeric',month:'short',day:'numeric'})}catch(e){return ''}};
-
-var KINDS=['blog','book','product'];
-var LIM={blog:4,book:1,product:1};
-var SAVED_KEY='savedPosts';
-var PAY_TYPES=['bank','ussd','paypal','stripe','wallet','other'];
-var HEAD={blog:['New blog post','Edit blog post'],book:['New book','Edit book'],product:['New affiliate product','Edit affiliate product']};
-var SOC=[['fb','Facebook'],['wa','WhatsApp'],['ig','Instagram'],['x','X (Twitter)'],['yt','YouTube'],['li','LinkedIn'],['tt','TikTok'],['tg','Telegram']];
-var STO=[['amazon','Amazon'],['jumia','Jumia'],['konga','Konga']];
-var STORE_NAME={amazon:'Amazon',jumia:'Jumia',konga:'Konga',other:''};
-var DEF_STORES={amazon:{link:'https://www.amazon.com/',id:'',img:0},jumia:{link:'https://www.jumia.com.ng/',id:'',img:0},konga:{link:'https://www.konga.com/',id:'',img:0}};
-var DEF_PHONES=['+2347069444260','+2349017668973'];
-var WA_NUMBERS=['+2347069444260','+2348080335353'];
-
-function getSaved(){try{return JSON.parse(LS.get(SAVED_KEY)||'[]')}catch(e){return []}}
-function isSaved(id){return getSaved().indexOf(id)>=0}
-function loadComments(postId){
-  api('comments/'+postId).then(function(j){renderComments(j.comments||[])}).catch(function(){renderComments([])});
-}
-function renderComments(list){
-  $('#cItems').innerHTML=list.length?list.map(function(c){
-    return '<div class="c-item"><b>'+esc(c.name||'Guest')+'</b><div class="cd">'+fmt(c.date)+'</div><p>'+esc(c.text)+'</p></div>';
-  }).join(''):'<p class="mut">'+esc(T('c_none'))+'</p>';
-}
-function sendComment(){
-  var postId=S.post&&S.post.id; if(!postId)return;
-  var name=$('#c-name').value.trim(), text=$('#c-text').value.trim();
-  if(!text){toast('Write a comment first');return}
-  $('#c-send').disabled=true;
-  api('comments/'+postId,{method:'POST',body:JSON.stringify({name:name,text:text,website:$('#c-hp').value})}).then(function(){
-    $('#c-name').value='';$('#c-text').value='';loadComments(postId);
-  }).catch(function(){toast('Could not post comment')}).then(function(){$('#c-send').disabled=false});
-}
-function toggleSaved(id){
-  var arr=getSaved(),i=arr.indexOf(id);
-  if(i>=0)arr.splice(i,1);else arr.unshift(id);
-  LS.set(SAVED_KEY,JSON.stringify(arr.slice(0,200)));
-  return arr.indexOf(id)>=0;
-}
-function renderSavedSection(){
-  var ids=getSaved(), box=$('#savedGrid');
-  if(!box)return;
-  var list=ids.map(function(id){return S.posts.find(function(p){return p.id===id})}).filter(Boolean);
-  $('#savedBlock').hidden=!list.length;
-  box.innerHTML=list.map(function(p){
-    var img=p.imgCount?imgUrl(p,0):ph(hash(p.id));
-    return '<article class="pc"><a class="pimg" href="/p/'+p.id+'"><img src="'+img+'" alt="" loading="lazy"></a><div class="pb">'+
-      '<span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span><h3><a href="/p/'+p.id+'">'+esc(p.title)+'</a></h3>'+
-      '<div class="pm"><span>'+fmt(p.date)+'</span><a class="more" href="/p/'+p.id+'">'+esc(T('more'))+'</a></div></div></article>';
-  }).join('');
-}
-function toast(m){var t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},3200)}
-
-function api(path,opts){
-  opts=opts||{};
-  var h={'content-type':'application/json'}; if(S.key) h['x-admin-key']=S.key;
-  return fetch('/api/'+path,{method:opts.method||'GET',headers:h,body:opts.body}).then(function(r){
-    return r.json().catch(function(){return {}}).then(function(j){
-      if(!r.ok){var e=new Error(j.error||'error');e.status=r.status;e.code=j.error;throw e}
-      return j;
-    });
-  });
-}
-
-var PH=[
-'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10306a"/><stop offset="1" stop-color="#2a86b8"/></linearGradient></defs><rect width="400" height="250" fill="url(#a)"/><circle cx="300" cy="78" r="34" fill="#ffd27a" opacity=".92"/><path d="M0 190Q90 130 180 175T400 160V250H0Z" fill="#0b3b63"/><path d="M0 222Q120 172 230 212T400 200V250H0Z" fill="#082a49"/></svg>',
-'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3a8f"/><stop offset="1" stop-color="#1590c8"/></linearGradient></defs><rect width="400" height="250" fill="url(#b)"/><circle cx="70" cy="50" r="46" fill="#fff" opacity=".07"/><circle cx="345" cy="205" r="62" fill="#fff" opacity=".07"/><path d="M200 78C170 62 130 62 96 74V180C130 168 170 168 200 184Z" fill="#fff" opacity=".93"/><path d="M200 78C230 62 270 62 304 74V180C270 168 230 168 200 184Z" fill="#dcecff" opacity=".85"/><path d="M200 78V184" stroke="#4b63d6" stroke-width="3"/></svg>',
-'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081d3f"/><stop offset="1" stop-color="#14508f"/></linearGradient></defs><rect width="400" height="250" fill="url(#c)"/><g stroke="#6ee7ff" stroke-opacity=".5" stroke-width="2" fill="none"><path d="M60 180L140 100L230 150L330 70"/><path d="M140 100L160 40M230 150L260 215M330 70L360 130"/></g><g fill="#6ee7ff"><circle cx="60" cy="180" r="9"/><circle cx="140" cy="100" r="11"/><circle cx="230" cy="150" r="9"/><circle cx="330" cy="70" r="12"/><circle cx="160" cy="40" r="6"/><circle cx="260" cy="215" r="6"/><circle cx="360" cy="130" r="6"/></g></svg>'];
-function ph(i){return 'data:image/svg+xml;utf8,'+encodeURIComponent(PH[i%3])}
-function hash(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h%3}
-function imgUrl(p,n){return '/api/img/'+p.id+'/'+n+'?v='+encodeURIComponent(p.updated||p.date)}
-
-function tagged(link,store){
-  var s=S.settings&&S.settings.stores&&S.settings.stores[store];
-  if(store==='amazon'&&s&&s.id&&/amazon\./i.test(link)){
-    try{var u=new URL(link);if(!u.searchParams.get('tag')){u.searchParams.set('tag',s.id)}return u.href}catch(e){}
-  }
-  return link;
-}
-
-/* ---------- language and static text ---------- */
-function applyLang(){
-  document.documentElement.lang=lang;
-  document.documentElement.dir=lang==='ar'?'rtl':'ltr';
-  $$('#langs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
-  $$('[data-i]').forEach(function(e){e.textContent=T(e.getAttribute('data-i'))});
-  $$('[data-ph]').forEach(function(e){e.placeholder=T(e.getAttribute('data-ph'))});
-  var sec=function(a){return a.map(function(x){return '<h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p>'}).join('')};
-  $('#aboutBody').innerHTML=sec(T('about'));
-  $('#privBody').innerHTML=sec(T('priv'));
-  renderPosts(); renderProducts(); renderStorage(); renderSupportCta(); siteShareBar();
-  if(S.post) renderPost();
-}
-
-function renderSupportCta(){
-  var s=S.settings; if(!s) return;
-  var links='';
-  if(s.social&&s.social.coffee) links+='<a class="btn sm" target="_blank" rel="noopener" href="'+esc(s.social.coffee)+'">☕ '+esc(T('buyc'))+'</a>';
-  links+='<a class="btn sm ghost" href="#posts" data-f="book">'+esc(T('tk_t'))+'</a>';
-  $('#supportLinks').innerHTML=links;
-  $('#supportCta').hidden=false;
-}
-
-function renderStorage(){
-  var s=S.settings; if(!s) return;
-  if(s.logo){
-    var limg=$('#logoImg'), csvg=$('#cloudSvg');
-    if(limg){limg.src=s.logo; limg.style.display='block';}
-    if(csvg){csvg.style.display='none';}
-    var navImg=$('#navLogoImg'), navSvg=$('#navCloudSvg');
-    if(navImg){navImg.src=s.logo; navImg.style.display='inline-block';}
-    if(navSvg){navSvg.style.display='none';}
-  }
-  var st=STO.filter(function(x){return s.stores&&s.stores[x[0]]&&s.stores[x[0]].link}).map(function(x){
-    var o=s.stores[x[0]];
-    return '<a class="store" href="'+esc(tagged(o.link,x[0]))+'" target="_blank" rel="sponsored nofollow noopener">'+(o.img?'<img src="/api/simg/'+x[0]+'?v='+o.img+'" alt="">':'')+'<span>'+x[1]+'</span></a>';
-  }).join('');
-  $('#stores').innerHTML=st; $('#storesBlock').hidden=!st;
-  var so=SOC.filter(function(x){return s.social&&s.social[x[0]]}).map(function(x){return '<a href="'+esc(s.social[x[0]])+'" target="_blank" rel="noopener">'+x[1]+'</a>'}).join('');
-  $('#bio').innerHTML=so; $('#connectBlock').hidden=!so;
-  $('#coffeeRow').hidden=!(s.social&&s.social.coffee);
-  if(s.social&&s.social.coffee)$('#coffeeLink').href=s.social.coffee;
-
-  var contactEmail=s.email||'ticher218@gmail.com';
-  var h='<li>'+esc(T('email'))+': <a href="mailto:'+esc(contactEmail)+'">'+esc(contactEmail)+'</a></li>';
-  (s.phones||[]).forEach(function(p){h+='<li>'+esc(T('phone'))+': <a href="tel:'+esc(p.replace(/[^0-9+]/g,''))+'" dir="ltr">'+esc(p)+'</a></li>'});
-  if(s.social&&s.social.wa) h+='<li>WhatsApp: <a href="'+esc(s.social.wa)+'" target="_blank" rel="noopener" dir="ltr">'+esc(s.social.wa.replace('https://',''))+'</a></li>';
-  $('#contactList').innerHTML=h;
-}
-
-/* ---------- lists on the main page ---------- */
-function renderPosts(){
-  var box=$('#postGrid'), list=S.posts.filter(function(p){return p.type!=='product'});
-  if(S.filter!=='all') list=list.filter(function(p){return p.type===S.filter});
-  var q=S.q.trim().toLowerCase();
-  if(q) list=list.filter(function(p){return (p.title+' '+(p.excerpt||'')).toLowerCase().indexOf(q)>=0});
-  if(!list.length){box.innerHTML='<p class="mut">'+esc(T(q?'nores':'none'))+'</p>';return}
-  box.innerHTML=list.map(function(p){
-    var img=p.imgCount?imgUrl(p,0):ph(hash(p.id));
-    return '<article class="pc"><a class="pimg" href="/p/'+p.id+'"><img src="'+img+'" alt="" loading="lazy"></a><div class="pb">'+
-      '<span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span>'+
-      '<h3><a href="/p/'+p.id+'">'+esc(p.title)+'</a></h3>'+(p.excerpt?'<p>'+esc(p.excerpt)+'</p>':'')+
-      tagPills(p.tags)+
-      '<div class="pm"><span>'+fmt(p.date)+'</span><a class="more" href="/p/'+p.id+'">'+esc(T('more'))+'</a></div></div></article>';
-  }).join('');
-}
-function tagPills(tags){
-  if(!tags||!tags.length)return '';
-  return '<div class="tagset">'+tags.map(function(t){
-    return '<span style="color:var(--mut);font-size:.8rem">#'+esc(t)+'</span>';
-  }).join(' ')+'</div>';
-}
-
-function renderProducts(){
-  var list=S.posts.filter(function(p){return p.type==='product'&&p.link});
-  $('#shop').hidden=!list.length;
-  $('#shopGrid').innerHTML=list.map(function(p){
-    var img=p.imgCount?imgUrl(p,0):ph(hash(p.id));
-    var nm=STORE_NAME[p.store]||'', label=nm?T('buy')+' '+nm:T('deal');
-    return '<article class="pc"><div class="pimg"><img src="'+img+'" alt="'+esc(p.title)+'" loading="lazy"></div><div class="pb">'+
-      '<h3>'+esc(p.title)+'</h3>'+(p.price?'<span class="price">'+esc(p.price)+'</span>':'')+(p.excerpt?'<p>'+esc(p.excerpt)+'</p>':'')+
-      '<a class="aff-btn cta" href="'+esc(tagged(p.link,p.store))+'" target="_blank" rel="sponsored nofollow noopener">'+esc(label)+'</a></div></article>';
-  }).join('');
-}
-
-function setFilter(f){
-  S.filter=f;
-  $$('#tabs button').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-f')===f)});
-  renderPosts();
-}
-
-function loadPosts(){
-  return api('posts').then(function(j){S.posts=j.posts||[]}).catch(function(){S.posts=[]}).then(function(){renderPosts();renderProducts();renderMgr();renderSavedSection();injectListSchema()});
-}
-function injectListSchema(){
-  var old=document.getElementById('listSchema');if(old)old.remove();
-  var list=S.posts.filter(function(p){return p.type!=='product'}).slice(0,20);
-  if(!list.length)return;
-  var ld={'@context':'https://schema.org','@type':'ItemList','itemListElement':list.map(function(p,i){
-    return {'@type':'ListItem','position':i+1,'url':location.origin+'/p/'+p.id,'name':p.title};
-  })};
-  var s=document.createElement('script');s.type='application/ld+json';s.id='listSchema';s.textContent=JSON.stringify(ld);
-  document.head.appendChild(s);
-}
-function loadSettings(){
-  return api('settings').then(function(j){S.settings=j}).catch(function(){S.settings={social:{},stores:DEF_STORES,phones:DEF_PHONES}}).then(function(){renderStorage();fillSettings();if(S.post)renderPost()});
-}
-
-/* ---------- single post ---------- */
-function renderPost(){
-  var p=S.post;
-  document.title=p.title+' | Allarbaa.cloud';
-  var head='<a class="back" href="/">'+esc(T('back'))+'</a>'+
-    '<div><span class="badge">'+esc(T(p.type==='book'?'bk':'bt'))+'</span></div>'+
-    '<h1>'+esc(p.title)+'</h1><div class="meta">'+fmt(p.date)+' &middot; '+(p.views||0)+' '+esc(T('views'))+
-    (p.type==='book'?' &middot; '+(p.price?esc(p.price):esc(T('free'))):'')+'</div>';
-  var cover=p.imgCount?'<div class="gallery"><img src="'+imgUrl(p,0)+'" alt="'+esc(p.title)+'" loading="lazy"></div>':'';
-  if(p.type==='book'){
-    if(p.locked && !S.unlocked){renderGate(head,cover);return}
-    renderReader(head,cover);
-    return;
-  }
-  var imgs='';
-  for(var n=1;n<(p.imgCount||0);n++) imgs+='<img src="'+imgUrl(p,n)+'" alt="'+esc(p.title)+'" loading="lazy">';
-  
-  var extraLink = p.link ? '<p><a class="aff-btn" href="'+esc(p.link)+'" target="_blank" rel="noopener nofollow">🔗 '+esc(p.linkTitle||'Visit Link / Resource')+'</a></p>' : '';
-  
-  $('#postBody').innerHTML=head+cover+
-    (imgs?'<div class="gallery">'+imgs+'</div>':'')+
-    '<div class="prose" id="listenText">'+p.html+'</div>'+
-    listenBtn()+
-    extraLink+shareBar(p)+saveBtn(p);
-  $('#commentsWrap').hidden=false; loadComments(p.id);
-}
-function listenBtn(){
-  if(!('speechSynthesis' in window)) return '';
-  return '<div class="row" style="margin:14px 0"><button class="btn sm ghost" type="button" id="listenBtn">\u{1F50A} '+esc(T('listen'))+'</button></div>';
-}
-function saveBtn(p){
-  var on=isSaved(p.id);
-  return '<div class="row" style="margin-top:10px"><button class="save-btn'+(on?' on':'')+'" type="button" id="saveToggle" data-id="'+p.id+'">'+(on?'★ ':'☆ ')+esc(T(on?'saved':'save'))+'</button></div>';
-}
-function renderGate(head,cover){
-  $('#commentsWrap').hidden=true;
-  var p=S.post;
-  var form=S.pending?
-    '<p class="mut" style="margin-top:14px">'+esc(T('gate_pending'))+'</p>':
-    '<h3 style="margin-top:18px">'+esc(T('gate_t'))+'</h3><p class="mut">'+esc(T('gate_p'))+'</p>'+
-    '<input type="email" id="g-email" placeholder="you@example.com">'+
-    '<input type="text" id="g-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">'+
-    '<div class="row" style="justify-content:center"><button class="btn" type="button" id="g-go">'+esc(T('gate_btn'))+'</button></div>'+
-    '<p class="mut" id="g-err" style="min-height:1.4em"></p>';
-  $('#postBody').innerHTML=head+cover+
-    '<div class="gate">'+
-    '<p class="mut">'+esc(p.pageCount||0)+' pages'+(p.price?' &middot; '+esc(p.price):' &middot; '+esc(T('free')))+'</p>'+
-    '<div class="prose">'+(p.previewHtml||'')+'&hellip;</div>'+
-    payBox(p)+form+
-    '</div>';
-}
-function payBox(p){
-  var s=S.settings||{}, list=s.payments||[];
-  if(!p.link && !list.length) return '';
-  var top=p.link?'<a class="aff-btn cta" style="display:inline-block;margin:10px 0" href="'+esc(p.link)+'" target="_blank" rel="noopener nofollow">'+esc(T('buynow'))+'</a>':'';
-  var rows=list.length?('<p class="mut" style="margin:6px 0">'+esc(T('pay_p'))+'</p>'+list.map(function(pm){
-    return '<div class="payrow" dir="ltr"><b>'+esc(T('pay_'+(pm.type||'other')))+(pm.label?' \u2014 '+esc(pm.label):'')+':</b> <span class="mut">'+esc(pm.value)+'</span></div>';
-  }).join('')):'';
-  return '<details class="pay"><summary>'+esc(T('buyc'))+'</summary>'+top+rows+'</details>';
-}
-function renderReader(head,cover){
-  $('#commentsWrap').hidden=false; loadComments(S.post.id);
-  var p=S.post, pages=p.pageHtml||[], i=Math.min(S.curPage,pages.length-1);
-  var codeBtn = p.codeLink ? '<p><a class="code-btn" href="'+esc(p.codeLink)+'" target="_blank" rel="noopener">💻 Source Code / Resources</a></p>' : '';
-  $('#postBody').innerHTML=head+cover+
-    (!p.locked?payBox(p):'')+
-    '<div class="reader"><div class="prose" id="listenText">'+(pages[i]||'')+'</div>'+
-    codeBtn+
-    listenBtn()+
-    '<div class="reader-nav"><button class="btn sm ghost" type="button" id="pPrev" '+(i<=0?'disabled':'')+'>\u2190 '+esc(T('prev'))+'</button>'+
-    '<span>'+T('page_of').replace('{n}',i+1).replace('{t}',pages.length)+'</span>'+
-    '<button class="btn sm ghost" type="button" id="pNext" '+(i>=pages.length-1?'disabled':'')+'>'+esc(T('next'))+' \u2192</button></div></div>'+
-    shareBar(p)+saveBtn(p);
-}
-function goPage(delta){
-  var pages=(S.post.pageHtml||[]);
-  S.curPage=Math.max(0,Math.min(pages.length-1,S.curPage+delta));
-  stopListen();
-  renderPost();
-  $('.reader').scrollIntoView({behavior:'smooth',block:'start'});
-}
-function siteShareBar(){
-  var u=encodeURIComponent(location.origin+'/'), t=encodeURIComponent(document.title);
-  $('#siteShare').innerHTML='<span>'+esc(T('share'))+'</span>'+
-    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/?text='+t+'%20'+u+'">WhatsApp</a>'+
-    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+u+'">Facebook</a>'+
-    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+t+'&url='+u+'">X</a>'+
-    '<button class="btn sm ghost" type="button" id="siteCopy">'+esc(T('copy'))+'</button>';
-}
-function shareBar(p){
-  var u=encodeURIComponent(location.origin+'/p/'+p.id), t=encodeURIComponent(p.title);
-  return '<div class="share"><span>'+esc(T('share'))+'</span>'+
-    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/?text='+t+'%20'+u+'">WhatsApp</a>'+
-    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+u+'">Facebook</a>'+
-    '<a class="btn sm ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+t+'&url='+u+'">X</a>'+
-    '<button class="btn sm ghost" type="button" data-copy="1">'+esc(T('copy'))+'</button></div>';
-}
-function showPost(id){
-  $('#home').hidden=true; $('#postView').hidden=false;
-  S.curPage=0; S.unlocked=false; S.pending=false; stopListen();
-  api('posts/'+id).then(function(p){
-    S.post=p;
-    var savedEmail=LS.get('bookEmail');
-    if(p.type==='book'&&p.locked&&savedEmail){
-      return unlock(id,savedEmail,true).catch(function(){renderPost()});
-    }
-    renderPost();
-  }).catch(function(){
-    $('#commentsWrap').hidden=true;
-    $('#postBody').innerHTML='<a class="back" href="/">'+esc(T('back'))+'</a><p>'+esc(T('notfound'))+'</p>';
-  }).then(function(){var s=$('#ssr');if(s)s.remove()});
-}
-function unlock(id,email,silent){
-  return api('unlock/'+id,{method:'POST',body:JSON.stringify({email:email})}).then(function(j){
-    LS.set('bookEmail',email);
-    if(j.pending){
-      S.pending=true; S.unlocked=false;
-      if(!silent) renderPost();
-      return;
-    }
-    S.post=Object.assign({},S.post,{locked:false,pageHtml:j.pageHtml});
-    S.unlocked=true; S.pending=false;
-    renderPost();
-  }).catch(function(e){
-    if(!silent){$('#g-err').textContent=T('gate_err')}
-    throw e;
-  });
-}
-
-/* ---------- admin ---------- */
-function setTab(t){
-  S.tab=t;
-  $$('#atabs button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===t)});
-  ['blog','book','product','links','subs','comments','claims','code'].forEach(function(x){$('#tab-'+x).hidden=(x!==t)});
-  if(t==='subs') loadSubs();
-  if(t==='comments') loadAllComments();
-  if(t==='claims') loadClaims();
-}
-function loadClaims(){
-  api('claims').then(function(j){S.claimsList=j.claims||[];renderClaims()}).catch(function(){toast('Could not load purchases')});
-}
-function renderClaims(){
-  $('#clList').innerHTML=S.claimsList.length?S.claimsList.map(function(c){
-    return '<div class="mrow"><span dir="ltr"><b>'+esc(c.email)+'</b> <span class="views">— "'+esc(c.bookTitle)+'"</span></span><span class="acts"><button class="btn sm" type="button" data-claim-ok="1" data-book="'+esc(c.bookId)+'" data-email="'+esc(c.email)+'">Approve</button><button class="btn sm danger" type="button" data-claim-no="1" data-book="'+esc(c.bookId)+'" data-email="'+esc(c.email)+'">Reject</button></span></div>';
-  }).join(''):'<p class="mut">No pending purchases.</p>';
-}
-function loadStats(){
-  api('stats').then(function(j){$('#siteStats').textContent='Total site views: '+j.views}).catch(function(){});
-}
-function loadAllComments(){
-  api('allcomments').then(function(j){S.comments=j.comments||[];renderAdminComments()}).catch(function(){toast('Could not load comments')});
-}
-function renderAdminComments(){
-  $('#cList').innerHTML=S.comments.length?S.comments.map(function(c){
-    return '<div class="mrow"><span>'+(c.name?'<b>'+esc(c.name)+'</b>: ':'')+esc(c.text)+' <span class="views">on "'+esc(c.postTitle)+'"</span></span><span class="acts"><button class="btn sm danger" type="button" data-act="rmcomment" data-post="'+esc(c.postId)+'" data-cid="'+esc(c.id)+'">Delete</button></span></div>';
-  }).join(''):'<p class="mut">No comments yet.</p>';
-}
-function loadSubs(){
-  api('subscribers').then(function(j){S.subs=j.subscribers||[];renderSubs()}).catch(function(){toast('Could not load followers')});
-}
-function renderSubs(){
-  $('#subCount').textContent=S.subs.length;
-  $('#subList').innerHTML=S.subs.length?S.subs.map(function(x){
-    return '<div class="mrow"><span dir="ltr">'+esc(x.email)+'</span><span class="acts"><button class="btn sm danger" type="button" data-act="rmsub" data-email="'+esc(x.email)+'">Remove</button></span></div>';
-  }).join(''):'<p class="mut">No followers yet.</p>';
-}
-function removeSub(email){
-  if(!confirm('Remove '+email+'?')) return;
-  api('subscribers?email='+encodeURIComponent(email),{method:'DELETE'}).then(loadSubs).catch(function(){toast('Could not remove')});
-}
-function follow(){
-  var em=$('#f-email').value.trim(), msg=$('#f-msg');
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){msg.textContent=T('f_err');return}
-  $('#f-btn').disabled=true;
-  api('subscribe',{method:'POST',body:JSON.stringify({email:em,website:$('#f-hp').value})}).then(function(){
-    msg.textContent=T('f_ok');$('#f-email').value='';
-    try{if(typeof gtag==='function')gtag('event','subscribe',{method:'email'})}catch(e){}
-  }).catch(function(){msg.textContent=T('f_err')}).then(function(){$('#f-btn').disabled=false});
-}
-function val(k,f){var e=$('#'+k+'-'+f);return e?e.value.trim():''}
-function renderPayMethods(){
-  var el=$('#pay-methods');
-  el.innerHTML=S.payMethods.map(function(pm,i){
-    var opts=PAY_TYPES.map(function(t){return '<option value="'+t+'"'+(pm.type===t?' selected':'')+'>'+esc(T('pay_'+t))+'</option>'}).join('');
-    return '<div class="payed" data-i="'+i+'">'+
-      '<select class="fld" data-pf="type" data-pi="'+i+'">'+opts+'</select>'+
-      '<input type="text" data-pf="value" data-pi="'+i+'" value="'+esc(pm.value)+'" placeholder="Account number, USSD code, PayPal link...">'+
-      '<button class="btn sm danger" type="button" data-rmpay="'+i+'">Remove</button></div>';
-  }).join('')||'<p class="mut">No payment methods yet.</p>';
-}
-function syncPayMethods(){
-  $$('#pay-methods [data-pf]').forEach(function(el){
-    var i=+el.getAttribute('data-pi'), f=el.getAttribute('data-pf');
-    if(!S.payMethods[i])return; S.payMethods[i][f]=el.value;
-  });
-}
-function renderBookPages(){
-  var el=$('#book-pages');
-  el.innerHTML=S.bookPages.map(function(txt,i){
-    return '<div class="pageed" data-i="'+i+'"><div class="ph"><span>Page '+(i+1)+'</span>'+(S.bookPages.length>1?'<button class="btn sm ghost" type="button" data-rmpage="'+i+'">Remove</button>':'')+'</div><textarea data-page="'+i+'" placeholder="Write page '+(i+1)+' here...">'+esc(txt)+'</textarea></div>';
-  }).join('');
-}
-function syncBookPages(){
-  $$('#book-pages textarea').forEach(function(t){S.bookPages[+t.getAttribute('data-page')]=t.value});
-}
-function resetForm(k){
-  S.editing[k]=null;S.newImgs[k]=null;
-  ['title','content','link','price','code-link'].forEach(function(f){var e=$('#'+k+'-'+f);if(e)e.value=''});
-  if(k==='book'){S.bookPages=[''];renderBookPages()}
-  var st=$('#'+k+'-store');if(st)st.value='amazon';
-  $('#'+k+'-imgs').value='';$('#'+k+'-prev').innerHTML='';
-  $('#'+k+'-h').textContent=HEAD[k][0];$('#'+k+'-save').textContent='Publish';$('#'+k+'-cancel').hidden=true;
-}
-function renderMgr(){
-  KINDS.forEach(function(k){
-    var el=$('#mgr-'+k); if(!el) return;
-    var list=S.posts.filter(function(p){return p.type===k});
-    el.innerHTML=list.length?list.map(function(p){
-      var badge=p.status==='draft'?' <span class="views" style="color:var(--warm)">(draft)</span>':'';
-      return '<div class="mrow"><span>'+esc(p.title)+badge+(p.type!=='product'&&p.views?' <span class="views">('+p.views+' '+esc(T('views'))+')</span>':'')+'</span><span class="acts"><button class="btn sm ghost" type="button" data-act="edit" data-id="'+p.id+'">Edit</button><button class="btn sm danger" type="button" data-act="del" data-id="'+p.id+'">Delete</button></span></div>';
-    }).join(''):'<p class="mut">Nothing here yet.</p>';
-  });
-}
-function showAdmin(){$('#admin').hidden=false;setTab(S.tab);renderMgr();fillSettings();loadStats();renderBookPages()}
-
-function buildSettingsForm(){
-  if($('#setSocial').children.length) return;
-  $('#setSocial').innerHTML=SOC.map(function(x){return '<div><label for="s-'+x[0]+'">'+x[1]+'</label><input type="text" id="s-'+x[0]+'" placeholder="'+(x[0]==='wa'?'2348012345678':'https://... or @yourname')+'"></div>'}).join('');
-  $('#setStores').innerHTML=STO.map(function(x){var k=x[0];
-    return '<div class="storebox"><b>'+x[1]+'</b>'+
-      '<label for="st-'+k+'-link">Store link</label><input type="text" id="st-'+k+'-link" placeholder="https://...">'+
-      '<label for="st-'+k+'-id">Store ID (your affiliate ID)</label><input type="text" id="st-'+k+'-id">'+
-      (k==='amazon'?'<p class="mut hint">Your Amazon ID (like yourname-20) is added to every Amazon link automatically.</p>':'<p class="mut hint">For '+x[1]+', paste the full affiliate link in Store link.</p>')+
-      '<label for="st-'+k+'-img">Picture or logo (optional)</label><input type="file" id="st-'+k+'-img" data-simg="'+k+'" accept="image/*">'+
-      '<div class="prev" id="st-'+k+'-prev"></div></div>';
-  }).join('');
-}
-function fillSettings(){
-  var s=S.settings; if(!s) return;
-  buildSettingsForm();
-  SOC.forEach(function(x){$('#s-'+x[0]).value=(s.social&&s.social[x[0]])||''});
-  STO.forEach(function(x){
-    var k=x[0],o=(s.stores&&s.stores[k])||{};
-    $('#st-'+k+'-link').value=o.link||'';$('#st-'+k+'-id').value=o.id||'';
-    var pv=$('#st-'+k+'-prev');pv.innerHTML='';
-    if(o.img){pv.innerHTML='<img src="/api/simg/'+k+'?v='+o.img+'" alt=""> <button class="btn sm ghost" type="button" data-rm="'+k+'">Remove picture</button>'}
-  });
-  if($('#s-email')) $('#s-email').value=s.email||'';
-  $('#s-phones').value=(s.phones||[]).join('\n');
-  $('#s-coffee').value=(s.social&&s.social.coffee)||'';
-  if(s.logo){
-    $('#s-logo-prev').innerHTML='<img src="'+s.logo+'" style="width:60px;height:60px;object-fit:cover;border-radius:10px"> <button class="btn sm ghost" type="button" id="rmLogo">Remove custom logo</button>';
-  }
-  S.payMethods=(s.payments||[]).map(function(p){return {type:p.type,label:p.label,value:p.value}});
-  renderPayMethods();
-  var cc=s.customCode||{};
-  $('#cc-head').value=cc.head||'';$('#cc-css').value=cc.css||'';$('#cc-js').value=cc.bodyJs||'';
-}
-
-function unlock(key){
-  S.key=key;
-  return api('login',{method:'POST'}).then(function(){S.admin=true;SS.set('ak',key);showAdmin();return true}).catch(function(e){S.key='';S.admin=false;SS.del('ak');throw e});
-}
-function stopListen(){
-  try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(e){}
-  S.speaking=false;
-  var b=$('#listenBtn');if(b)b.innerHTML='\u{1F50A} '+esc(T('listen'));
-}
-function toggleListen(){
-  if(!('speechSynthesis' in window))return;
-  if(S.speaking){stopListen();return}
-  var el=$('#listenText');if(!el)return;
-  var u=new SpeechSynthesisUtterance(el.textContent||'');
-  u.lang=lang==='ar'?'ar-SA':lang==='ha'?'ha-NG':'en-US';
-  u.onend=stopListen; u.onerror=stopListen;
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
-  S.speaking=true;
-  var b=$('#listenBtn');if(b)b.innerHTML='\u23F9 '+esc(T('stop'));
-}
-function insertAt(el,s){
-  var a=typeof el.selectionStart==='number'?el.selectionStart:el.value.length, b=typeof el.selectionEnd==='number'?el.selectionEnd:a;
-  el.value=el.value.slice(0,a)+s+el.value.slice(b);el.focus();el.selectionStart=el.selectionEnd=a+s.length;
-}
-function affiliate(kind){
-  var t=$('#a-text').value.replace(/[|\[\]]/g,'').trim(), u=$('#a-url').value.trim();
-  if(!t||!u){toast('Add the text and the link first');return}
-  if(!/^https?:\/\//i.test(u)) u='https://'+u;
-  insertAt($('#blog-content'),kind==='btn'?'\n\n[[btn:'+t+'|'+u+']]\n\n':'['+t+']('+u+')');
-  $('#a-text').value='';$('#a-url').value='';
-}
-function compress(file,max){
-  return new Promise(function(res,rej){
-    var fr=new FileReader();fr.onerror=rej;
-    fr.onload=function(){var im=new Image();im.onerror=rej;im.onload=function(){
-      var w=im.width,h=im.height,k=Math.min(1,max/Math.max(w,h));w=Math.round(w*k);h=Math.round(h*k);
-      var c=document.createElement('canvas');c.width=w;c.height=h;var x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,w,h);x.drawImage(im,0,0,w,h);
-      res(c.toDataURL('image/jpeg',0.8));};im.src=fr.result};
-    fr.readAsDataURL(file);
-  });
-}
-function onImgs(k){
-  var files=Array.prototype.slice.call($('#'+k+'-imgs').files,0,LIM[k]), prev=$('#'+k+'-prev'); prev.innerHTML='';
-  if(!files.length){S.newImgs[k]=null;return}
-  Promise.all(files.map(function(f){return compress(f,1100)})).then(function(arr){
-    S.newImgs[k]=arr; arr.forEach(function(d){var i=document.createElement('img');i.src=d;i.alt='';prev.appendChild(i)});
-  }).catch(function(){toast('Could not read that photo');S.newImgs[k]=null});
-}
-function save(k,status){
-  var title=val(k,'title'), content=val(k,'content'), link=val(k,'link');
-  if(k==='book') syncBookPages();
-  var pages=k==='book'?S.bookPages.map(function(t){return t.trim()}).filter(Boolean):null;
-  if(!title){toast('Add a title');return}
-  if(k==='blog'&&!content){toast('Add the content');return}
-  if(k==='product'&&!link){toast('Add the product link');return}
-  if(k==='book'&&!pages.length&&status!=='draft'){toast('Add at least one page, or save as draft');return}
-  var body={type:k,title:title,content:content,link:link,status:status||'published'};
-  if(k==='product'){body.store=val(k,'store');body.price=val(k,'price')}
-  if(k==='book'){body.pages=pages;body.price=val(k,'price');body.codeLink=val(k,'code-link')}
-  if(S.newImgs[k]!=null) body.images=S.newImgs[k];
-  var btns=[$('#'+k+'-save'),$('#'+k+'-draft')].filter(Boolean);btns.forEach(function(b){b.disabled=true});
-  var editing=S.editing[k];
-  api(editing?'posts/'+editing:'posts',{method:editing?'PUT':'POST',body:JSON.stringify(body)}).then(function(){
-    toast(status==='draft'?'Saved as draft':(editing?'Saved':'Published')); resetForm(k); return loadPosts();
-  }).catch(function(e){toast(e.status===401?'Wrong or missing password. Unlock again.':'Could not save ('+(e.code||'error')+')')}).then(function(){btns.forEach(function(b){b.disabled=false})});
-}
-function edit(id){
-  api('posts/'+id).then(function(p){
-    var k=p.type; if(KINDS.indexOf(k)<0) return;
-    setTab(k);S.editing[k]=id;S.newImgs[k]=null;
-    $('#'+k+'-title').value=p.title;$('#'+k+'-content').value=p.content||'';
-    if($('#'+k+'-link'))$('#'+k+'-link').value=p.link||'';
-    if(k==='product'){$('#product-store').value=p.store||'amazon';$('#product-price').value=p.price||''}
-    if(k==='book'){$('#book-price').value=p.price||'';if($('#book-code-link'))$('#book-code-link').value=p.codeLink||'';S.bookPages=(p.pages&&p.pages.length?p.pages.slice():['']);renderBookPages()}
-    $('#'+k+'-imgs').value='';
-    var pv=$('#'+k+'-prev');pv.innerHTML='';
-    if(p.imgCount){pv.innerHTML='<span>'+p.imgCount+' photo(s) kept. Choose new photos to replace them.</span> ';
-      var b=document.createElement('button');b.type='button';b.className='btn sm ghost';b.textContent='Remove photos';b.onclick=function(){S.newImgs[k]=[];pv.textContent='Photos will be removed when you save.'};pv.appendChild(b)}
-    $('#'+k+'-h').textContent=HEAD[k][1];$('#'+k+'-save').textContent='Save changes';$('#'+k+'-cancel').hidden=false;
-    $('#tab-'+k).scrollIntoView({behavior:'smooth'});
-  }).catch(function(){toast('Could not open this item')});
-}
-function del(id){
-  if(!confirm('Delete this? This cannot be undone.')) return;
-  api('posts/'+id,{method:'DELETE'}).then(function(){toast('Deleted');KINDS.forEach(function(k){if(S.editing[k]===id)resetForm(k)});return loadPosts()}).catch(function(){toast('Could not delete')});
-}
-function saveSettings(){
-  syncPayMethods();
-  var b={
-    email:($('#s-email')?$('#s-email').value.trim():''),
-    social:{},
-    stores:{},
-    phones:$('#s-phones').value.split('\n').map(function(x){return x.trim()}).filter(Boolean),
-    storeImgs:S.storeImgs,
-    payments:S.payMethods
-  };
-  if(S.uploadedLogo) b.logo = S.uploadedLogo;
-  else if(S.settings&&S.settings.logo&&!S.removeLogo) b.logo = S.settings.logo;
-  else if(S.removeLogo) b.logo = '';
-
-  SOC.forEach(function(x){b.social[x[0]]=$('#s-'+x[0]).value.trim()});
-  b.social.coffee=$('#s-coffee').value.trim();
-  STO.forEach(function(x){b.stores[x[0]]={link:$('#st-'+x[0]+'-link').value.trim(),id:$('#st-'+x[0]+'-id').value.trim()}});
-  api('settings',{method:'PUT',body:JSON.stringify(b)}).then(function(j){
-    S.settings=j;S.storeImgs={};S.uploadedLogo=null;S.removeLogo=false;
-    renderStorage();fillSettings();toast('Saved. Changes are now live on the main page.');
-  }).catch(function(e){toast(e.status===401?'Unlock again':'Could not save settings')});
-}
-
-/* ---------- events ---------- */
-$('#langs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;lang=b.getAttribute('data-l');LS.set('tl',lang);applyLang()});
-$('#tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setFilter(b.getAttribute('data-f'))});
-$$('.tile[data-f]').forEach(function(a){a.addEventListener('click',function(){setFilter(a.getAttribute('data-f'))})});
-$('#supportLinks').addEventListener('click',function(e){var a=e.target.closest('[data-f]');if(a)setFilter(a.getAttribute('data-f'))});
-$('#admin').addEventListener('click',function(e){
-  var b=e.target.closest('button[data-act]');
-  if(b){var act=b.getAttribute('data-act');if(act==='rmsub')removeSub(b.getAttribute('data-email'));else if(act==='edit')edit(b.getAttribute('data-id'));else del(b.getAttribute('data-id'));return}
-  var r=e.target.closest('button[data-rm]');
-  if(r){var k=r.getAttribute('data-rm');S.storeImgs[k]=null;$('#st-'+k+'-prev').textContent='Picture will be removed when you save.'}
-  if(e.target.closest('#rmLogo')){S.removeLogo=true;S.uploadedLogo=null;$('#s-logo-prev').textContent='Logo will be reset to default when you save.'}
-});
-$('#atabs').addEventListener('click',function(e){var b=e.target.closest('button');if(b)setTab(b.getAttribute('data-t'))});
-$('#setStores').addEventListener('change',function(e){
-  var i=e.target.closest('input[data-simg]');if(!i||!i.files[0])return;
-  var k=i.getAttribute('data-simg');
-  compress(i.files[0],420).then(function(d){S.storeImgs[k]=d;$('#st-'+k+'-prev').innerHTML='<img src="'+d+'" alt="">'}).catch(function(){toast('Could not read that picture')});
-});
-var logoInput=$('#s-logo');
-if(logoInput){
-  logoInput.addEventListener('change',function(){
-    if(!this.files||!this.files[0]) return;
-    compress(this.files[0],400).then(function(d){
-      S.uploadedLogo=d;S.removeLogo=false;
-      $('#s-logo-prev').innerHTML='<img src="'+d+'" style="width:60px;height:60px;object-fit:cover;border-radius:10px"> <span class="hint">Preview ready. Press Save below to apply.</span>';
-    }).catch(function(){toast('Could not process logo image')});
-  });
-}
-$('#admLink').addEventListener('click',function(){
-  if(S.admin){if($('#postView').hidden){showAdmin();$('#admin').scrollIntoView({behavior:'smooth'})}else location.href='/#admin';return}
-  $('#pwErr').textContent='';$('#pw').value='';$('#modal').hidden=false;$('#pw').focus();
-});
-// Keyboard shortcut Ctrl+Alt+A to easily open Taska/Admin
-window.addEventListener('keydown',function(e){
-  if(e.ctrlKey&&e.altKey&&e.key.toLowerCase()==='a'){
-    $('#admLink').click();
-  }
-});
-$('#pwNo').addEventListener('click',function(){$('#modal').hidden=true});
-function tryUnlock(){
-  var v=$('#pw').value; if(!v) return;
-  unlock(v).then(function(){$('#modal').hidden=true;if(!$('#postView').hidden){location.href='/#admin'}else $('#admin').scrollIntoView({behavior:'smooth'})}).catch(function(e){
-    $('#pwErr').textContent=e.code==='kv_missing'?'Storage is not connected yet. Add the KV binding named BLOG, then redeploy.':e.code==='password_not_set'?'Add the ADMIN_PASSWORD variable in Cloudflare, then redeploy.':'Wrong password.';
-  });
-}
-$('#pwOk').addEventListener('click',tryUnlock);
-$('#pw').addEventListener('keydown',function(e){if(e.key==='Enter')tryUnlock()});
-$('#lockBtn').addEventListener('click',function(){S.admin=false;S.key='';SS.del('ak');$('#admin').hidden=true;KINDS.forEach(resetForm)});
-KINDS.forEach(function(k){
-  $('#'+k+'-imgs').addEventListener('change',function(){onImgs(k)});
-  $('#'+k+'-save').addEventListener('click',function(){save(k)});
-  $('#'+k+'-cancel').addEventListener('click',function(){resetForm(k)});
-});
-$('#a-btn').addEventListener('click',function(){affiliate('btn')});
-$('#a-lnk').addEventListener('click',function(){affiliate('lnk')});
-$('#saveSet').addEventListener('click',saveSettings);
-$('#postBody').addEventListener('click',function(e){
-  var g=e.target.closest('#g-go');
-  if(g){
-    var em=$('#g-email').value.trim();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){$('#g-err').textContent=T('gate_err');return}
-    if($('#g-hp').value){return}
-    g.disabled=true;
-    unlock(S.post.id,em,false).catch(function(){}).then(function(){g.disabled=false});
-    return;
-  }
-  var pp=e.target.closest('#pPrev'); if(pp&&!pp.disabled){goPage(-1);return}
-  var pn=e.target.closest('#pNext'); if(pn&&!pn.disabled){goPage(1);return}
-  var lb=e.target.closest('#listenBtn'); if(lb){toggleListen();return}
-  var sv=e.target.closest('#saveToggle');
-  if(sv){var on=toggleSaved(sv.getAttribute('data-id'));sv.classList.toggle('on',on);sv.innerHTML=(on?'★ ':'☆ ')+esc(T(on?'saved':'save'));renderSavedSection();return}
-});
-$('#c-send').addEventListener('click',sendComment);
-$('#q').addEventListener('input',function(){S.q=this.value;renderPosts()});
-$('#pay-add').addEventListener('click',function(){syncPayMethods();S.payMethods.push({type:'bank',label:'',value:''});renderPayMethods()});
-$('#pay-methods').addEventListener('click',function(e){
-  var b=e.target.closest('button[data-rmpay]');if(!b)return;
-  syncPayMethods();S.payMethods.splice(+b.getAttribute('data-rmpay'),1);renderPayMethods();
-});
-$('#book-addpage').addEventListener('click',function(){syncBookPages();S.bookPages.push('');renderBookPages()});
-$('#book-pages').addEventListener('click',function(e){
-  var b=e.target.closest('button[data-rmpage]');if(!b)return;
-  syncBookPages();S.bookPages.splice(+b.getAttribute('data-rmpage'),1);if(!S.bookPages.length)S.bookPages=[''];renderBookPages();
-});
-$('#book-pages').addEventListener('input',function(e){
-  var t=e.target.closest('textarea[data-page]');if(!t)return;S.bookPages[+t.getAttribute('data-page')]=t.value;
-});
-$('#book-save').addEventListener('click',function(){save('book','published')});
-$('#book-draft').addEventListener('click',function(){save('book','draft')});
-$('#cc-save').addEventListener('click',function(){
-  var btn=$('#cc-save');btn.disabled=true;
-  var body={social:S.settings?S.settings.social:{},stores:S.settings?S.settings.stores:{},phones:(S.settings&&S.settings.phones)||[],payments:(S.settings&&S.settings.payments)||[],
-    customCode:{head:$('#cc-head').value,css:$('#cc-css').value,bodyJs:$('#cc-js').value}};
-  api('settings',{method:'PUT',body:JSON.stringify(body)}).then(function(j){S.settings=j;toast('Custom code saved \u2014 live now')}).catch(function(e){toast(e.status===401?'Unlock again':'Could not save')}).then(function(){btn.disabled=false});
-});
-$('#clRefresh').addEventListener('click',loadClaims);
-$('#clList').addEventListener('click',function(e){
-  var ok=e.target.closest('[data-claim-ok]'), no=e.target.closest('[data-claim-no]'), b=ok||no;
-  if(!b)return;
-  api('claims',{method:'POST',body:JSON.stringify({bookId:b.getAttribute('data-book'),email:b.getAttribute('data-email'),approve:!!ok})}).then(loadClaims).catch(function(){toast('Could not update')});
-});
-$('#cRefresh').addEventListener('click',loadAllComments);
-$('#cList').addEventListener('click',function(e){
-  var b=e.target.closest('button[data-act="rmcomment"]');if(!b)return;
-  if(!confirm('Delete this comment?'))return;
-  api('comments/'+b.getAttribute('data-post')+'/'+b.getAttribute('data-cid'),{method:'DELETE'}).then(loadAllComments).catch(function(){toast('Could not delete')});
-});
-$('#f-btn').addEventListener('click',follow);
-$('#f-email').addEventListener('keydown',function(e){if(e.key==='Enter')follow()});
-$('#subRefresh').addEventListener('click',loadSubs);
-$('#subCopy').addEventListener('click',function(){
-  var t=S.subs.map(function(x){return x.email}).join(', ');
-  if(!t){toast('No emails yet');return}
-  try{navigator.clipboard.writeText(t).then(function(){toast('Copied '+S.subs.length+' emails')},function(){toast('Could not copy')})}catch(e){toast('Could not copy')}
-});
-$('#siteShare').addEventListener('click',function(e){
-  if(!e.target.closest('#siteCopy')) return;
-  var u=location.origin+'/';
-  try{navigator.clipboard.writeText(u).then(function(){toast(T('copied'))},function(){prompt('',u)})}catch(err){prompt('',u)}
-});
-$('#postBody').addEventListener('click',function(e){
-  if(!e.target.closest('[data-copy]')) return;
-  var u=location.origin+location.pathname;
-  try{navigator.clipboard.writeText(u).then(function(){toast(T('copied'))},function(){prompt('',u)})}catch(err){prompt('',u)}
-});
-document.addEventListener('click',function(e){
-  var a=e.target.closest&&e.target.closest('a[rel~="sponsored"],a.aff-btn'); if(!a) return;
-  try{if(typeof gtag==='function')gtag('event','affiliate_click',{link_url:a.href,link_domain:a.hostname,link_text:(a.textContent||'').trim().slice(0,80),page_path:location.pathname})}catch(err){}
-});
-$('#yr').textContent=new Date().getFullYear();
-[0,1].forEach(function(i){$('#tile'+i).src=ph(i+1)});
-
-/* ---------- floating WhatsApp ---------- */
-function waLink(n,text){return 'https://wa.me/'+n.replace(/\D/g,'')+'?text='+encodeURIComponent(text)}
-function buildWaMenu(){
-  var text=T('wa_chat');
-  $('#waMenu').innerHTML=WA_NUMBERS.map(function(n){
-    return '<a href="'+waLink(n,'')+'" target="_blank" rel="noopener" dir="ltr">'+
-      '<svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>'+n+'</a>';
-  }).join('');
-}
-$('#waBtn').addEventListener('click',function(){buildWaMenu();$('#waMenu').classList.toggle('show')});
-document.addEventListener('click',function(e){if(!e.target.closest('.wa-wrap'))$('#waMenu').classList.remove('show')});
-
-/* ---------- back to top ---------- */
-window.addEventListener('scroll',function(){$('#topBtn').classList.toggle('show',window.scrollY>500)},{passive:true});
-$('#topBtn').addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
-
-/* ---------- cookie banner ---------- */
-if(!LS.get('cookieOk')){$('#cookieBar').hidden=false}
-$('#cookieOk').addEventListener('click',function(){LS.set('cookieOk','1');$('#cookieBar').hidden=true});
-
-/* ---------- offline app (PWA) ---------- */
-if('serviceWorker' in navigator){
-  window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){})});
-}
-
-try{api('hit',{method:'POST'})}catch(e){}
-
-/* ---------- start ---------- */
-applyLang();
-var m=location.pathname.match(/^\/p\/([a-z0-9-]+)/);
-loadSettings();
-if(m){showPost(m[1])}
-else{
-  var s0=$('#ssr'); if(s0) s0.remove();
-  loadPosts();
-  if(S.key){unlock(S.key).catch(function(){})}
-}
-})();
-</script>
-<!--CUSTOM_BODY_END-->
+<script id=app>!function(){"use strict";var t={en:{nav_home:"Home",nav_posts:"Posts",nav_about:"About",nav_contact:"Contact",sub:"Publish • Share • Earn • Grow Organically",hero:"Tech blogging, insightful articles, and digital books, all in one place and easy to read on any device.",cta:"Read the latest",stores:"Recommended Stores",connect:"Connect With Me",latest:"Latest Posts",all:"All",blog:"Blog",book:"Books",bt:"Blog",bk:"Book",more:"Read more",none:"No posts yet.",back:"← Back to home",getbook:"Get the book",notfound:"This post could not be found.",about_t:"About",contact_t:"Contact",contact_p:"Questions, feedback or partnership ideas? Reach out.",email:"Email",phone:"Phone",priv_t:"Privacy Policy",updated:"Last updated: 2026",disc:"As an Amazon Associate I earn from qualifying purchases. Some links on this site are affiliate links; they cost you nothing extra.",author:"Author: Ticher",search:"Search posts",nores:"No posts match your search.",follow_t:"Follow and get new posts",follow_p:"Leave your email. No password and no account. Reading is always free.",f_ph:"Your email",f_btn:"Follow",f_ok:"Thank you! You are now following.",f_err:"Please enter a valid email.",share:"Share",copy:"Copy link",copied:"Link copied",tb_t:"Blog",tb_s:"Tech tips, programming & articles",tk_t:"Books",tk_s:"Read, download or buy",ts_t:"Products",ts_s:"Things worth buying",shop:"Recommended Products",buy:"Buy on",deal:"View deal",store_desc:"Curated stores and recommended products — click any link below.",cookie_p:"We use cookies for basic analytics and to remember your language.",cookie_ok:"Got it",views:"views",wa_chat:"Chat on WhatsApp",gate_t:"Enter your email to read",gate_p:"Free to read — we’ll just email you when new books come out.",gate_btn:"Unlock and read",gate_err:"Please enter a valid email.",pay_bank:"Bank transfer",pay_ussd:"USSD code",pay_paypal:"PayPal",pay_stripe:"Card / Stripe",pay_wallet:"Crypto wallet",pay_other:"Other",buynow:"Buy now",gate_pending:"Thanks! Once your payment is confirmed, this book will unlock automatically the next time you open it — no need to pay again.",support_t:"Support this work",support_p:"If you’ve enjoyed reading, you can support with a small donation.",page_of:"Page {n} of {t}",prev:"Previous",next:"Next",buyc:"Buy me a copy",pay_p:"Send payment to the account below, then message me a screenshot to receive the book.",acct:"Account",listen:"Listen",stop:"Stop",save:"Save for later",saved:"Saved",saved_t:"Saved for later",comments_t:"Comments",c_name:"Your name (optional)",c_text:"Your comment",c_send:"Post comment",c_none:"No comments yet. Be the first!",free:"Free",about:[["What you will find","Insightful tech articles, programming tutorials, guides on creating and hosting digital websites, rich educational books, and trusted product recommendations through affiliate links that support this platform."],["Why this website?","Allarbaa.cloud was built to make digital knowledge, books, and blogging accessible and permanent for everyone."],["The author","Allarbaa.cloud is created and published by Ticher, dedicated to open knowledge, tech sharing, and creative publishing."]],priv:[["Overview","Your privacy matters. This policy explains what information Allarbaa.cloud (allarbaa.cloud) collects, how it is used and the choices you have. By using this site you agree to this policy."],["Information we collect","We do not ask visitors to create accounts. We use standard privacy-respecting analytics to understand site visits. If you follow by email, we only use it to notify you about new posts, and you can unsubscribe at any time."],["Cookies","Analytics tools and affiliate partners may set cookies to measure traffic and record visits from this site."],["Affiliate links","Some links are affiliate links (Amazon, Jumia, Konga). If you purchase through them, we may receive a small commission at no extra cost to you."],["Third-party websites","Our posts may link to external websites whose policies we do not control."],["Contact","Questions? Reach out using the contact information provided."]]},ha:{nav_home:"Farko",nav_posts:"Rubutu",nav_about:"Game da mu",nav_contact:"Tuntuɓa",sub:"Wallafa • Rabawa • Samun Riba • Ci Gaba",hero:"Rubutun fasaha, labarai masu ilmantarwa da wallafa littattafai a wuri ɗaya, masu sauƙin karantawa a kowace na'ura.",cta:"Karanta sababbi",stores:"Shagunan da Muke Ba da Shawara",connect:"Haɗa da Ni",latest:"Sababbin Rubutu",all:"Duka",blog:"Rubutu",book:"Littattafai",bt:"Rubutu",bk:"Littafi",more:"Karanta ƙari",none:"Babu rubutu tukuna.",back:"← Koma shafin farko",getbook:"Sami littafin",notfound:"Ba a sami wannan rubutu ba.",about_t:"Game da mu",contact_t:"Tuntuɓa",contact_p:"Tambaya, shawara ko ra'ayin haɗin gwiwa? Ka tuntuɓe mu.",email:"Imel",phone:"Waya",priv_t:"Manufar Sirri",updated:"An sabunta: 2026",disc:"A matsayina na Abokin Amazon (Amazon Associate), ina samun kuɗi daga sayayya da suka cancanta. Wasu hanyoyin haɗi na affiliate ne; ba sa ƙara maka farashi.",author:"Marubuci: Ticher",search:"Nemo rubutu",nores:"Babu rubutun da ya dace da bincikenka.",follow_t:"Bibi ka samu sababbin rubutu",follow_p:"Bar imel ɗinka. Babu kalmar sirri, babu buɗe asusu. Karatu kyauta ne kullum.",f_ph:"Imel ɗinka",f_btn:"Bibi",f_ok:"Na gode! Yanzu kana bibiya.",f_err:"Ka shigar da imel mai inganci.",share:"Raba",copy:"Kwafi link",copied:"An kwafi link ɗin",tb_t:"Rubutu",tb_s:"Fasahar kwamfuta, tutorials da labarai",tk_t:"Littattafai",tk_s:"Karanta, sauke ko saya",ts_t:"Kayayyaki",ts_s:"Abubuwan da suka cancanci saya",shop:"Kayayyakin da Muke Ba da Shawara",buy:"Saya a",deal:"Duba tayin",store_desc:"Zaɓaɓɓun kayayyaki masu inganci — danna ko wane link a ƙasa.",cookie_p:"Muna amfani da cookies don ƙididdiga da tuna harshenka.",cookie_ok:"Na gane",views:"kallo",wa_chat:"Tattauna a WhatsApp",gate_t:"Shigar da imel don karantawa",gate_p:"Karatu kyauta ne — za mu turo maka imel ne kawai idan sabon littafi ya fito.",gate_btn:"Buɗe ka karanta",gate_err:"Ka shigar da imel mai inganci.",pay_bank:"Canja wurin banki",pay_ussd:"Lambar USSD",pay_paypal:"PayPal",pay_stripe:"Katin biya / Stripe",pay_wallet:"Wallet na crypto",pay_other:"Wani",buynow:"Saya yanzu",gate_pending:"Na gode! Da zarar an tabbatar da biyanka, littafin zai buɗe kansa nan take.",support_t:"Taimaka wa wannan aiki",support_p:"Idan karatun ya yi maka daɗi, za ka iya taimakawa da ɗan gudunmawa.",page_of:"Shafi {n} na {t}",prev:"Na baya",next:"Na gaba",buyc:"Saya mini kwafi",pay_p:"Ka aika kuɗi zuwa asusun da ke ƙasa don karɓar littafin.",acct:"Asusun",listen:"Saurara",stop:"Tsaya",save:"Ajiye don baya",saved:"An ajiye",saved_t:"Ajiyayyu don baya",comments_t:"Tsokaci",c_name:"Sunanka (na zaɓi)",c_text:"Tsokacinka",c_send:"Aika tsokaci",c_none:"Babu tsokaci tukuna.",free:"Kyauta",about:[["Abin da za ka samu","Rubutun fasaha mai ma'ana, darussan coding, labarai masu ilmantarwa, da littattafai na musamman tare da affiliate links masu inganci."],["Me ya sa aka kirkirar shafi?","Allarbaa.cloud an gina shi ne domin ilimi da wallafa littattafai su kasance kyauta kuma a sauƙaƙe ga kowa."],["Marubuci","Ticher ne ke rubutawa da kula da Allarbaa.cloud."]],priv:[["Gabaɗaya","Sirrinka yana da muhimmanci a Allarbaa.cloud."],["Bayanan da muke tattarawa","Ba ma neman buɗe asusu. Ana amfani da cookies don tuna yare da ƙididdigar shafi kawai."],["Affiliate links","Wasu links na affiliate ne (Amazon, Jumia, Konga) don tallafa wa ci gaban shafin."],["Tuntuɓa","Za a iya tuntuɓar mu ta hanyoyin sadarwa da ke shafin nan."]]},ar:{nav_home:"الرئيسية",nav_posts:"المنشورات",nav_about:"من نحن",nav_contact:"اتصل بنا",sub:"انشر • شارك • اربح • انمُ",hero:"مدونة تقنية، مقالات مفيدة، ونشر الكتب الرقمية في مكان واحد وبسهولة.",cta:"اقرأ الجديد",stores:"متاجر موصى بها",connect:"تواصل معي",latest:"أحدث المنشورات",all:"الكل",blog:"مدونة",book:"كتب",bt:"مدونة",bk:"كتاب",more:"اقرأ المزيد",none:"لا توجد منشورات بعد.",back:"→ العودة إلى الرئيسية",getbook:"احصل على الكتاب",notfound:"تعذر العثور على هذا المنشور.",about_t:"من نحن",contact_t:"اتصل بنا",contact_p:"أسئلة أو ملاحظات أو أفكار للتعاون؟ تواصل معنا.",email:"البريد الإلكتروني",phone:"الهاتف",priv_t:"سياسة الخصوصية",updated:"آخر تحديث: 2026",disc:"بصفتي شريكًا في Amazon، أحصل على عمولة من المشتريات المؤهلة.",author:"الكاتب: Ticher",search:"ابحث في المنشورات",nores:"لا توجد منشورات مطابقة.",follow_t:"تابعنا لتصلك المنشورات الجديدة",follow_p:"اترك بريدك الإلكتروني. القراءة مجانية دائمًا.",f_ph:"بريدك الإلكتروني",f_btn:"تابع",f_ok:"شكرًا لك! أنت الآن تتابعنا.",f_err:"يرجى إدخال بريد صحيح.",share:"شارك",copy:"انسخ الرابط",copied:"تم نسخ الرابط",tb_t:"المدونة",tb_s:"مقالات تقنية وشروحات",tk_t:"الكتب",tk_s:"اقرأ أو حمّل أو اشترِ",ts_t:"المنتجات",ts_s:"أشياء تستحق الشراء",shop:"منتجات موصى بها",buy:"اشترِ من",deal:"شاهد العرض",store_desc:"منتجات مختارة — اضغط على أحد الروابط أدناه.",cookie_p:"نستخدم ملفات تعريف الارتباط لإحصاءات أساسية ولتذكر لغتك.",cookie_ok:"حسنًا",views:"مشاهدة",wa_chat:"تحدث عبر واتساب",gate_t:"أدخل بريدك الإلكتروني للقراءة",gate_p:"القراءة مجانية.",gate_btn:"افتح واقرأ",gate_err:"يرجى إدخال بريد صحيح.",pay_bank:"تحويل بنكي",pay_ussd:"كود USSD",pay_paypal:"باي بال",pay_stripe:"بطاقة / سترايب",pay_wallet:"محفظة عملات",pay_other:"أخرى",buynow:"اشترِ الآن",gate_pending:"شكرًا لك! بمجرد تأكيد الدفع سيُفتح الكتاب.",support_t:"ادعم هذا العمل",support_p:"يمكنك الدعم بتبرع بسيط.",page_of:"صفحة {n} من {t}",prev:"السابق",next:"التالي",buyc:"اشترِ لي نسخة",pay_p:"أرسل المبلغ إلى الحساب أدناه.",acct:"الحساب",listen:"استماع",stop:"إيقاف",save:"احفظ لوقت لاحق",saved:"محفوظ",saved_t:"محفوظ لوقت لاحق",comments_t:"التعليقات",c_name:"اسمك (اختياري)",c_text:"تعليقك",c_send:"أرسل التعليق",c_none:"لا توجد تعليقات بعد.",free:"مجانًا",about:[["ماذا ستجد","مقالات تقنية وشروحات برمجية، كتب رقمية، وتوصيات بالمنتجات."],["لماذا هذا الموقع؟","نشر المعرفة والكتب بطريقة حرة ومستدامة."],["الكاتب","Allarbaa.cloud يُنشر بواسطة Ticher."]],priv:[["نظرة عامة","خصوصيتك تهمنا في Allarbaa.cloud."],["المعلومات التي نجمعها","بيانات تصفح مجهولة الهوية لتحسين الموقع."],["روابط الشراكة","بعض الروابط روابط تابعة لدعم الموقع."],["التواصل","راسلنا عبر بيانات الاتصال الموضحة."]]}},e=function(t){return document.querySelector(t)},a=function(t){return Array.prototype.slice.call(document.querySelectorAll(t))},n=function(t){return String(null==t?"":t).replace(/[&<>"']/g,(function(t){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[t]}))},o=function(t){try{return localStorage.getItem(t)}catch(t){return null}},i=function(t,e){try{localStorage.setItem(t,e)}catch(t){}},s=function(t){try{return sessionStorage.getItem(t)}catch(t){return null}},r=function(t,e){try{sessionStorage.setItem(t,e)}catch(t){}},c=function(t){try{sessionStorage.removeItem(t)}catch(t){}},l=o("tl");t[l]||(l="en");var d={posts:[],q:"",subs:[],comments:[],claimsList:[],filter:"all",settings:null,key:s("ak")||"",admin:!1,editing:{},newImgs:{},storeImgs:{},post:null,tab:"blog",bookPages:[""],curPage:0,unlocked:!1,speaking:!1,payMethods:[]},u=function(e){var a=t[l][e];return null==a?t.en[e]:a},p=function(t){try{return new Date(t).toLocaleDateString("ar"===l?"ar":"en-GB",{year:"numeric",month:"short",day:"numeric"})}catch(t){return""}},m=["blog","book","product"],f={blog:4,book:1,product:1},h="savedPosts",g=["bank","ussd","paypal","stripe","wallet","other"],b={blog:["New blog post","Edit blog post"],book:["New book","Edit book"],product:["New affiliate product","Edit affiliate product"]},v=[["fb","Facebook"],["wa","WhatsApp"],["ig","Instagram"],["x","X (Twitter)"],["yt","YouTube"],["li","LinkedIn"],["tt","TikTok"],["tg","Telegram"]],k=[["amazon","Amazon"],["jumia","Jumia"],["konga","Konga"]],y={amazon:"Amazon",jumia:"Jumia",konga:"Konga",other:""},w={amazon:{link:"https://www.amazon.com/",id:"",img:0},jumia:{link:"https://www.jumia.com.ng/",id:"",img:0},konga:{link:"https://www.konga.com/",id:"",img:0}},_=["+2347069444260","+2349017668973"],L=["+2347069444260","+2348080335353"];function x(){try{return JSON.parse(o(h)||"[]")}catch(t){return[]}}function E(t){A("comments/"+t).then((function(t){S(t.comments||[])})).catch((function(){S([])}))}function S(t){e("#cItems").innerHTML=t.length?t.map((function(t){return'<div class="c-item"><b>'+n(t.name||"Guest")+'</b><div class="cd">'+p(t.date)+"</div><p>"+n(t.text)+"</p></div>"})).join(""):'<p class="mut">'+n(u("c_none"))+"</p>"}function T(){var t=x(),a=e("#savedGrid");if(a){var o=t.map((function(t){return d.posts.find((function(e){return e.id===t}))})).filter(Boolean);e("#savedBlock").hidden=!o.length,a.innerHTML=o.map((function(t){var e=t.imgCount?B(t,0):P(I(t.id));return'<article class="pc"><a class="pimg" href="/p/'+t.id+'"><img src="'+e+'" alt="" loading="lazy"></a><div class="pb"><span class="badge">'+n(u("book"===t.type?"bk":"bt"))+'</span><h3><a href="/p/'+t.id+'">'+n(t.title)+'</a></h3><div class="pm"><span>'+p(t.date)+'</span><a class="more" href="/p/'+t.id+'">'+n(u("more"))+"</a></div></div></article>"})).join("")}}function C(t){var e=document.createElement("div");e.className="toast",e.textContent=t,document.body.appendChild(e),setTimeout((function(){e.remove()}),3200)}function A(t,e){e=e||{};var a={"content-type":"application/json"};return d.key&&(a["x-admin-key"]=d.key),fetch("/api/"+t,{method:e.method||"GET",headers:a,body:e.body}).then((function(t){return t.json().catch((function(){return{}})).then((function(e){if(!t.ok){var a=new Error(e.error||"error");throw a.status=t.status,a.code=e.error,a}return e}))}))}var M=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#10306a"/><stop offset="1" stop-color="#2a86b8"/></linearGradient></defs><rect width="400" height="250" fill="url(#a)"/><circle cx="300" cy="78" r="34" fill="#ffd27a" opacity=".92"/><path d="M0 190Q90 130 180 175T400 160V250H0Z" fill="#0b3b63"/><path d="M0 222Q120 172 230 212T400 200V250H0Z" fill="#082a49"/></svg>','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b3a8f"/><stop offset="1" stop-color="#1590c8"/></linearGradient></defs><rect width="400" height="250" fill="url(#b)"/><circle cx="70" cy="50" r="46" fill="#fff" opacity=".07"/><circle cx="345" cy="205" r="62" fill="#fff" opacity=".07"/><path d="M200 78C170 62 130 62 96 74V180C130 168 170 168 200 184Z" fill="#fff" opacity=".93"/><path d="M200 78C230 62 270 62 304 74V180C270 168 230 168 200 184Z" fill="#dcecff" opacity=".85"/><path d="M200 78V184" stroke="#4b63d6" stroke-width="3"/></svg>','<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="c" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081d3f"/><stop offset="1" stop-color="#14508f"/></linearGradient></defs><rect width="400" height="250" fill="url(#c)"/><g stroke="#6ee7ff" stroke-opacity=".5" stroke-width="2" fill="none"><path d="M60 180L140 100L230 150L330 70"/><path d="M140 100L160 40M230 150L260 215M330 70L360 130"/></g><g fill="#6ee7ff"><circle cx="60" cy="180" r="9"/><circle cx="140" cy="100" r="11"/><circle cx="230" cy="150" r="9"/><circle cx="330" cy="70" r="12"/><circle cx="160" cy="40" r="6"/><circle cx="260" cy="215" r="6"/><circle cx="360" cy="130" r="6"/></g></svg>'];function P(t){return"data:image/svg+xml;utf8,"+encodeURIComponent(M[t%3])}function I(t){for(var e=0,a=0;a<t.length;a++)e=31*e+t.charCodeAt(a)>>>0;return e%3}function B(t,e){return"/api/img/"+t.id+"/"+e+"?v="+encodeURIComponent(t.updated||t.date)}function H(t,e){var a=d.settings&&d.settings.stores&&d.settings.stores[e];if("amazon"===e&&a&&a.id&&/amazon\./i.test(t))try{var n=new URL(t);return n.searchParams.get("tag")||n.searchParams.set("tag",a.id),n.href}catch(t){}return t}function R(){document.documentElement.lang=l,document.documentElement.dir="ar"===l?"rtl":"ltr",a("#langs button").forEach((function(t){t.classList.toggle("on",t.getAttribute("data-l")===l)})),a("[data-i]").forEach((function(t){t.textContent=u(t.getAttribute("data-i"))})),a("[data-ph]").forEach((function(t){t.placeholder=u(t.getAttribute("data-ph"))}));var t,o,i=function(t){return t.map((function(t){return"<h3>"+n(t[0])+"</h3><p>"+n(t[1])+"</p>"})).join("")};e("#aboutBody").innerHTML=i(u("about")),e("#privBody").innerHTML=i(u("priv")),N(),z(),j(),function(){var t=d.settings;if(!t)return;var a="";t.social&&t.social.coffee&&(a+='<a class="btn sm" target="_blank" rel="noopener" href="'+n(t.social.coffee)+'">☕ '+n(u("buyc"))+"</a>");a+='<a class="btn sm ghost" href="#posts" data-f="book">'+n(u("tk_t"))+"</a>",e("#supportLinks").innerHTML=a,e("#supportCta").hidden=!1}(),t=encodeURIComponent(location.origin+"/"),o=encodeURIComponent(document.title),e("#siteShare").innerHTML="<span>"+n(u("share"))+'</span><a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/?text='+o+"%20"+t+'">WhatsApp</a><a class="btn sm ghost" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+t+'">Facebook</a><a class="btn sm ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+o+"&url="+t+'">X</a><button class="btn sm ghost" type="button" id="siteCopy">'+n(u("copy"))+"</button>",d.post&&D()}function j(){var t=d.settings;if(t){if(t.logo){var a=e("#logoImg"),o=e("#cloudSvg");a&&(a.src=t.logo,a.style.display="block"),o&&(o.style.display="none");var i=e("#navLogoImg"),s=e("#navCloudSvg");i&&(i.src=t.logo,i.style.display="inline-block"),s&&(s.style.display="none")}var r=k.filter((function(e){return t.stores&&t.stores[e[0]]&&t.stores[e[0]].link})).map((function(e){var a=t.stores[e[0]];return'<a class="store" href="'+n(H(a.link,e[0]))+'" target="_blank" rel="sponsored nofollow noopener">'+(a.img?'<img src="/api/simg/'+e[0]+"?v="+a.img+'" alt="">':"")+"<span>"+e[1]+"</span></a>"})).join("");e("#stores").innerHTML=r,e("#storesBlock").hidden=!r;var c=v.filter((function(e){return t.social&&t.social[e[0]]})).map((function(e){return'<a href="'+n(t.social[e[0]])+'" target="_blank" rel="noopener">'+e[1]+"</a>"})).join("");e("#bio").innerHTML=c,e("#connectBlock").hidden=!c,e("#coffeeRow").hidden=!(t.social&&t.social.coffee),t.social&&t.social.coffee&&(e("#coffeeLink").href=t.social.coffee);var l=t.email||"ticher218@gmail.com",p="<li>"+n(u("email"))+': <a href="mailto:'+n(l)+'">'+n(l)+"</a></li>";(t.phones||[]).forEach((function(t){p+="<li>"+n(u("phone"))+': <a href="tel:'+n(t.replace(/[^0-9+]/g,""))+'" dir="ltr">'+n(t)+"</a></li>"})),t.social&&t.social.wa&&(p+='<li>WhatsApp: <a href="'+n(t.social.wa)+'" target="_blank" rel="noopener" dir="ltr">'+n(t.social.wa.replace("https://",""))+"</a></li>"),e("#contactList").innerHTML=p}}function N(){var t=e("#postGrid"),a=d.posts.filter((function(t){return"product"!==t.type}));"all"!==d.filter&&(a=a.filter((function(t){return t.type===d.filter})));var o=d.q.trim().toLowerCase();o&&(a=a.filter((function(t){return(t.title+" "+(t.excerpt||"")).toLowerCase().indexOf(o)>=0}))),a.length?t.innerHTML=a.map((function(t){var e,a=t.imgCount?B(t,0):P(I(t.id));return'<article class="pc"><a class="pimg" href="/p/'+t.id+'"><img src="'+a+'" alt="" loading="lazy"></a><div class="pb"><span class="badge">'+n(u("book"===t.type?"bk":"bt"))+'</span><h3><a href="/p/'+t.id+'">'+n(t.title)+"</a></h3>"+(t.excerpt?"<p>"+n(t.excerpt)+"</p>":"")+(((e=t.tags)&&e.length?'<div class="tagset">'+e.map((function(t){return'<span style="color:var(--mut);font-size:.8rem">#'+n(t)+"</span>"})).join(" ")+"</div>":"")+'<div class="pm"><span>')+p(t.date)+'</span><a class="more" href="/p/'+t.id+'">'+n(u("more"))+"</a></div></div></article>"})).join(""):t.innerHTML='<p class="mut">'+n(u(o?"nores":"none"))+"</p>"}function z(){var t=d.posts.filter((function(t){return"product"===t.type&&t.link}));e("#shop").hidden=!t.length,e("#shopGrid").innerHTML=t.map((function(t){var e=t.imgCount?B(t,0):P(I(t.id)),a=y[t.store]||"",o=a?u("buy")+" "+a:u("deal");return'<article class="pc"><div class="pimg"><img src="'+e+'" alt="'+n(t.title)+'" loading="lazy"></div><div class="pb"><h3>'+n(t.title)+"</h3>"+(t.price?'<span class="price">'+n(t.price)+"</span>":"")+(t.excerpt?"<p>"+n(t.excerpt)+"</p>":"")+'<a class="aff-btn cta" href="'+n(H(t.link,t.store))+'" target="_blank" rel="sponsored nofollow noopener">'+n(o)+"</a></div></article>"})).join("")}function O(t){d.filter=t,a("#tabs button").forEach((function(e){e.classList.toggle("on",e.getAttribute("data-f")===t)})),N()}function W(){return A("posts").then((function(t){d.posts=t.posts||[]})).catch((function(){d.posts=[]})).then((function(){N(),z(),it(),T(),function(){var t=document.getElementById("listSchema");t&&t.remove();var e=d.posts.filter((function(t){return"product"!==t.type})).slice(0,20);if(!e.length)return;var a={"@context":"https://schema.org","@type":"ItemList",itemListElement:e.map((function(t,e){return{"@type":"ListItem",position:e+1,url:location.origin+"/p/"+t.id,name:t.title}}))},n=document.createElement("script");n.type="application/ld+json",n.id="listSchema",n.textContent=JSON.stringify(a),document.head.appendChild(n)}()}))}function D(){var t=d.post;document.title=t.title+" | Allarbaa.cloud";var a='<a class="back" href="/">'+n(u("back"))+'</a><div><span class="badge">'+n(u("book"===t.type?"bk":"bt"))+"</span></div><h1>"+n(t.title)+'</h1><div class="meta">'+p(t.date)+" &middot; "+(t.views||0)+" "+n(u("views"))+("book"===t.type?" &middot; "+(t.price?n(t.price):n(u("free"))):"")+"</div>",o=t.imgCount?'<div class="gallery"><img src="'+B(t,0)+'" alt="'+n(t.title)+'" loading="lazy"></div>':"";if("book"===t.type)return t.locked&&!d.unlocked?void function(t,a){e("#commentsWrap").hidden=!0;var o=d.post,i=d.pending?'<p class="mut" style="margin-top:14px">'+n(u("gate_pending"))+"</p>":'<h3 style="margin-top:18px">'+n(u("gate_t"))+'</h3><p class="mut">'+n(u("gate_p"))+'</p><input type="email" id="g-email" placeholder="you@example.com"><input type="text" id="g-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true"><div class="row" style="justify-content:center"><button class="btn" type="button" id="g-go">'+n(u("gate_btn"))+'</button></div><p class="mut" id="g-err" style="min-height:1.4em"></p>';e("#postBody").innerHTML=t+a+'<div class="gate"><p class="mut">'+n(o.pageCount||0)+" pages"+(o.price?" &middot; "+n(o.price):" &middot; "+n(u("free")))+'</p><div class="prose">'+(o.previewHtml||"")+"&hellip;</div>"+G(o)+i+"</div>"}(a,o):void function(t,a){e("#commentsWrap").hidden=!1,E(d.post.id);var o=d.post,i=o.pageHtml||[],s=Math.min(d.curPage,i.length-1),r=o.codeLink?'<p><a class="code-btn" href="'+n(o.codeLink)+'" target="_blank" rel="noopener">💻 Source Code / Resources</a></p>':"";e("#postBody").innerHTML=t+a+(o.locked?"":G(o))+'<div class="reader"><div class="prose" id="listenText">'+(i[s]||"")+"</div>"+r+U()+'<div class="reader-nav"><button class="btn sm ghost" type="button" id="pPrev" '+(s<=0?"disabled":"")+">← "+n(u("prev"))+"</button><span>"+u("page_of").replace("{n}",s+1).replace("{t}",i.length)+'</span><button class="btn sm ghost" type="button" id="pNext" '+(s>=i.length-1?"disabled":"")+">"+n(u("next"))+" →</button></div></div>"+V(o)+K(o)}(a,o);for(var i="",s=1;s<(t.imgCount||0);s++)i+='<img src="'+B(t,s)+'" alt="'+n(t.title)+'" loading="lazy">';var r=t.link?'<p><a class="aff-btn" href="'+n(t.link)+'" target="_blank" rel="noopener nofollow">🔗 '+n(t.linkTitle||"Visit Link / Resource")+"</a></p>":"";e("#postBody").innerHTML=a+o+(i?'<div class="gallery">'+i+"</div>":"")+'<div class="prose" id="listenText">'+t.html+"</div>"+U()+r+V(t)+K(t),e("#commentsWrap").hidden=!1,E(t.id)}function U(){return"speechSynthesis"in window?'<div class="row" style="margin:14px 0"><button class="btn sm ghost" type="button" id="listenBtn">🔊 '+n(u("listen"))+"</button></div>":""}function K(t){var e,a=(e=t.id,x().indexOf(e)>=0);return'<div class="row" style="margin-top:10px"><button class="save-btn'+(a?" on":"")+'" type="button" id="saveToggle" data-id="'+t.id+'">'+(a?"★ ":"☆ ")+n(u(a?"saved":"save"))+"</button></div>"}function G(t){var e=(d.settings||{}).payments||[];if(!t.link&&!e.length)return"";var a=t.link?'<a class="aff-btn cta" style="display:inline-block;margin:10px 0" href="'+n(t.link)+'" target="_blank" rel="noopener nofollow">'+n(u("buynow"))+"</a>":"",o=e.length?'<p class="mut" style="margin:6px 0">'+n(u("pay_p"))+"</p>"+e.map((function(t){return'<div class="payrow" dir="ltr"><b>'+n(u("pay_"+(t.type||"other")))+(t.label?" — "+n(t.label):"")+':</b> <span class="mut">'+n(t.value)+"</span></div>"})).join(""):"";return'<details class="pay"><summary>'+n(u("buyc"))+"</summary>"+a+o+"</details>"}function J(t){var a=d.post.pageHtml||[];d.curPage=Math.max(0,Math.min(a.length-1,d.curPage+t)),ct(),D(),e(".reader").scrollIntoView({behavior:"smooth",block:"start"})}function V(t){var e=encodeURIComponent(location.origin+"/p/"+t.id),a=encodeURIComponent(t.title);return'<div class="share"><span>'+n(u("share"))+'</span><a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/?text='+a+"%20"+e+'">WhatsApp</a><a class="btn sm ghost" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+e+'">Facebook</a><a class="btn sm ghost" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?text='+a+"&url="+e+'">X</a><button class="btn sm ghost" type="button" data-copy="1">'+n(u("copy"))+"</button></div>"}function F(t,a,n){return A("unlock/"+t,{method:"POST",body:JSON.stringify({email:a})}).then((function(t){if(i("bookEmail",a),t.pending)return d.pending=!0,d.unlocked=!1,void(n||D());d.post=Object.assign({},d.post,{locked:!1,pageHtml:t.pageHtml}),d.unlocked=!0,d.pending=!1,D()})).catch((function(t){throw n||(e("#g-err").textContent=u("gate_err")),t}))}function Y(t){d.tab=t,a("#atabs button").forEach((function(e){e.classList.toggle("on",e.getAttribute("data-t")===t)})),["blog","book","product","links","subs","comments","claims","code"].forEach((function(a){e("#tab-"+a).hidden=a!==t})),"subs"===t&&Q(),"comments"===t&&Z(),"claims"===t&&q()}function q(){A("claims").then((function(t){d.claimsList=t.claims||[],e("#clList").innerHTML=d.claimsList.length?d.claimsList.map((function(t){return'<div class="mrow"><span dir="ltr"><b>'+n(t.email)+'</b> <span class="views">— "'+n(t.bookTitle)+'"</span></span><span class="acts"><button class="btn sm" type="button" data-claim-ok="1" data-book="'+n(t.bookId)+'" data-email="'+n(t.email)+'">Approve</button><button class="btn sm danger" type="button" data-claim-no="1" data-book="'+n(t.bookId)+'" data-email="'+n(t.email)+'">Reject</button></span></div>'})).join(""):'<p class="mut">No pending purchases.</p>'})).catch((function(){C("Could not load purchases")}))}function Z(){A("allcomments").then((function(t){d.comments=t.comments||[],e("#cList").innerHTML=d.comments.length?d.comments.map((function(t){return'<div class="mrow"><span>'+(t.name?"<b>"+n(t.name)+"</b>: ":"")+n(t.text)+' <span class="views">on "'+n(t.postTitle)+'"</span></span><span class="acts"><button class="btn sm danger" type="button" data-act="rmcomment" data-post="'+n(t.postId)+'" data-cid="'+n(t.id)+'">Delete</button></span></div>'})).join(""):'<p class="mut">No comments yet.</p>'})).catch((function(){C("Could not load comments")}))}function Q(){A("subscribers").then((function(t){d.subs=t.subscribers||[],e("#subCount").textContent=d.subs.length,e("#subList").innerHTML=d.subs.length?d.subs.map((function(t){return'<div class="mrow"><span dir="ltr">'+n(t.email)+'</span><span class="acts"><button class="btn sm danger" type="button" data-act="rmsub" data-email="'+n(t.email)+'">Remove</button></span></div>'})).join(""):'<p class="mut">No followers yet.</p>'})).catch((function(){C("Could not load followers")}))}function X(){var t=e("#f-email").value.trim(),a=e("#f-msg");/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(t)?(e("#f-btn").disabled=!0,A("subscribe",{method:"POST",body:JSON.stringify({email:t,website:e("#f-hp").value})}).then((function(){a.textContent=u("f_ok"),e("#f-email").value="";try{"function"==typeof gtag&&gtag("event","subscribe",{method:"email"})}catch(t){}})).catch((function(){a.textContent=u("f_err")})).then((function(){e("#f-btn").disabled=!1}))):a.textContent=u("f_err")}function $(t,a){var n=e("#"+t+"-"+a);return n?n.value.trim():""}function tt(){e("#pay-methods").innerHTML=d.payMethods.map((function(t,e){return'<div class="payed" data-i="'+e+'"><select class="fld" data-pf="type" data-pi="'+e+'">'+g.map((function(e){return'<option value="'+e+'"'+(t.type===e?" selected":"")+">"+n(u("pay_"+e))+"</option>"})).join("")+'</select><input type="text" data-pf="value" data-pi="'+e+'" value="'+n(t.value)+'" placeholder="Account number, USSD code, PayPal link..."><button class="btn sm danger" type="button" data-rmpay="'+e+'">Remove</button></div>'})).join("")||'<p class="mut">No payment methods yet.</p>'}function et(){a("#pay-methods [data-pf]").forEach((function(t){var e=+t.getAttribute("data-pi"),a=t.getAttribute("data-pf");d.payMethods[e]&&(d.payMethods[e][a]=t.value)}))}function at(){e("#book-pages").innerHTML=d.bookPages.map((function(t,e){return'<div class="pageed" data-i="'+e+'"><div class="ph"><span>Page '+(e+1)+"</span>"+(d.bookPages.length>1?'<button class="btn sm ghost" type="button" data-rmpage="'+e+'">Remove</button>':"")+'</div><textarea data-page="'+e+'" placeholder="Write page '+(e+1)+' here...">'+n(t)+"</textarea></div>"})).join("")}function nt(){a("#book-pages textarea").forEach((function(t){d.bookPages[+t.getAttribute("data-page")]=t.value}))}function ot(t){d.editing[t]=null,d.newImgs[t]=null,["title","content","link","price","code-link"].forEach((function(a){var n=e("#"+t+"-"+a);n&&(n.value="")})),"book"===t&&(d.bookPages=[""],at());var a=e("#"+t+"-store");a&&(a.value="amazon"),e("#"+t+"-imgs").value="",e("#"+t+"-prev").innerHTML="",e("#"+t+"-h").textContent=b[t][0],e("#"+t+"-save").textContent="Publish",e("#"+t+"-cancel").hidden=!0}function it(){m.forEach((function(t){var a=e("#mgr-"+t);if(a){var o=d.posts.filter((function(e){return e.type===t}));a.innerHTML=o.length?o.map((function(t){var e="draft"===t.status?' <span class="views" style="color:var(--warm)">(draft)</span>':"";return'<div class="mrow"><span>'+n(t.title)+e+("product"!==t.type&&t.views?' <span class="views">('+t.views+" "+n(u("views"))+")</span>":"")+'</span><span class="acts"><button class="btn sm ghost" type="button" data-act="edit" data-id="'+t.id+'">Edit</button><button class="btn sm danger" type="button" data-act="del" data-id="'+t.id+'">Delete</button></span></div>'})).join(""):'<p class="mut">Nothing here yet.</p>'}}))}function st(){e("#admin").hidden=!1,Y(d.tab),it(),rt(),A("stats").then((function(t){e("#siteStats").textContent="Total site views: "+t.views})).catch((function(){})),at()}function rt(){var t=d.settings;if(t){e("#setSocial").children.length||(e("#setSocial").innerHTML=v.map((function(t){return'<div><label for="s-'+t[0]+'">'+t[1]+'</label><input type="text" id="s-'+t[0]+'" placeholder="'+("wa"===t[0]?"2348012345678":"https://... or @yourname")+'"></div>'})).join(""),e("#setStores").innerHTML=k.map((function(t){var e=t[0];return'<div class="storebox"><b>'+t[1]+'</b><label for="st-'+e+'-link">Store link</label><input type="text" id="st-'+e+'-link" placeholder="https://..."><label for="st-'+e+'-id">Store ID (your affiliate ID)</label><input type="text" id="st-'+e+'-id">'+("amazon"===e?'<p class="mut hint">Your Amazon ID (like yourname-20) is added to every Amazon link automatically.</p>':'<p class="mut hint">For '+t[1]+", paste the full affiliate link in Store link.</p>")+'<label for="st-'+e+'-img">Picture or logo (optional)</label><input type="file" id="st-'+e+'-img" data-simg="'+e+'" accept="image/*"><div class="prev" id="st-'+e+'-prev"></div></div>'})).join("")),v.forEach((function(a){e("#s-"+a[0]).value=t.social&&t.social[a[0]]||""})),k.forEach((function(a){var n=a[0],o=t.stores&&t.stores[n]||{};e("#st-"+n+"-link").value=o.link||"",e("#st-"+n+"-id").value=o.id||"";var i=e("#st-"+n+"-prev");i.innerHTML="",o.img&&(i.innerHTML='<img src="/api/simg/'+n+"?v="+o.img+'" alt=""> <button class="btn sm ghost" type="button" data-rm="'+n+'">Remove picture</button>')})),e("#s-email")&&(e("#s-email").value=t.email||""),e("#s-phones").value=(t.phones||[]).join("\n"),e("#s-coffee").value=t.social&&t.social.coffee||"",t.logo&&(e("#s-logo-prev").innerHTML='<img src="'+t.logo+'" style="width:60px;height:60px;object-fit:cover;border-radius:10px"> <button class="btn sm ghost" type="button" id="rmLogo">Remove custom logo</button>'),d.payMethods=(t.payments||[]).map((function(t){return{type:t.type,label:t.label,value:t.value}})),tt();var a=t.customCode||{};e("#cc-head").value=a.head||"",e("#cc-css").value=a.css||"",e("#cc-js").value=a.bodyJs||""}}function F(t){return d.key=t,A("login",{method:"POST"}).then((function(){return d.admin=!0,r("ak",t),st(),!0})).catch((function(t){throw d.key="",d.admin=!1,c("ak"),t}))}function ct(){try{window.speechSynthesis&&window.speechSynthesis.cancel()}catch(t){}d.speaking=!1;var t=e("#listenBtn");t&&(t.innerHTML="🔊 "+n(u("listen")))}function lt(t){var a,n,o,i,s=e("#a-text").value.replace(/[|\[\]]/g,"").trim(),r=e("#a-url").value.trim();s&&r?(/^https?:\/\//i.test(r)||(r="https://"+r),a=e("#blog-content"),n="btn"===t?"\n\n[[btn:"+s+"|"+r+"]]\n\n":"["+s+"]("+r+")",o="number"==typeof a.selectionStart?a.selectionStart:a.value.length,i="number"==typeof a.selectionEnd?a.selectionEnd:o,a.value=a.value.slice(0,o)+n+a.value.slice(i),a.focus(),a.selectionStart=a.selectionEnd=o+n.length,e("#a-text").value="",e("#a-url").value=""):C("Add the text and the link first")}function dt(t,e){return new Promise((function(a,n){var o=new FileReader;o.onerror=n,o.onload=function(){var t=new Image;t.onerror=n,t.onload=function(){var n=t.width,o=t.height,i=Math.min(1,e/Math.max(n,o));n=Math.round(n*i),o=Math.round(o*i);var s=document.createElement("canvas");s.width=n,s.height=o;var r=s.getContext("2d");r.fillStyle="#fff",r.fillRect(0,0,n,o),r.drawImage(t,0,0,n,o),a(s.toDataURL("image/jpeg",.8))},t.src=o.result},o.readAsDataURL(t)}))}function ut(t,a){var n=$(t,"title"),o=$(t,"content"),i=$(t,"link");"book"===t&&nt();var s="book"===t?d.bookPages.map((function(t){return t.trim()})).filter(Boolean):null;if(n)if("blog"!==t||o)if("product"!==t||i)if("book"!==t||s.length||"draft"===a){var r={type:t,title:n,content:o,link:i,status:a||"published"};"product"===t&&(r.store=$(t,"store"),r.price=$(t,"price")),"book"===t&&(r.pages=s,r.price=$(t,"price"),r.codeLink=$(t,"code-link")),null!=d.newImgs[t]&&(r.images=d.newImgs[t]);var c=[e("#"+t+"-save"),e("#"+t+"-draft")].filter(Boolean);c.forEach((function(t){t.disabled=!0}));var l=d.editing[t];A(l?"posts/"+l:"posts",{method:l?"PUT":"POST",body:JSON.stringify(r)}).then((function(){return C("draft"===a?"Saved as draft":l?"Saved":"Published"),ot(t),W()})).catch((function(t){C(401===t.status?"Wrong or missing password. Unlock again.":"Could not save ("+(t.code||"error")+")")})).then((function(){c.forEach((function(t){t.disabled=!1}))}))}else C("Add at least one page, or save as draft");else C("Add the product link");else C("Add the content");else C("Add a title")}e("#langs").addEventListener("click",(function(t){var e=t.target.closest("button");e&&(l=e.getAttribute("data-l"),i("tl",l),R())})),e("#tabs").addEventListener("click",(function(t){var e=t.target.closest("button");e&&O(e.getAttribute("data-f"))})),a(".tile[data-f]").forEach((function(t){t.addEventListener("click",(function(){O(t.getAttribute("data-f"))}))})),e("#supportLinks").addEventListener("click",(function(t){var e=t.target.closest("[data-f]");e&&O(e.getAttribute("data-f"))})),e("#admin").addEventListener("click",(function(t){var a=t.target.closest("button[data-act]");if(a){var n=a.getAttribute("data-act");"rmsub"===n?(i=a.getAttribute("data-email"),confirm("Remove "+i+"?")&&A("subscribers?email="+encodeURIComponent(i),{method:"DELETE"}).then(Q).catch((function(){C("Could not remove")}))):"edit"===n?A("posts/"+(o=a.getAttribute("data-id"))).then((function(t){var a=t.type;if(!(m.indexOf(a)<0)){Y(a),d.editing[a]=o,d.newImgs[a]=null,e("#"+a+"-title").value=t.title,e("#"+a+"-content").value=t.content||"",e("#"+a+"-link")&&(e("#"+a+"-link").value=t.link||""),"product"===a&&(e("#product-store").value=t.store||"amazon",e("#product-price").value=t.price||""),"book"===a&&(e("#book-price").value=t.price||"",e("#book-code-link")&&(e("#book-code-link").value=t.codeLink||""),d.bookPages=t.pages&&t.pages.length?t.pages.slice():[""],at()),e("#"+a+"-imgs").value="";var n=e("#"+a+"-prev");if(n.innerHTML="",t.imgCount){n.innerHTML="<span>"+t.imgCount+" photo(s) kept. Choose new photos to replace them.</span> ";var i=document.createElement("button");i.type="button",i.className="btn sm ghost",i.textContent="Remove photos",i.onclick=function(){d.newImgs[a]=[],n.textContent="Photos will be removed when you save."},n.appendChild(i)}e("#"+a+"-h").textContent=b[a][1],e("#"+a+"-save").textContent="Save changes",e("#"+a+"-cancel").hidden=!1,e("#tab-"+a).scrollIntoView({behavior:"smooth"})}})).catch((function(){C("Could not open this item")})):function(t){confirm("Delete this? This cannot be undone.")&&A("posts/"+t,{method:"DELETE"}).then((function(){return C("Deleted"),m.forEach((function(e){d.editing[e]===t&&ot(e)})),W()})).catch((function(){C("Could not delete")}))}(a.getAttribute("data-id"))}else{var o,i,s=t.target.closest("button[data-rm]");if(s){var r=s.getAttribute("data-rm");d.storeImgs[r]=null,e("#st-"+r+"-prev").textContent="Picture will be removed when you save."}t.target.closest("#rmLogo")&&(d.removeLogo=!0,d.uploadedLogo=null,e("#s-logo-prev").textContent="Logo will be reset to default when you save.")}})),e("#atabs").addEventListener("click",(function(t){var e=t.target.closest("button");e&&Y(e.getAttribute("data-t"))})),e("#setStores").addEventListener("change",(function(t){var a=t.target.closest("input[data-simg]");if(a&&a.files[0]){var n=a.getAttribute("data-simg");dt(a.files[0],420).then((function(t){d.storeImgs[n]=t,e("#st-"+n+"-prev").innerHTML='<img src="'+t+'" alt="">'})).catch((function(){C("Could not read that picture")}))}}));var pt=e("#s-logo");function mt(){var t=e("#pw").value;t&&F(t).then((function(){e("#modal").hidden=!0,e("#postView").hidden?e("#admin").scrollIntoView({behavior:"smooth"}):location.href="/#admin"})).catch((function(t){e("#pwErr").textContent="kv_missing"===t.code?"Storage is not connected yet. Add the KV binding named BLOG, then redeploy.":"password_not_set"===t.code?"Add the ADMIN_PASSWORD variable in Cloudflare, then redeploy.":"Wrong password."}))}function ft(){u("wa_chat");e("#waMenu").innerHTML=L.map((function(t){return'<a href="'+function(t,e){return"https://wa.me/"+t.replace(/\D/g,"")+"?text="+encodeURIComponent(e)}(t,"")+'" target="_blank" rel="noopener" dir="ltr"><svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>'+t+"</a>"})).join("")}pt&&pt.addEventListener("change",(function(){this.files&&this.files[0]&&dt(this.files[0],400).then((function(t){d.uploadedLogo=t,d.removeLogo=!1,e("#s-logo-prev").innerHTML='<img src="'+t+'" style="width:60px;height:60px;object-fit:cover;border-radius:10px"> <span class="hint">Preview ready. Press Save below to apply.</span>'})).catch((function(){C("Could not process logo image")}))})),e("#admLink").addEventListener("click",(function(){d.admin?e("#postView").hidden?(st(),e("#admin").scrollIntoView({behavior:"smooth"})):location.href="/#admin":(e("#pwErr").textContent="",e("#pw").value="",e("#modal").hidden=!1,e("#pw").focus())})),window.addEventListener("keydown",(function(t){t.ctrlKey&&t.altKey&&"a"===t.key.toLowerCase()&&e("#admLink").click()})),e("#pwNo").addEventListener("click",(function(){e("#modal").hidden=!0})),e("#pwOk").addEventListener("click",mt),e("#pw").addEventListener("keydown",(function(t){"Enter"===t.key&&mt()})),e("#lockBtn").addEventListener("click",(function(){d.admin=!1,d.key="",c("ak"),e("#admin").hidden=!0,m.forEach(ot)})),m.forEach((function(t){e("#"+t+"-imgs").addEventListener("change",(function(){!function(t){var a=Array.prototype.slice.call(e("#"+t+"-imgs").files,0,f[t]),n=e("#"+t+"-prev");n.innerHTML="",a.length?Promise.all(a.map((function(t){return dt(t,1100)}))).then((function(e){d.newImgs[t]=e,e.forEach((function(t){var e=document.createElement("img");e.src=t,e.alt="",n.appendChild(e)}))})).catch((function(){C("Could not read that photo"),d.newImgs[t]=null})):d.newImgs[t]=null}(t)})),e("#"+t+"-save").addEventListener("click",(function(){ut(t)})),e("#"+t+"-cancel").addEventListener("click",(function(){ot(t)}))})),e("#a-btn").addEventListener("click",(function(){lt("btn")})),e("#a-lnk").addEventListener("click",(function(){lt("lnk")})),e("#saveSet").addEventListener("click",(function(){et();var t={email:e("#s-email")?e("#s-email").value.trim():"",social:{},stores:{},phones:e("#s-phones").value.split("\n").map((function(t){return t.trim()})).filter(Boolean),storeImgs:d.storeImgs,payments:d.payMethods};d.uploadedLogo?t.logo=d.uploadedLogo:d.settings&&d.settings.logo&&!d.removeLogo?t.logo=d.settings.logo:d.removeLogo&&(t.logo=""),v.forEach((function(a){t.social[a[0]]=e("#s-"+a[0]).value.trim()})),t.social.coffee=e("#s-coffee").value.trim(),k.forEach((function(a){t.stores[a[0]]={link:e("#st-"+a[0]+"-link").value.trim(),id:e("#st-"+a[0]+"-id").value.trim()}})),A("settings",{method:"PUT",body:JSON.stringify(t)}).then((function(t){d.settings=t,d.storeImgs={},d.uploadedLogo=null,d.removeLogo=!1,j(),rt(),C("Saved. Changes are now live on the main page.")})).catch((function(t){C(401===t.status?"Unlock again":"Could not save settings")}))})),e("#postBody").addEventListener("click",(function(t){var a=t.target.closest("#g-go");if(a){var o=e("#g-email").value.trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(o))return void(e("#g-err").textContent=u("gate_err"));if(e("#g-hp").value)return;return a.disabled=!0,void F(d.post.id).catch((function(){})).then((function(){a.disabled=!1}))}var s=t.target.closest("#pPrev");if(!s||s.disabled){var r=t.target.closest("#pNext");if(!r||r.disabled)if(t.target.closest("#listenBtn"))!function(){if("speechSynthesis"in window)if(d.speaking)ct();else{var t=e("#listenText");if(t){var a=new SpeechSynthesisUtterance(t.textContent||"");a.lang="ar"===l?"ar-SA":"ha"===l?"ha-NG":"en-US",a.onend=ct,a.onerror=ct,window.speechSynthesis.cancel(),window.speechSynthesis.speak(a),d.speaking=!0;var o=e("#listenBtn");o&&(o.innerHTML="⏹ "+n(u("stop")))}}}();else{var c,p,m,f=t.target.closest("#saveToggle");if(f){var g=(c=f.getAttribute("data-id"),p=x(),(m=p.indexOf(c))>=0?p.splice(m,1):p.unshift(c),i(h,JSON.stringify(p.slice(0,200))),p.indexOf(c)>=0);return f.classList.toggle("on",g),f.innerHTML=(g?"★ ":"☆ ")+n(u(g?"saved":"save")),void T()}}else J(1)}else J(-1)})),e("#c-send").addEventListener("click",(function(){var t=d.post&&d.post.id;if(t){var a=e("#c-name").value.trim(),n=e("#c-text").value.trim();n?(e("#c-send").disabled=!0,A("comments/"+t,{method:"POST",body:JSON.stringify({name:a,text:n,website:e("#c-hp").value})}).then((function(){e("#c-name").value="",e("#c-text").value="",E(t)})).catch((function(){C("Could not post comment")})).then((function(){e("#c-send").disabled=!1}))):C("Write a comment first")}})),e("#q").addEventListener("input",(function(){d.q=this.value,N()})),e("#pay-add").addEventListener("click",(function(){et(),d.payMethods.push({type:"bank",label:"",value:""}),tt()})),e("#pay-methods").addEventListener("click",(function(t){var e=t.target.closest("button[data-rmpay]");e&&(et(),d.payMethods.splice(+e.getAttribute("data-rmpay"),1),tt())})),e("#book-addpage").addEventListener("click",(function(){nt(),d.bookPages.push(""),at()})),e("#book-pages").addEventListener("click",(function(t){var e=t.target.closest("button[data-rmpage]");e&&(nt(),d.bookPages.splice(+e.getAttribute("data-rmpage"),1),d.bookPages.length||(d.bookPages=[""]),at())})),e("#book-pages").addEventListener("input",(function(t){var e=t.target.closest("textarea[data-page]");e&&(d.bookPages[+e.getAttribute("data-page")]=e.value)})),e("#book-save").addEventListener("click",(function(){ut("book","published")})),e("#book-draft").addEventListener("click",(function(){ut("book","draft")})),e("#cc-save").addEventListener("click",(function(){var t=e("#cc-save");t.disabled=!0;var a={social:d.settings?d.settings.social:{},stores:d.settings?d.settings.stores:{},phones:d.settings&&d.settings.phones||[],payments:d.settings&&d.settings.payments||[],customCode:{head:e("#cc-head").value,css:e("#cc-css").value,bodyJs:e("#cc-js").value}};A("settings",{method:"PUT",body:JSON.stringify(a)}).then((function(t){d.settings=t,C("Custom code saved — live now")})).catch((function(t){C(401===t.status?"Unlock again":"Could not save")})).then((function(){t.disabled=!1}))})),e("#clRefresh").addEventListener("click",q),e("#clList").addEventListener("click",(function(t){var e=t.target.closest("[data-claim-ok]"),a=t.target.closest("[data-claim-no]"),n=e||a;n&&A("claims",{method:"POST",body:JSON.stringify({bookId:n.getAttribute("data-book"),email:n.getAttribute("data-email"),approve:!!e})}).then(q).catch((function(){C("Could not update")}))})),e("#cRefresh").addEventListener("click",Z),e("#cList").addEventListener("click",(function(t){var e=t.target.closest('button[data-act="rmcomment"]');e&&confirm("Delete this comment?")&&A("comments/"+e.getAttribute("data-post")+"/"+e.getAttribute("data-cid"),{method:"DELETE"}).then(Z).catch((function(){C("Could not delete")}))})),e("#f-btn").addEventListener("click",X),e("#f-email").addEventListener("keydown",(function(t){"Enter"===t.key&&X()})),e("#subRefresh").addEventListener("click",Q),e("#subCopy").addEventListener("click",(function(){var t=d.subs.map((function(t){return t.email})).join(", ");if(t)try{navigator.clipboard.writeText(t).then((function(){C("Copied "+d.subs.length+" emails")}),(function(){C("Could not copy")}))}catch(t){C("Could not copy")}else C("No emails yet")})),e("#siteShare").addEventListener("click",(function(t){if(t.target.closest("#siteCopy")){var e=location.origin+"/";try{navigator.clipboard.writeText(e).then((function(){C(u("copied"))}),(function(){prompt("",e)}))}catch(t){prompt("",e)}}})),e("#postBody").addEventListener("click",(function(t){if(t.target.closest("[data-copy]")){var e=location.origin+location.pathname;try{navigator.clipboard.writeText(e).then((function(){C(u("copied"))}),(function(){prompt("",e)}))}catch(t){prompt("",e)}}})),document.addEventListener("click",(function(t){var e=t.target.closest&&t.target.closest('a[rel~="sponsored"],a.aff-btn');if(e)try{"function"==typeof gtag&&gtag("event","affiliate_click",{link_url:e.href,link_domain:e.hostname,link_text:(e.textContent||"").trim().slice(0,80),page_path:location.pathname})}catch(t){}})),e("#yr").textContent=(new Date).getFullYear(),[0,1].forEach((function(t){e("#tile"+t).src=P(t+1)})),e("#waBtn").addEventListener("click",(function(){ft(),e("#waMenu").classList.toggle("show")})),document.addEventListener("click",(function(t){t.target.closest(".wa-wrap")||e("#waMenu").classList.remove("show")})),window.addEventListener("scroll",(function(){e("#topBtn").classList.toggle("show",window.scrollY>500)}),{passive:!0}),e("#topBtn").addEventListener("click",(function(){window.scrollTo({top:0,behavior:"smooth"})})),o("cookieOk")||(e("#cookieBar").hidden=!1),e("#cookieOk").addEventListener("click",(function(){i("cookieOk","1"),e("#cookieBar").hidden=!0})),"serviceWorker"in navigator&&window.addEventListener("load",(function(){navigator.serviceWorker.register("/sw.js").catch((function(){}))}));try{A("hit",{method:"POST"})}catch(t){}R();var ht,gt=location.pathname.match(/^\/p\/([a-z0-9-]+)/);if(A("settings").then((function(t){d.settings=t})).catch((function(){d.settings={social:{},stores:w,phones:_}})).then((function(){j(),rt(),d.post&&D()})),gt)ht=gt[1],e("#home").hidden=!0,e("#postView").hidden=!1,d.curPage=0,d.unlocked=!1,d.pending=!1,ct(),A("posts/"+ht).then((function(t){d.post=t;var e=o("bookEmail");if("book"===t.type&&t.locked&&e)return F(ht).catch((function(){D()}));D()})).catch((function(){e("#commentsWrap").hidden=!0,e("#postBody").innerHTML='<a class="back" href="/">'+n(u("back"))+"</a><p>"+n(u("notfound"))+"</p>"})).then((function(){var t=e("#ssr");t&&t.remove()}));else{var bt=e("#ssr");bt&&bt.remove(),W(),d.key&&F(d.key).catch((function(){}))}}()</script>
 </body>
 </html>
