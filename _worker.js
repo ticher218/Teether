@@ -4,6 +4,8 @@
 const DEFAULT_SITE = 'https://allarbaa.cloud'; // links use whatever address the visitor is on
 const NAME = 'Allarbaa.cloud';
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,90}$/;
+const BOT_RE = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|lighthouse|pingdom|uptime/i;
+const RX_TYPES = ['helpful', 'fire', 'applause', 'heart'];
 function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
 const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
 
@@ -12,6 +14,9 @@ const DEFAULTS = {
   payments: [],
   customCode: { css: '', head: '', bodyJs: '' },
   authorBio: '',
+  email: '',
+  waChannel: '',
+  logo: '',
   stores: {
     amazon: { link: 'https://www.amazon.com/', id: '', img: 0 },
     jumia: { link: 'https://www.jumia.com.ng/', id: '', img: 0 },
@@ -47,9 +52,14 @@ const normUrl = (u) => {
 
 /* Turns plain text into safe HTML.
    [[btn:Label|https://link]] -> affiliate button, [text](https://link) -> text link,
-   **bold**, "## Heading", blank line = new paragraph. */
+   **bold**, "## Heading", ```code```, blank line = new paragraph. */
 function render(text) {
   let s = esc(String(text || '').replace(/\r\n?/g, '\n'));
+  const blocks = [];
+  s = s.replace(/```([\s\S]*?)```/g, (m, c) => {
+    blocks.push(c.replace(/^\n+|\n+$/g, ''));
+    return '\n\n@@CODE' + (blocks.length - 1) + '@@\n\n';
+  });
   s = s.replace(/\[\[btn:([^|\]]+)\|([^\]]+)\]\]/g, (m, label, u) => {
     const href = safeUrl(u.replace(/&amp;/g, '&'));
     return href
@@ -65,7 +75,11 @@ function render(text) {
     .split(/\n{2,}/)
     .map((b) => b.trim())
     .filter(Boolean)
-    .map((b) => (/^## /.test(b) ? `<h3>${b.slice(3)}</h3>` : `<p>${b.replace(/\n/g, '<br>')}</p>`))
+    .map((b) => {
+      const cm = b.match(/^@@CODE(\d+)@@$/);
+      if (cm) return `<pre>${blocks[+cm[1]] || ''}</pre>`;
+      return /^## /.test(b) ? `<h3>${b.slice(3)}</h3>` : `<p>${b.replace(/\n/g, '<br>')}</p>`;
+    })
     .join('\n');
 }
 
@@ -73,6 +87,7 @@ const excerpt = (t, n = 160) =>
   Array.isArray(t) ? excerptText(t[0] || '', n) : excerptText(t, n);
 const excerptText = (t, n = 160) =>
   String(t || '')
+    .replace(/```[\s\S]*?```/g, '')
     .replace(/\[\[btn:[^\]]*\]\]/g, '')
     .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
     .replace(/[*#]/g, '')
@@ -97,6 +112,13 @@ const authed = (request, env) => {
   return !!env.ADMIN_PASSWORD && k === env.ADMIN_PASSWORD;
 };
 
+/* Visits that must NOT be counted: the owner (admin key or owner flag on their device),
+   repeat opens in the same browser session, and known bots/crawlers. */
+const skipCount = (request, env) =>
+  authed(request, env) ||
+  request.headers.get('x-no-count') === '1' ||
+  BOT_RE.test(request.headers.get('user-agent') || '');
+
 async function getIndex(env) {
   try {
     return JSON.parse((await env.BLOG.get('index')) || '[]');
@@ -108,6 +130,16 @@ async function getIndex(env) {
 async function putIndex(env, idx) {
   idx.sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0));
   await env.BLOG.put('index', JSON.stringify(idx));
+}
+
+async function getRx(env, id) {
+  const out = {};
+  let r = {};
+  try {
+    r = JSON.parse((await env.BLOG.get('rx:' + id)) || '{}');
+  } catch (e) {}
+  RX_TYPES.forEach((t) => (out[t] = Math.max(0, parseInt(r[t], 10) || 0)));
+  return out;
 }
 
 async function getSettings(env) {
@@ -132,7 +164,10 @@ async function getSettings(env) {
     phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones,
     payments,
     customCode: { ...DEFAULTS.customCode, ...(s.customCode || {}) },
-    authorBio: typeof s.authorBio === 'string' ? s.authorBio : DEFAULTS.authorBio
+    authorBio: typeof s.authorBio === 'string' ? s.authorBio : DEFAULTS.authorBio,
+    email: typeof s.email === 'string' ? s.email : '',
+    waChannel: typeof s.waChannel === 'string' ? s.waChannel : '',
+    logo: typeof s.logo === 'string' ? s.logo : ''
   };
 }
 
@@ -146,7 +181,14 @@ const HANDLE = {
   tg: (h) => 'https://t.me/' + h
 };
 
+const dataUrlOk = (s, max) => typeof s === 'string' && /^data:image\/(jpeg|png|webp);base64,/.test(s) && s.length < max;
+const PAY_TYPES = ['bank', 'ussd', 'paypal', 'stripe', 'wallet', 'other'];
+const EMAIL_RE = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/;
+
+/* Anything the admin page did not send is kept as it was, so saving one part
+   of the settings never wipes another part. */
 function cleanSettings(b, existing) {
+  const has = (k) => Object.prototype.hasOwnProperty.call(b, k);
   const out = { social: {}, stores: {}, phones: [] };
   const src = (b && b.social) || {};
   for (const k of Object.keys(DEFAULTS.social)) {
@@ -179,28 +221,47 @@ function cleanSettings(b, existing) {
       img: (existing && existing.stores[k] && existing.stores[k].img) || 0
     };
   }
-  const ph = (b && Array.isArray(b.phones) ? b.phones : []).slice(0, 5);
-  out.phones = ph.map((p) => String(p).replace(/[^0-9+ ()-]/g, '').trim().slice(0, 20)).filter(Boolean);
-  const PAY_TYPES = ['bank','ussd','paypal','stripe','wallet','other'];
-  out.payments = (Array.isArray(b.payments) ? b.payments : [])
-    .slice(0, 12)
-    .map((p) => ({
-      type: PAY_TYPES.includes(p && p.type) ? p.type : 'other',
-      label: String((p && p.label) || '').trim().slice(0, 60),
-      value: String((p && p.value) || '').trim().slice(0, 300)
-    }))
-    .filter((p) => p.label || p.value);
-  const cc = b.customCode || {};
-  out.customCode = {
-    css: String(cc.css || '').slice(0, 20000),
-    head: String(cc.head || '').slice(0, 20000),
-    bodyJs: String(cc.bodyJs || '').slice(0, 20000)
-  };
-  out.authorBio = String(b.authorBio || '').trim().slice(0, 600);
+  if (has('phones')) {
+    const ph = (Array.isArray(b.phones) ? b.phones : []).slice(0, 5);
+    out.phones = ph.map((p) => String(p).replace(/[^0-9+ ()-]/g, '').trim().slice(0, 20)).filter(Boolean);
+  } else out.phones = existing.phones;
+
+  if (has('payments')) {
+    out.payments = (Array.isArray(b.payments) ? b.payments : [])
+      .slice(0, 12)
+      .map((p) => ({
+        type: PAY_TYPES.includes(p && p.type) ? p.type : 'other',
+        label: String((p && p.label) || '').trim().slice(0, 60),
+        value: String((p && p.value) || '').trim().slice(0, 300)
+      }))
+      .filter((p) => p.label || p.value);
+  } else out.payments = existing.payments;
+
+  if (has('customCode')) {
+    const cc = b.customCode || {};
+    out.customCode = {
+      css: String(cc.css || '').slice(0, 20000),
+      head: String(cc.head || '').slice(0, 20000),
+      bodyJs: String(cc.bodyJs || '').slice(0, 20000)
+    };
+  } else out.customCode = existing.customCode;
+
+  out.authorBio = has('authorBio') ? String(b.authorBio || '').trim().slice(0, 600) : existing.authorBio;
+
+  if (has('email')) {
+    const e = String(b.email || '').trim().slice(0, 200);
+    out.email = EMAIL_RE.test(e) ? e : '';
+  } else out.email = existing.email;
+
+  out.waChannel = has('waChannel') ? normUrl(b.waChannel) : existing.waChannel;
+
+  if (has('logo')) {
+    if (b.logo === '' || b.logo === null) out.logo = '';
+    else out.logo = dataUrlOk(b.logo, 400000) ? b.logo : existing.logo;
+  } else out.logo = existing.logo;
+
   return out;
 }
-
-const dataUrlOk = (s, max) => typeof s === 'string' && /^data:image\/(jpeg|png|webp);base64,/.test(s) && s.length < max;
 
 function imgResponse(v) {
   const c = v.indexOf(',');
@@ -226,6 +287,7 @@ async function savePost(env, body, id, existing) {
     content = String(body.content || '').replace(/\r\n?/g, '\n').trim().slice(0, 50000);
   }
   const link = body.link ? normUrl(body.link) : '';
+  const codeLink = type !== 'product' && body.codeLink ? normUrl(body.codeLink) : '';
   if (!title) return { error: 'missing_fields' };
   if (type === 'blog' && !content) return { error: 'missing_fields' };
   if (type === 'product' && !link) return { error: 'missing_fields' };
@@ -253,7 +315,7 @@ async function savePost(env, body, id, existing) {
   }
 
   const views = existing ? existing.views || 0 : 0;
-  const post = { id, title, type, content, pages, link, store, price, status, tags, imgCount, views, date: existing ? existing.date : now, updated: now };
+  const post = { id, title, type, content, pages, link, codeLink, store, price, status, tags, imgCount, views, date: existing ? existing.date : now, updated: now };
   await env.BLOG.put(`post:${id}`, JSON.stringify(post));
 
   const idx = await getIndex(env);
@@ -305,7 +367,7 @@ async function api(request, env, url) {
     const b = await request.json().catch(() => null);
     if (!b || b.website) return json({ ok: true }); // hidden field filled in = bot, pretend it worked
     const email = String(b.email || '').trim().toLowerCase();
-    if (email.length > 200 || !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(email)) return json({ error: 'bad_email' }, 400);
+    if (email.length > 200 || !EMAIL_RE.test(email)) return json({ error: 'bad_email' }, 400);
     await env.BLOG.put('sub:' + email, '1', { metadata: { d: new Date().toISOString() } });
     return json({ ok: true });
   }
@@ -332,14 +394,29 @@ async function api(request, env, url) {
   }
 
   if (route === 'hit' && m === 'POST') {
-    const cur = parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0;
-    await env.BLOG.put('stat:site', String(cur + 1));
-    return json({ ok: true });
+    if (skipCount(request, env)) return json({ ok: true, counted: false });
+    try {
+      const cur = parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0;
+      await env.BLOG.put('stat:site', String(cur + 1));
+    } catch (e) {}
+    return json({ ok: true, counted: true });
   }
 
   if (route === 'stats' && m === 'GET') {
     if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
     return json({ views: parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0 });
+  }
+
+  if (route === 'react' && m === 'POST') {
+    const id = parts[2] || '';
+    if (!ID_RE.test(id)) return json({ error: 'not_found' }, 404);
+    if (!(await env.BLOG.get(`post:${id}`))) return json({ error: 'not_found' }, 404);
+    const b = (await request.json().catch(() => null)) || {};
+    const rx = await getRx(env, id);
+    if (RX_TYPES.includes(b.prev) && rx[b.prev] > 0) rx[b.prev]--;
+    if (RX_TYPES.includes(b.type)) rx[b.type]++;
+    await env.BLOG.put('rx:' + id, JSON.stringify(rx));
+    return json({ ok: true, reactions: rx });
   }
 
   if (route === 'unlock') {
@@ -348,7 +425,7 @@ async function api(request, env, url) {
       const b = await request.json().catch(() => null);
       if (!b || b.website) return json({ error: 'bad_request' }, 400);
       const email = String(b.email || '').trim().toLowerCase();
-      if (email.length > 200 || !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(email)) return json({ error: 'bad_email' }, 400);
+      if (email.length > 200 || !EMAIL_RE.test(email)) return json({ error: 'bad_email' }, 400);
       const raw = await env.BLOG.get(`post:${bookId}`);
       if (!raw) return json({ error: 'not_found' }, 404);
       const p = JSON.parse(raw);
@@ -524,16 +601,21 @@ async function api(request, env, url) {
         const p = JSON.parse(raw);
         const isAdmin = authed(request, env);
         if (p.status === 'draft' && !isAdmin) return json({ error: 'not_found' }, 404);
-        if (!isAdmin) {
-          p.views = (p.views || 0) + 1;
-          await env.BLOG.put(`post:${id}`, JSON.stringify(p));
-          const idx2 = await getIndex(env);
-          const j = idx2.findIndex((x) => x.id === id);
-          if (j >= 0) {
-            idx2[j].views = p.views;
-            await putIndex(env, idx2);
+        if (!skipCount(request, env)) {
+          try {
+            p.views = (p.views || 0) + 1;
+            await env.BLOG.put(`post:${id}`, JSON.stringify(p));
+            const idx2 = await getIndex(env);
+            const j = idx2.findIndex((x) => x.id === id);
+            if (j >= 0) {
+              idx2[j].views = p.views;
+              await putIndex(env, idx2);
+            }
+          } catch (e) {
+            /* if the counter cannot be saved, the post must still open */
           }
         }
+        const reactions = await getRx(env, id);
         if (p.type === 'book' && !isAdmin) {
           const first = (p.pages && p.pages[0]) || '';
           return json({
@@ -541,10 +623,11 @@ async function api(request, env, url) {
             pages: undefined,
             locked: true,
             pageCount: (p.pages || []).length,
-            previewHtml: render(first.slice(0, 500))
+            previewHtml: render(first.slice(0, 500)),
+            reactions
           });
         }
-        return json({ ...p, html: p.type === 'book' ? undefined : render(p.content), pageHtml: p.type === 'book' ? (p.pages || []).map(render) : undefined });
+        return json({ ...p, reactions, html: p.type === 'book' ? undefined : render(p.content), pageHtml: p.type === 'book' ? (p.pages || []).map(render) : undefined });
       }
       if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
       if (!raw) return json({ error: 'not_found' }, 404);
@@ -559,7 +642,9 @@ async function api(request, env, url) {
         for (let n = 0; n < (existing.imgCount || 0); n++) await env.BLOG.delete(`img:${id}:${n}`);
         await env.BLOG.delete(`post:${id}`);
         await env.BLOG.delete(`comments:${id}`);
-        await env.BLOG.delete(`comments:${id}`);
+        await env.BLOG.delete(`rx:${id}`);
+        await env.BLOG.delete(`claims:${id}`);
+        await env.BLOG.delete(`paid:${id}`);
         const idx = (await getIndex(env)).filter((p) => p.id !== id);
         await putIndex(env, idx);
         return json({ ok: true });
@@ -572,7 +657,7 @@ async function api(request, env, url) {
 async function sitemap(env, SITE) {
   const idx = env.BLOG ? await getIndex(env) : [];
   const urls = [`<url><loc>${SITE}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`];
-  for (const p of idx.filter((x) => x.type !== 'product')) {
+  for (const p of idx.filter((x) => x.type !== 'product' && x.status !== 'draft')) {
     urls.push(`<url><loc>${SITE}/p/${p.id}</loc><lastmod>${String(p.updated || p.date).slice(0, 10)}</lastmod></url>`);
   }
   return new Response(
@@ -582,7 +667,7 @@ async function sitemap(env, SITE) {
 }
 
 async function feed(env, SITE) {
-  const idx = (env.BLOG ? await getIndex(env) : []).filter((x) => x.type !== 'product').slice(0, 30);
+  const idx = (env.BLOG ? await getIndex(env) : []).filter((x) => x.type !== 'product' && x.status !== 'draft').slice(0, 30);
   const items = idx
     .map(
       (p) =>
@@ -613,7 +698,7 @@ async function postPage(env, url) {
     return new Response(html, { status: 404, headers });
   }
   const link = `${SITE}/p/${post.id}`;
-  const desc = excerpt(post.content, 160);
+  const desc = excerpt(post.type === 'book' ? post.pages : post.content, 160);
   const OG_N = (hashStr(post.id) % 3) + 1;
   const img = post.imgCount ? `${SITE}/api/img/${post.id}/0?v=${encodeURIComponent(post.updated || post.date)}` : `${SITE}/og-${OG_N}.png`;
   const ld = {
@@ -649,15 +734,17 @@ async function postPage(env, url) {
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
 
-/* The page and robots.txt say allarbaa.cloud. Until that domain is connected,
-   swap it for the address the visitor is really on (for example allarbaa.pages.dev). */
+/* Puts the Custom Code (AdSense, CSS, scripts) from the admin panel into the page.
+   index.html must contain <!--CUSTOM_HEAD--> inside <head> and <!--CUSTOM_BODY_END--> before </body>. */
 function injectCustom(html, settings) {
   const cc = (settings && settings.customCode) || {};
   const head = (cc.css ? `<style>${cc.css}</style>` : '') + (cc.head || '');
   const bodyEnd = cc.bodyJs ? `<script>${cc.bodyJs}<\/script>` : '';
-  return html.replace('<!--CUSTOM_HEAD-->', head).replace('<!--CUSTOM_BODY_END-->', bodyEnd);
+  return html.replace('<!--CUSTOM_HEAD-->', () => head).replace('<!--CUSTOM_BODY_END-->', () => bodyEnd);
 }
 
+/* The page and robots.txt say allarbaa.cloud. Until that domain is connected,
+   swap it for the address the visitor is really on (for example allarbaa.pages.dev). */
 async function withOrigin(request, env, url) {
   const res = await env.ASSETS.fetch(request);
   if (!res.ok) return res;
