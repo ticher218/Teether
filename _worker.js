@@ -1,7 +1,7 @@
 /* Allarbaa.cloud - Cloudflare Pages worker
    Needs: KV binding named BLOG, and variable ADMIN_PASSWORD (Pages > Settings). */
 
-const DEFAULT_SITE = 'https://allarbaa.cloud'; // links use whatever address the visitor is on
+const DEFAULT_SITE = 'https://allarbaa.cloud';
 const NAME = 'Allarbaa.cloud';
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,90}$/;
 const BOT_RE = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|lighthouse|pingdom|uptime/i;
@@ -28,7 +28,10 @@ const DEFAULTS = {
 const json = (data, status = 200) =>
   new Response(JSON.stringify(data), {
     status,
-    headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' }
+    headers: {
+      'content-type': 'application/json; charset=utf-8',
+      'cache-control': 'no-store, no-cache, must-revalidate, max-age=0'
+    }
   });
 
 const esc = (s) =>
@@ -50,9 +53,6 @@ const normUrl = (u) => {
   return safeUrl(u);
 };
 
-/* Turns plain text into safe HTML.
-   [[btn:Label|https://link]] -> affiliate button, [text](https://link) -> text link,
-   **bold**, "## Heading", ```code```, blank line = new paragraph. */
 function render(text) {
   let s = esc(String(text || '').replace(/\r\n?/g, '\n'));
   const blocks = [];
@@ -112,8 +112,6 @@ const authed = (request, env) => {
   return !!env.ADMIN_PASSWORD && k === env.ADMIN_PASSWORD;
 };
 
-/* Visits that must NOT be counted: the owner (admin key or owner flag on their device),
-   repeat opens in the same browser session, and known bots/crawlers. */
 const skipCount = (request, env) =>
   authed(request, env) ||
   request.headers.get('x-no-count') === '1' ||
@@ -128,7 +126,7 @@ async function getIndex(env) {
 }
 
 async function putIndex(env, idx) {
-  idx.sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0));
+  idx.sort((a, b) => (new Date(b.date || 0) > new Date(a.date || 0) ? 1 : -1));
   await env.BLOG.put('index', JSON.stringify(idx));
 }
 
@@ -155,7 +153,6 @@ async function getSettings(env) {
   }
   let payments = Array.isArray(s.payments) ? s.payments : [];
   if (!payments.length && s.bank && s.bank.number) {
-    // migrate an old single bank-account setting the first time it's read
     payments = [{ type: 'bank', label: s.bank.bankName || 'Bank transfer', value: [s.bank.number, s.bank.name].filter(Boolean).join(' \u2014 ') }];
   }
   return {
@@ -185,8 +182,6 @@ const dataUrlOk = (s, max) => typeof s === 'string' && /^data:image\/(jpeg|png|w
 const PAY_TYPES = ['bank', 'ussd', 'paypal', 'stripe', 'wallet', 'other'];
 const EMAIL_RE = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/;
 
-/* Anything the admin page did not send is kept as it was, so saving one part
-   of the settings never wipes another part. */
 function cleanSettings(b, existing) {
   const has = (k) => Object.prototype.hasOwnProperty.call(b, k);
   const out = { social: {}, stores: {}, phones: [] };
@@ -314,7 +309,7 @@ async function savePost(env, body, id, existing) {
     imgCount = imgs.length;
   }
 
-  const views = existing ? existing.views || 0 : 0;
+  const views = existing ? (parseInt(existing.views, 10) || 0) : 0;
   const post = { id, title, type, content, pages, link, codeLink, store, price, status, tags, imgCount, views, date: existing ? existing.date : now, updated: now };
   await env.BLOG.put(`post:${id}`, JSON.stringify(post));
 
@@ -331,7 +326,7 @@ async function savePost(env, body, id, existing) {
 
 async function api(request, env, url) {
   if (!env.BLOG) return json({ error: 'kv_missing' }, 503);
-  const parts = url.pathname.split('/').filter(Boolean); // ['api', route, id, n]
+  const parts = url.pathname.split('/').filter(Boolean);
   const route = parts[1];
   const m = request.method;
 
@@ -365,7 +360,7 @@ async function api(request, env, url) {
 
   if (route === 'subscribe' && m === 'POST') {
     const b = await request.json().catch(() => null);
-    if (!b || b.website) return json({ ok: true }); // hidden field filled in = bot, pretend it worked
+    if (!b || b.website) return json({ ok: true });
     const email = String(b.email || '').trim().toLowerCase();
     if (email.length > 200 || !EMAIL_RE.test(email)) return json({ error: 'bad_email' }, 400);
     await env.BLOG.put('sub:' + email, '1', { metadata: { d: new Date().toISOString() } });
@@ -513,7 +508,7 @@ async function api(request, env, url) {
     }
     if (m === 'POST') {
       const b = await request.json().catch(() => null);
-      if (!b || b.website) return json({ ok: true, comment: null }); // honeypot
+      if (!b || b.website) return json({ ok: true, comment: null });
       const name = String(b.name || '').trim().slice(0, 60) || 'Guest';
       const text = String(b.text || '').trim().slice(0, 1000);
       if (!text) return json({ error: 'missing_text' }, 400);
@@ -603,7 +598,7 @@ async function api(request, env, url) {
         if (p.status === 'draft' && !isAdmin) return json({ error: 'not_found' }, 404);
         if (!skipCount(request, env)) {
           try {
-            p.views = (p.views || 0) + 1;
+            p.views = (parseInt(p.views, 10) || 0) + 1;
             await env.BLOG.put(`post:${id}`, JSON.stringify(p));
             const idx2 = await getIndex(env);
             const j = idx2.findIndex((x) => x.id === id);
@@ -611,9 +606,7 @@ async function api(request, env, url) {
               idx2[j].views = p.views;
               await putIndex(env, idx2);
             }
-          } catch (e) {
-            /* if the counter cannot be saved, the post must still open */
-          }
+          } catch (e) {}
         }
         const reactions = await getRx(env, id);
         if (p.type === 'book' && !isAdmin) {
@@ -734,8 +727,6 @@ async function postPage(env, url) {
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
 
-/* Puts the Custom Code (AdSense, CSS, scripts) from the admin panel into the page.
-   index.html must contain <!--CUSTOM_HEAD--> inside <head> and <!--CUSTOM_BODY_END--> before </body>. */
 function injectCustom(html, settings) {
   const cc = (settings && settings.customCode) || {};
   const head = (cc.css ? `<style>${cc.css}</style>` : '') + (cc.head || '');
@@ -743,8 +734,6 @@ function injectCustom(html, settings) {
   return html.replace('<!--CUSTOM_HEAD-->', () => head).replace('<!--CUSTOM_BODY_END-->', () => bodyEnd);
 }
 
-/* The page and robots.txt say allarbaa.cloud. Until that domain is connected,
-   swap it for the address the visitor is really on (for example allarbaa.pages.dev). */
 async function withOrigin(request, env, url) {
   const res = await env.ASSETS.fetch(request);
   if (!res.ok) return res;
