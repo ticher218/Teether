@@ -7,4 +7,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://teesher.cloud/sitemap.xml
+Sitemap: https://allarbaa.cloud/sitemap.xml
