@@ -1,17 +1,17 @@
 <!doctype html>
-<html lang="ha" dir="ltr">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
 <!--SEO_HEAD_START-->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Allarbaa.cloud — Labarai, Littattafai &amp; Fasaha</title>
-<meta name="description" content="Allarbaa.cloud: Dandalin labarai, fasahar zamani, karatun littattafai, da koyarwa a Hausa, English, da Larabci.">
+<title>Allarbaa.cloud — World News, Tech, Books &amp; Insights</title>
+<meta name="description" content="Allarbaa.cloud: Tech blogging, global news, books, education and tutorials in English, Hausa and Arabic.">
 <link rel="canonical" href="https://allarbaa.cloud/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Allarbaa.cloud">
-<meta property="og:title" content="Allarbaa.cloud — Labarai, Littattafai &amp; Fasaha">
-<meta property="og:description" content="Dandalin labarai, fasahar zamani, karatun littattafai, da koyarwa.">
+<meta property="og:title" content="Allarbaa.cloud — World News, Tech, Books &amp; Insights">
+<meta property="og:description" content="Tech blogging, global news, digital books and digital solutions.">
 <meta property="og:url" content="https://allarbaa.cloud/">
 <meta name="twitter:card" content="summary_large_image">
 <!--SEO_HEAD_END-->
@@ -21,91 +21,110 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f8fafc;--card:#ffffff;--text:#0f172a;--sub:#64748b;--border:#e2e8f0;
-  --pri:#0284c7;--pri-light:#e0f2fe;--pri-dark:#0369a1;--acc:#f59e0b;
-  --danger:#ef4444;--success:#10b981;--radius:16px;--shadow:0 4px 20px -2px rgba(15,23,42,0.06);
+  --bg:#070b14;
+  --bg-sub:#0d1424;
+  --card:#121a2d;
+  --card-hover:#18243e;
+  --border:#1e293b;
+  --border-focus:#38bdf8;
+  --text:#f8fafc;
+  --sub:#94a3b8;
+  --pri:#0ea5e9;
+  --pri-glow:rgba(14,165,233,0.18);
+  --pri-dark:#0284c7;
+  --accent:#f59e0b;
+  --danger:#ef4444;
+  --success:#10b981;
+  --radius:16px;
+  --shadow:0 8px 30px rgba(0,0,0,0.5);
 }
-[data-theme="dark"]{
-  --bg:#090d16;--card:#111827;--text:#f1f5f9;--sub:#94a3b8;--border:#1e293b;
-  --pri:#38bdf8;--pri-light:#082f49;--pri-dark:#0284c7;--shadow:0 4px 20px -2px rgba(0,0,0,0.4);
+[data-theme="light"]{
+  --bg:#f8fafc;--bg-sub:#f1f5f9;--card:#ffffff;--card-hover:#f8fafc;
+  --border:#e2e8f0;--border-focus:#0284c7;--text:#0f172a;--sub:#64748b;
+  --pri:#0284c7;--pri-glow:rgba(2,132,199,0.12);--shadow:0 4px 20px rgba(15,23,42,0.06);
 }
 [data-theme="sepia"]{
-  --bg:#f4ecd8;--card:#fbf7ee;--text:#433422;--sub:#8f7e6b;--border:#e6dcbe;
-  --pri:#b45309;--pri-light:#fef3c7;--pri-dark:#92400e;
+  --bg:#f4ecd8;--bg-sub:#ede2c6;--card:#fcf8ef;--card-hover:#f7f0df;
+  --border:#e4d6b6;--border-focus:#b45309;--text:#433422;--sub:#8f7e6b;
+  --pri:#b45309;--pri-glow:rgba(180,83,9,0.12);
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .2s,color .2s;min-height:100vh;}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;transition:background .2s,color .2s;}
 [dir="rtl"]{font-family:'Amiri','Plus Jakarta Sans',serif;}
 a{color:inherit;text-decoration:none;}
 button,input,textarea,select{font:inherit;}
 
-/* Layout */
-.container{max-width:1100px;margin:0 auto;padding:0 16px;}
-header{position:sticky;top:0;background:var(--card);border-bottom:1px solid var(--border);z-index:90;backdrop-filter:blur(8px);}
+/* Container & Header */
+.container{max-width:1120px;margin:0 auto;padding:0 16px;}
+header{position:sticky;top:0;background:rgba(13,20,36,0.92);border-bottom:1px solid var(--border);z-index:90;backdrop-filter:blur(12px);}
 .nav-row{display:flex;align-items:center;justify-content:space-between;height:68px;gap:12px;}
-.logo{font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:8px;color:var(--pri);}
-.logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--pri),#6366f1);color:#fff;display:grid;place-items:center;font-weight:900;}
+.logo{font-size:1.35rem;font-weight:800;display:flex;align-items:center;gap:10px;color:var(--text);}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--pri),#6366f1);color:#fff;display:grid;place-items:center;font-weight:900;box-shadow:0 0 15px var(--pri-glow);}
 .nav-actions{display:flex;align-items:center;gap:8px;}
 .btn-icon{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:grid;place-items:center;cursor:pointer;color:var(--text);transition:.15s;}
-.btn-icon:hover{background:var(--pri-light);color:var(--pri);}
-.lang-select{padding:6px 10px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:600;font-size:0.85rem;cursor:pointer;}
+.btn-icon:hover{background:var(--card-hover);border-color:var(--pri);color:var(--pri);}
+.lang-select{padding:7px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:600;font-size:0.85rem;cursor:pointer;}
 
-/* Universal Search Header */
-.search-bar-wrap{background:var(--card);border-bottom:1px solid var(--border);padding:12px 0;}
-.search-box{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:8px 14px;transition:border-color .2s;}
-.search-box:focus-within{border-color:var(--pri);box-shadow:0 0 0 3px var(--pri-light);}
-.search-box input{flex:1;border:none;background:transparent;outline:none;color:var(--text);font-size:0.95rem;}
+/* Universal Search (Kamar Google) */
+.search-bar-wrap{background:var(--bg-sub);border-bottom:1px solid var(--border);padding:14px 0;}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:10px 16px;transition:.2s;}
+.search-box:focus-within{border-color:var(--border-focus);box-shadow:0 0 0 3px var(--pri-glow);}
+.search-box input{flex:1;border:none;background:transparent;outline:none;color:var(--text);font-size:0.98rem;}
+.search-box input::placeholder{color:var(--sub);}
 .search-clear{background:none;border:none;color:var(--sub);cursor:pointer;font-weight:bold;font-size:1.1rem;}
 
-/* Main Nav Tabs */
-.tabs{display:flex;gap:8px;padding:16px 0;overflow-x:auto;scrollbar-width:none;}
-.tab-btn{padding:8px 18px;border-radius:30px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-weight:600;font-size:0.88rem;cursor:pointer;white-space:nowrap;transition:.15s;}
-.tab-btn.active{background:var(--pri);color:#fff;border-color:var(--pri);}
+/* Navigation Tabs */
+.tabs{display:flex;gap:8px;padding:18px 0 10px;overflow-x:auto;scrollbar-width:none;}
+.tab-btn{padding:8px 20px;border-radius:30px;border:1px solid var(--border);background:var(--card);color:var(--sub);font-weight:600;font-size:0.88rem;cursor:pointer;white-space:nowrap;transition:.15s;}
+.tab-btn.active{background:var(--pri);color:#fff;border-color:var(--pri);box-shadow:0 0 14px var(--pri-glow);}
 
-/* Blog / Product Grid */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px;padding:16px 0 40px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;cursor:pointer;}
-.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px -4px rgba(15,23,42,0.12);}
-.card-img{width:100%;height:180px;object-fit:cover;background:#e2e8f0;}
-.card-body{padding:18px;flex:1;display:flex;flex-direction:column;}
-.card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:0.8rem;color:var(--sub);font-weight:500;}
-.badge{padding:3px 9px;border-radius:6px;font-size:0.75rem;font-weight:700;text-transform:uppercase;}
-.badge-blog{background:#e0f2fe;color:#0369a1;}
-.badge-book{background:#fef3c7;color:#92400e;}
-.badge-product{background:#dcfce7;color:#15803d;}
-.card-title{font-size:1.15rem;font-weight:700;line-height:1.4;margin-bottom:8px;color:var(--text);}
-.card-excerpt{color:var(--sub);font-size:0.9rem;margin-bottom:14px;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border);font-size:0.82rem;font-weight:600;}
-.views-count{display:inline-flex;align-items:center;gap:4px;color:var(--pri);background:var(--pri-light);padding:3px 8px;border-radius:8px;}
+/* Grid & Cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:22px;padding:16px 0 50px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .2s,border-color .2s,box-shadow .2s;cursor:pointer;}
+.card:hover{transform:translateY(-4px);border-color:var(--pri);box-shadow:0 12px 30px rgba(0,0,0,0.6);}
+.card-img{width:100%;height:190px;object-fit:cover;background:#1e293b;}
+.card-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+.card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-size:0.8rem;color:var(--sub);font-weight:500;}
+.badge{padding:3px 10px;border-radius:6px;font-size:0.75rem;font-weight:700;text-transform:uppercase;}
+.badge-blog{background:rgba(14,165,233,0.15);color:var(--pri);}
+.badge-book{background:rgba(245,158,11,0.15);color:var(--accent);}
+.badge-product{background:rgba(16,185,129,0.15);color:var(--success);}
+.card-title{font-size:1.2rem;font-weight:700;line-height:1.4;margin-bottom:10px;color:var(--text);}
+.card-excerpt{color:var(--sub);font-size:0.92rem;margin-bottom:16px;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);font-size:0.85rem;font-weight:600;}
+.views-count{display:inline-flex;align-items:center;gap:5px;color:var(--pri);background:var(--pri-glow);padding:4px 10px;border-radius:8px;}
+.read-more-link{color:var(--pri);display:inline-flex;align-items:center;gap:4px;font-weight:700;}
 
-/* Detail Article View */
-.article-wrap{max-width:760px;margin:24px auto 60px;background:var(--card);padding:28px 24px;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);}
+/* Single Post View */
+.article-wrap{max-width:800px;margin:28px auto 60px;background:var(--card);padding:32px 28px;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);}
 .article-header{margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border);}
-.article-title{font-size:1.9rem;font-weight:800;line-height:1.3;margin:12px 0;}
-.article-stats{display:flex;flex-wrap:wrap;gap:14px;color:var(--sub);font-size:0.88rem;align-items:center;}
-.article-content{font-size:1.05rem;line-height:1.8;color:var(--text);}
-.article-content p{margin-bottom:1.2em;}
-.article-content img{max-width:100%;border-radius:12px;margin:16px 0;}
-.article-content pre{background:#0f172a;color:#f8fafc;padding:16px;border-radius:12px;overflow-x:auto;margin:18px 0;font-size:0.9rem;}
-.aff-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#ea580c);color:#fff;padding:12px 24px;border-radius:30px;font-weight:700;margin:16px 0;text-decoration:none;box-shadow:0 4px 14px rgba(245,158,11,0.35);}
+.article-title{font-size:2.1rem;font-weight:800;line-height:1.3;margin:14px 0;color:var(--text);}
+.article-stats{display:flex;flex-wrap:wrap;gap:16px;color:var(--sub);font-size:0.9rem;align-items:center;}
+.article-content{font-size:1.08rem;line-height:1.85;color:var(--text);margin-top:20px;}
+.article-content p{margin-bottom:1.4em;}
+.article-content img{max-width:100%;border-radius:12px;margin:18px 0;}
+.article-content pre{background:#070b14;border:1px solid var(--border);color:#e2e8f0;padding:18px;border-radius:12px;overflow-x:auto;margin:20px 0;font-size:0.92rem;}
+.aff-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#f59e0b,#ea580c);color:#fff;padding:12px 26px;border-radius:30px;font-weight:700;margin:16px 0;text-decoration:none;box-shadow:0 4px 14px rgba(245,158,11,0.35);}
 
 /* Reactions & Comments */
-.reactions-bar{display:flex;gap:10px;margin:30px 0;flex-wrap:wrap;}
-.rx-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:24px;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-weight:600;font-size:0.9rem;}
-.rx-btn.active{border-color:var(--pri);background:var(--pri-light);color:var(--pri);}
+.reactions-bar{display:flex;gap:12px;margin:32px 0;flex-wrap:wrap;}
+.rx-btn{display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:30px;border:1px solid var(--border);background:var(--bg);cursor:pointer;font-weight:600;font-size:0.92rem;color:var(--text);transition:.15s;}
+.rx-btn:hover{border-color:var(--pri);background:var(--pri-glow);}
 .comments-sec{margin-top:40px;padding-top:24px;border-top:1px solid var(--border);}
-.comment-card{background:var(--bg);padding:14px;border-radius:12px;margin-bottom:12px;border:1px solid var(--border);}
-.comment-author{font-weight:700;font-size:0.9rem;color:var(--text);display:flex;justify-content:space-between;}
+.comment-card{background:var(--bg);padding:14px 18px;border-radius:12px;margin-bottom:12px;border:1px solid var(--border);}
+.comment-author{font-weight:700;font-size:0.92rem;display:flex;justify-content:space-between;color:var(--text);}
 
-/* Admin Panel & Modals */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);z-index:999;display:none;place-items:center;padding:16px;}
-.modal-box{background:var(--card);border-radius:var(--radius);max-width:550px;width:100%;padding:24px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 40px rgba(0,0,0,0.25);}
-.btn-primary{background:var(--pri);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-weight:700;cursor:pointer;}
-.input-field{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);margin-bottom:12px;outline:none;}
-.highlight{background:#fef08a;color:#854d0e;padding:1px 3px;border-radius:3px;font-weight:bold;}
+/* Admin & Modals */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);z-index:999;display:none;place-items:center;padding:16px;}
+.modal-box{background:var(--card);border-radius:var(--radius);max-width:580px;width:100%;padding:26px;max-height:90vh;overflow-y:auto;border:1px solid var(--border);box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+.btn-primary{background:var(--pri);color:#fff;border:none;padding:11px 22px;border-radius:10px;font-weight:700;cursor:pointer;transition:.15s;}
+.btn-primary:hover{background:var(--pri-dark);}
+.input-field{width:100%;padding:11px 16px;border-radius:10px;border:1px solid var(--border);background:var(--bg);color:var(--text);margin-bottom:14px;outline:none;}
+.input-field:focus{border-color:var(--pri);}
+.highlight{background:rgba(245,158,11,0.25);color:#fcd34d;padding:2px 4px;border-radius:4px;font-weight:bold;}
 
 /* Footer */
-footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 20px;text-align:center;color:var(--sub);font-size:0.9rem;}
+footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 24px;text-align:center;color:var(--sub);font-size:0.9rem;}
 </style>
 </head>
 <body>
@@ -118,21 +137,22 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 
     </a>
     <div class="nav-actions">
       <select id="langSelect" class="lang-select" onchange="changeLang(this.value)">
+        <option value="en" selected>English</option>
         <option value="ha">Hausa</option>
-        <option value="en">English</option>
         <option value="ar">العربية</option>
       </select>
-      <button class="btn-icon" onclick="toggleTheme()" title="Canza Salon Haske">🌙</button>
-      <button class="btn-icon" id="adminBtn" onclick="openAdmin()" title="Admin">⚙️</button>
+      <button class="btn-icon" onclick="toggleTheme()" title="Switch Theme">☀️</button>
+      <button class="btn-icon" onclick="openAdmin()" title="Admin">⚙️</button>
     </div>
   </div>
 </header>
 
+<!-- Universal Google-Style Search -->
 <div class="search-bar-wrap">
   <div class="container">
     <div class="search-box">
       <span>🔍</span>
-      <input type="search" id="universalSearch" placeholder="Bincika komai (Labarai, Littattafai, Kanti, Tags)..." oninput="doSearch(this.value)">
+      <input type="search" id="universalSearch" placeholder="Search world news, blogs, tech stories, books & keywords..." oninput="doSearch(this.value)">
       <button class="search-clear" onclick="clearSearch()" style="display:none;" id="clearSearchBtn">✕</button>
     </div>
   </div>
@@ -141,88 +161,88 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 
 <main class="container">
   <!-- Tabs Navigation -->
   <div class="tabs" id="tabNav">
-    <button class="tab-btn active" onclick="filterType('all', this)">Duka (All)</button>
-    <button class="tab-btn" onclick="filterType('blog', this)">Labaran Blog</button>
-    <button class="tab-btn" onclick="filterType('book', this)">Littattafai (Books)</button>
-    <button class="tab-btn" onclick="filterType('product', this)">Kanti (Stores)</button>
+    <button class="tab-btn active" id="tabAll" onclick="filterType('all', this)">All Content</button>
+    <button class="tab-btn" id="tabBlog" onclick="filterType('blog', this)">Articles &amp; News</button>
+    <button class="tab-btn" id="tabBook" onclick="filterType('book', this)">Books &amp; Guides</button>
+    <button class="tab-btn" id="tabProduct" onclick="filterType('product', this)">Affiliate Stores</button>
   </div>
 
   <!-- Search Results Notice -->
-  <div id="searchNotice" style="display:none; padding: 10px 0; font-weight:600; color:var(--pri);"></div>
+  <div id="searchNotice" style="display:none; padding: 12px 0 4px; font-weight:600; color:var(--pri);"></div>
 
   <!-- Posts Container Grid -->
   <div class="grid" id="postsGrid">
     <div style="grid-column: 1/-1; text-align: center; padding: 60px 0; color:var(--sub);">
-      Ana lodi labarai da bayanan allarbaa.cloud...
+      Loading articles and updates...
     </div>
   </div>
 
-  <!-- Single Post Detail View (Hidden by default) -->
+  <!-- Single Post Detail View (Opened strictly one at a time) -->
   <div id="articleView" style="display:none;"></div>
 </main>
 
-<!-- Admin Login / Manage Modal -->
+<!-- Admin Modal -->
 <div class="modal-overlay" id="adminModal">
   <div class="modal-box">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <h3 style="font-weight:800;" id="adminModalTitle">Kula da Shafin (Admin Panel)</h3>
-      <button onclick="closeModal('adminModal')" style="border:none;background:none;font-size:1.4rem;cursor:pointer;">✕</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+      <h3 style="font-weight:800;" id="txtAdminTitle">Admin Control Panel</h3>
+      <button onclick="closeModal('adminModal')" style="border:none;background:none;color:var(--sub);font-size:1.4rem;cursor:pointer;">✕</button>
     </div>
     <div id="adminLoginSec">
-      <p style="margin-bottom:12px; color:var(--sub); font-size:0.9rem;">Shigar da Admin Password dinka don rubuta sabon labari ko duba masu ziyara:</p>
+      <p style="margin-bottom:14px; color:var(--sub); font-size:0.92rem;">Enter your Admin Password to publish posts and inspect analytics:</p>
       <input type="password" id="adminPassInput" class="input-field" placeholder="Admin Password">
-      <button class="btn-primary" style="width:100%;" onclick="submitLogin()">Shiga Admin</button>
+      <button class="btn-primary" style="width:100%;" onclick="submitLogin()">Sign In as Admin</button>
     </div>
     <div id="adminDashSec" style="display:none;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <span style="color:var(--success); font-weight:700;">● Admin Yana Aiki</span>
-        <button onclick="logoutAdmin()" style="border:none;background:none;color:var(--danger);cursor:pointer;font-weight:600;">Fita (Logout)</button>
+        <span style="color:var(--success); font-weight:700;">● Admin Session Active</span>
+        <button onclick="logoutAdmin()" style="border:none;background:none;color:var(--danger);cursor:pointer;font-weight:600;">Sign Out</button>
       </div>
-      <button class="btn-primary" style="width:100%; margin-bottom:12px;" onclick="openNewPostModal()">+ Rubuta Sabon Blog / Littafi</button>
-      <div id="adminStatsBox" style="background:var(--bg); padding:12px; border-radius:10px; margin-bottom:12px; font-size:0.9rem;">
-        <div>Jimillar Ziyarar Masu Karatu: <strong id="totalSiteViews">0</strong></div>
+      <button class="btn-primary" style="width:100%; margin-bottom:14px;" onclick="openNewPostModal()">+ Create New Article / Book</button>
+      <div style="background:var(--bg); padding:14px; border-radius:10px; margin-bottom:12px; font-size:0.92rem; border:1px solid var(--border);">
+        <div>Total Verified Website Visitors: <strong id="totalSiteViews" style="color:var(--pri);">0</strong></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- New Post Creation Modal -->
+<!-- New Post Modal -->
 <div class="modal-overlay" id="postModal">
-  <div class="modal-box" style="max-width:680px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <h3 style="font-weight:800;">Wallafa Sabon Abu</h3>
-      <button onclick="closeModal('postModal')" style="border:none;background:none;font-size:1.4rem;cursor:pointer;">✕</button>
+  <div class="modal-box" style="max-width:700px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+      <h3 style="font-weight:800;">Publish New Content</h3>
+      <button onclick="closeModal('postModal')" style="border:none;background:none;color:var(--sub);font-size:1.4rem;cursor:pointer;">✕</button>
     </div>
     <select id="postType" class="input-field" onchange="togglePostFields(this.value)">
-      <option value="blog">Labarin Blog</option>
-      <option value="book">Littafi (Book with Pages)</option>
-      <option value="product">Kayan Kanti (Affiliate Store Product)</option>
+      <option value="blog">Blog Article / News</option>
+      <option value="book">Digital Book (Paged)</option>
+      <option value="product">Store Affiliate Product</option>
     </select>
-    <input type="text" id="postTitle" class="input-field" placeholder="Taken Labari ko Littafi (Title)">
+    <input type="text" id="postTitle" class="input-field" placeholder="Title">
     <div id="blogContentFields">
-      <textarea id="postContent" class="input-field" rows="8" placeholder="Cikakken labari (Support Markdown, **bold**, [[btn:Sayar da Kaya|https://link]])"></textarea>
+      <textarea id="postContent" class="input-field" rows="9" placeholder="Full article body (Supports Markdown, **bold**, [[btn:Buy Now|https://link]])"></textarea>
     </div>
     <div id="bookContentFields" style="display:none;">
-      <textarea id="bookPages" class="input-field" rows="8" placeholder="Rubuta shafukan littafi (raba kowane shafi da layuka uku: ---PAGE---)"></textarea>
+      <textarea id="bookPages" class="input-field" rows="9" placeholder="Book pages (Separate each page with: ---PAGE---)"></textarea>
     </div>
     <div id="productFields" style="display:none;">
-      <input type="text" id="productLink" class="input-field" placeholder="Affiliate Link (Amazon, Jumia, Konga)">
+      <input type="text" id="productLink" class="input-field" placeholder="Affiliate link (Amazon, Jumia, Konga)">
       <select id="productStore" class="input-field">
         <option value="amazon">Amazon</option>
         <option value="jumia">Jumia</option>
         <option value="konga">Konga</option>
-        <option value="other">Wani Kanti</option>
+        <option value="other">Other Store</option>
       </select>
     </div>
-    <input type="text" id="postTags" class="input-field" placeholder="Tags (raba da comma: labarai, fasaha, nishadi)">
-    <button class="btn-primary" style="width:100%;" onclick="saveNewPost()">Wallafa Yanzu (Publish)</button>
+    <input type="text" id="postTags" class="input-field" placeholder="Tags (separated by comma: news, tech, world)">
+    <button class="btn-primary" style="width:100%;" onclick="saveNewPost()">Publish Now</button>
   </div>
 </div>
 
 <footer>
   <div class="container">
-    <p>© 2026 <strong>Allarbaa.cloud</strong>. Dukkan haƙƙi mallaki ne.</p>
-    <p style="margin-top:6px; font-size:0.8rem;">Dandalin labarai, fasaha, da karatun littattafai na zamani.</p>
+    <p>© 2026 <strong>Allarbaa.cloud</strong>. All rights reserved.</p>
+    <p style="margin-top:6px; font-size:0.82rem; color:var(--sub);">Digital publishing, technology research, books and global insights.</p>
   </div>
 </footer>
 
@@ -230,14 +250,50 @@ footer{background:var(--card);border-top:1px solid var(--border);padding:40px 0 
 let ALL_POSTS = [];
 let CURRENT_TYPE = 'all';
 let SEARCH_QUERY = '';
+let CURRENT_LANG = localStorage.getItem('allarbaa_lang') || 'en';
 const ADMIN_KEY_STORAGE = 'allarbaa_admin_key';
 
-// Check if user is owner/admin to avoid self-counting
+// Multilingual Dictionary
+const DICT = {
+  en: {
+    searchPlaceholder: "Search world news, blogs, tech stories, books & keywords...",
+    all: "All Content", blog: "Articles & News", book: "Books & Guides", product: "Affiliate Stores",
+    readMore: "Read More →", views: "views", back: "← Back to Articles",
+    noResults: "No matching articles found.", searchResults: "Search results for",
+    loading: "Loading content...", commentsTitle: "Reader Feedback & Comments",
+    leaveComment: "Leave a comment...", sendComment: "Post Comment", yourName: "Your Name",
+    firstComment: "No comments yet. Be the first to share your thoughts!"
+  },
+  ha: {
+    searchPlaceholder: "Bincika labaran duniya, blog, fasaha, littattafai da kalmomi...",
+    all: "Duka (All)", blog: "Labaran Blog", book: "Littattafai (Books)", product: "Kanti (Stores)",
+    readMore: "Karanta Cikakken Labari →", views: "views", back: "← Koma Babban Shafi",
+    noResults: "Babu wani abu da aka samu a wannan sashin.", searchResults: "Sakamakon bincike na",
+    loading: "Ana lodi labarai da bayanan allarbaa.cloud...", commentsTitle: "Tsokaci & Ra'ayoyin Masu Karatu",
+    leaveComment: "Rubuta ra'ayinka...", sendComment: "Aika Tsokaci", yourName: "Sunanka",
+    firstComment: "Babu tsokaci tukunna. Kasance na farko da zai bar ra'ayi!"
+  },
+  ar: {
+    searchPlaceholder: "ابحث في أخبار العالم، التكنولوجيا، المقالات، الكتب والكلمات...",
+    all: "الكل", blog: "المقالات والأخبار", book: "الكتب والأدلة", product: "المتاجر والتسوق",
+    readMore: "اقرأ المزيد ←", views: "مشاهدة", back: "← العودة إلى الصفحة الرئيسية",
+    noResults: "لم يتم العثور على محتوى مطابق.", searchResults: "نتائج البحث عن",
+    loading: "جاري تحميل المقالات...", commentsTitle: "تعليقات وآراء القراء",
+    leaveComment: "اكتب تعليقك هنا...", sendComment: "إرسال التعليق", yourName: "اسمك",
+    firstComment: "لا توجد تعليقات حتى الآن. كن أول من يعلق!"
+  }
+};
+
+function t(key) {
+  return (DICT[CURRENT_LANG] && DICT[CURRENT_LANG][key]) || DICT['en'][key] || key;
+}
+
+// Check admin
 function isAdminUser() {
   return !!localStorage.getItem(ADMIN_KEY_STORAGE);
 }
 
-// Fetch headers helper: excludes owner self-view
+// Request headers: avoids counting owner's visits
 function getHeaders(extra = {}) {
   const h = { 'content-type': 'application/json', ...extra };
   if (isAdminUser()) {
@@ -247,13 +303,29 @@ function getHeaders(extra = {}) {
   return h;
 }
 
-// Record Real Website Hit (Skips self-view & bots)
+// Record hit for real visitors
 function recordSiteHit() {
-  if (isAdminUser()) return; // Don't count owner
-  fetch('/api/hit', {
-    method: 'POST',
-    headers: { 'x-no-count': '0' }
-  }).catch(()=>{});
+  if (isAdminUser()) return;
+  fetch('/api/hit', { method: 'POST', headers: { 'x-no-count': '0' } }).catch(()=>{});
+}
+
+// Apply Language
+function applyLanguage() {
+  document.documentElement.lang = CURRENT_LANG;
+  document.documentElement.dir = CURRENT_LANG === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('langSelect').value = CURRENT_LANG;
+  document.getElementById('universalSearch').placeholder = t('searchPlaceholder');
+  document.getElementById('tabAll').textContent = t('all');
+  document.getElementById('tabBlog').textContent = t('blog');
+  document.getElementById('tabBook').textContent = t('book');
+  document.getElementById('tabProduct').textContent = t('product');
+}
+
+function changeLang(lang) {
+  CURRENT_LANG = lang;
+  localStorage.setItem('allarbaa_lang', lang);
+  applyLanguage();
+  renderPosts();
 }
 
 // Load all posts
@@ -264,15 +336,21 @@ async function loadPosts() {
     ALL_POSTS = data.posts || [];
     renderPosts();
   } catch (err) {
-    document.getElementById('postsGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; color:var(--danger);">Kuskure wajen saukar da bayanai. Tabbatar da haɗin intanet.</div>';
+    document.getElementById('postsGrid').innerHTML = `<div style="grid-column: 1/-1; text-align: center; color:var(--danger);">Error loading content. Please check internet connection.</div>`;
   }
 }
 
-// Universal Google-Style Search
+// Universal Search (World News, Tech, Blogs, Books, Stores, Tags)
 function doSearch(q) {
   SEARCH_QUERY = q.trim().toLowerCase();
   const clearBtn = document.getElementById('clearSearchBtn');
   clearBtn.style.display = SEARCH_QUERY ? 'block' : 'none';
+  // When searching, search everything across all categories
+  if (SEARCH_QUERY && CURRENT_TYPE !== 'all') {
+    CURRENT_TYPE = 'all';
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tabAll').classList.add('active');
+  }
   renderPosts();
 }
 
@@ -283,7 +361,6 @@ function clearSearch() {
   renderPosts();
 }
 
-// Filter by post type
 function filterType(type, btn) {
   CURRENT_TYPE = type;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -291,7 +368,6 @@ function filterType(type, btn) {
   renderPosts();
 }
 
-// Helper to highlight search matches
 function highlightText(text, query) {
   if (!query || !text) return text || '';
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -299,19 +375,18 @@ function highlightText(text, query) {
   return String(text).replace(reg, '<span class="highlight">$1</span>');
 }
 
-// Render Posts List
+// Render Grid
 function renderPosts() {
   const grid = document.getElementById('postsGrid');
   const notice = document.getElementById('searchNotice');
   
   let list = ALL_POSTS;
 
-  // Filter by Type
   if (CURRENT_TYPE !== 'all') {
     list = list.filter(p => p.type === CURRENT_TYPE);
   }
 
-  // Universal Search Filtering (Title, Excerpt, Tags, Store)
+  // Search across Title, Body content, Excerpt, Tags, Store
   if (SEARCH_QUERY) {
     list = list.filter(p => {
       const titleMatch = p.title && p.title.toLowerCase().includes(SEARCH_QUERY);
@@ -321,20 +396,20 @@ function renderPosts() {
       return titleMatch || excerptMatch || tagMatch || storeMatch;
     });
     notice.style.display = 'block';
-    notice.innerHTML = `Sakamakon bincike na "<strong>${escapeHtml(SEARCH_QUERY)}</strong>": An samu ${list.length}`;
+    notice.innerHTML = `${t('searchResults')} "<strong>${escapeHtml(SEARCH_QUERY)}</strong>": (${list.length})`;
   } else {
     notice.style.display = 'none';
   }
 
   if (!list.length) {
-    grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px 0; color:var(--sub);">Babu wani abu da aka samu a wannan sashin.</div>`;
+    grid.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px 0; color:var(--sub);">${t('noResults')}</div>`;
     return;
   }
 
   grid.innerHTML = list.map(post => {
     const badgeClass = post.type === 'book' ? 'badge-book' : post.type === 'product' ? 'badge-product' : 'badge-blog';
-    const badgeName = post.type === 'book' ? 'Littafi' : post.type === 'product' ? 'Kanti' : 'Blog';
-    const imgUrl = post.imgCount ? `/api/img/${post.id}/0` : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><rect fill="%230284c7" width="400" height="200"/><text fill="%23ffffff" font-size="28" font-family="sans-serif" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Allarbaa.cloud</text></svg>';
+    const badgeName = post.type === 'book' ? t('book') : post.type === 'product' ? t('product') : t('blog');
+    const imgUrl = post.imgCount ? `/api/img/${post.id}/0` : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><rect fill="%230f172a" width="400" height="200"/><text fill="%2338bdf8" font-size="28" font-family="sans-serif" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle">Allarbaa.cloud</text></svg>';
     const views = post.views || 0;
     
     return `
@@ -343,13 +418,13 @@ function renderPosts() {
         <div class="card-body">
           <div class="card-meta">
             <span class="badge ${badgeClass}">${badgeName}</span>
-            <span>${new Date(post.date).toLocaleDateString('ha-NG')}</span>
+            <span>${new Date(post.date).toLocaleDateString()}</span>
           </div>
           <h2 class="card-title">${highlightText(escapeHtml(post.title), SEARCH_QUERY)}</h2>
           <p class="card-excerpt">${highlightText(escapeHtml(post.excerpt), SEARCH_QUERY)}</p>
           <div class="card-footer">
-            <span class="views-count">👁️ ${views} views</span>
-            <span style="color:var(--pri);">Karanta Cikakken Labari →</span>
+            <span class="views-count">👁️ ${views} ${t('views')}</span>
+            <span class="read-more-link">${t('readMore')}</span>
           </div>
         </div>
       </div>
@@ -357,14 +432,14 @@ function renderPosts() {
   }).join('');
 }
 
-// Open Single Article / Book
+// Open strictly ONE individual article in reading mode
 async function openPost(id) {
   document.getElementById('postsGrid').style.display = 'none';
   document.getElementById('tabNav').style.display = 'none';
   document.getElementById('searchNotice').style.display = 'none';
   const view = document.getElementById('articleView');
   view.style.display = 'block';
-  view.innerHTML = '<div style="text-align:center; padding:50px;">Ana saukar da cikakken bayani...</div>';
+  view.innerHTML = `<div style="text-align:center; padding:60px; color:var(--sub);">${t('loading')}</div>`;
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
   try {
@@ -372,22 +447,22 @@ async function openPost(id) {
     if (!res.ok) throw new Error('Not found');
     const post = await res.json();
     
-    // Update local list view count if updated
+    // Update local counter
     const local = ALL_POSTS.find(p => p.id === id);
     if (local && post.views) local.views = post.views;
 
-    const imgTag = post.imgCount ? `<img src="/api/img/${post.id}/0" style="width:100%; border-radius:12px; margin-bottom:18px;">` : '';
+    const imgTag = post.imgCount ? `<img src="/api/img/${post.id}/0" style="width:100%; border-radius:12px; margin: 18px 0;">` : '';
 
     view.innerHTML = `
       <div class="article-wrap">
-        <button onclick="showHome()" style="background:none;border:none;color:var(--pri);font-weight:700;cursor:pointer;margin-bottom:14px;">← Koma Babban Shafi</button>
+        <button onclick="showHome()" style="background:none;border:none;color:var(--pri);font-weight:700;font-size:1rem;cursor:pointer;margin-bottom:18px;">${t('back')}</button>
         <div class="article-header">
           <span class="badge badge-blog">${post.type.toUpperCase()}</span>
           <h1 class="article-title">${escapeHtml(post.title)}</h1>
           <div class="article-stats">
             <span>📅 ${new Date(post.date).toLocaleDateString()}</span>
-            <span class="views-count">👁️ ${post.views || 0} views</span>
-            ${isAdminUser() ? `<button onclick="deletePost('${post.id}')" style="color:var(--danger);border:none;background:none;cursor:pointer;font-weight:bold;">[Goge Wannan Post]</button>` : ''}
+            <span class="views-count">👁️ ${post.views || 0} ${t('views')}</span>
+            ${isAdminUser() ? `<button onclick="deletePost('${post.id}')" style="color:var(--danger);border:none;background:none;cursor:pointer;font-weight:bold;margin-left:auto;">[Delete Post]</button>` : ''}
           </div>
         </div>
         ${imgTag}
@@ -400,19 +475,19 @@ async function openPost(id) {
           <button class="rx-btn" onclick="sendReaction('${post.id}', 'heart')">❤️ Love <span id="rx_heart">${post.reactions?.heart || 0}</span></button>
         </div>
         <div class="comments-sec">
-          <h3>Tsokaci &amp; Ra'ayoyin Masu Karatu</h3>
+          <h3>${t('commentsTitle')}</h3>
           <div id="commentsList" style="margin-top:14px;"></div>
-          <div style="margin-top:18px;">
-            <input type="text" id="cName" class="input-field" placeholder="Sunanka">
-            <textarea id="cText" class="input-field" rows="3" placeholder="Rubuta ra'ayinka..."></textarea>
-            <button class="btn-primary" onclick="submitComment('${post.id}')">Aika Tsokaci</button>
+          <div style="margin-top:20px;">
+            <input type="text" id="cName" class="input-field" placeholder="${t('yourName')}">
+            <textarea id="cText" class="input-field" rows="3" placeholder="${t('leaveComment')}"></textarea>
+            <button class="btn-primary" onclick="submitComment('${post.id}')">${t('sendComment')}</button>
           </div>
         </div>
       </div>
     `;
     loadComments(post.id);
   } catch (e) {
-    view.innerHTML = '<div style="text-align:center; padding:40px; color:var(--danger);">Kuskure: Ba a samu wannan labarin ba.</div>';
+    view.innerHTML = `<div style="text-align:center; padding:50px; color:var(--danger);">Error loading article.</div>`;
   }
 }
 
@@ -423,7 +498,7 @@ function showHome() {
   renderPosts();
 }
 
-// Reactions System
+// Reactions
 async function sendReaction(id, type) {
   try {
     const res = await fetch(`/api/react/${id}`, {
@@ -439,7 +514,7 @@ async function sendReaction(id, type) {
   } catch (err) {}
 }
 
-// Comments System
+// Comments
 async function loadComments(id) {
   const box = document.getElementById('commentsList');
   try {
@@ -447,7 +522,7 @@ async function loadComments(id) {
     const data = await res.json();
     const list = data.comments || [];
     if (!list.length) {
-      box.innerHTML = '<p style="color:var(--sub); font-size:0.9rem;">Babu wani tsokaci tukunna. Kasance na farko!</p>';
+      box.innerHTML = `<p style="color:var(--sub); font-size:0.92rem;">${t('firstComment')}</p>`;
       return;
     }
     box.innerHTML = list.map(c => `
@@ -456,16 +531,16 @@ async function loadComments(id) {
           <span>${escapeHtml(c.name)}</span>
           <span style="font-size:0.75rem; color:var(--sub); font-weight:normal;">${new Date(c.date).toLocaleDateString()}</span>
         </div>
-        <div style="margin-top:4px; font-size:0.95rem;">${escapeHtml(c.text)}</div>
+        <div style="margin-top:6px; font-size:0.95rem;">${escapeHtml(c.text)}</div>
       </div>
     `).join('');
   } catch (e) {}
 }
 
 async function submitComment(id) {
-  const name = document.getElementById('cName').value.trim() || 'Bako';
+  const name = document.getElementById('cName').value.trim() || 'Visitor';
   const text = document.getElementById('cText').value.trim();
-  if (!text) return alert('Da fatan a rubuta ra\'ayi kafin aikawa.');
+  if (!text) return alert('Please enter your comment.');
   await fetch(`/api/comments/${id}`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
@@ -475,7 +550,7 @@ async function submitComment(id) {
   loadComments(id);
 }
 
-// Admin Controls
+// Admin
 function openAdmin() {
   document.getElementById('adminModal').style.display = 'grid';
   if (isAdminUser()) {
@@ -490,7 +565,7 @@ function openAdmin() {
 
 async function submitLogin() {
   const pass = document.getElementById('adminPassInput').value.trim();
-  if (!pass) return alert('Shigar da password!');
+  if (!pass) return alert('Enter password!');
   const res = await fetch('/api/login', {
     method: 'POST',
     headers: { 'x-admin-key': pass }
@@ -499,9 +574,9 @@ async function submitLogin() {
     localStorage.setItem(ADMIN_KEY_STORAGE, pass);
     document.getElementById('adminPassInput').value = '';
     openAdmin();
-    loadPosts(); // refresh with draft visibility
+    loadPosts();
   } else {
-    alert('Password bai yi daidai ba!');
+    alert('Invalid password!');
   }
 }
 
@@ -534,7 +609,7 @@ async function saveNewPost() {
   const type = document.getElementById('postType').value;
   const title = document.getElementById('postTitle').value.trim();
   const tags = document.getElementById('postTags').value.split(',').map(s=>s.trim()).filter(Boolean);
-  if (!title) return alert('Da fatan a saka taken rubutu (Title).');
+  if (!title) return alert('Please enter a title.');
 
   const payload = { type, title, tags, status: 'published' };
   if (type === 'blog') payload.content = document.getElementById('postContent').value.trim();
@@ -551,19 +626,19 @@ async function saveNewPost() {
   });
 
   if (res.ok) {
-    alert('An wallafa cikin nasara!');
+    alert('Published successfully!');
     closeModal('postModal');
     loadPosts();
   } else {
-    alert('Kuskure wajen wallafawa.');
+    alert('Failed to publish.');
   }
 }
 
 async function deletePost(id) {
-  if (!confirm('Kana da tabbacin kana son goge wannan post din?')) return;
+  if (!confirm('Are you sure you want to delete this post?')) return;
   const res = await fetch(`/api/posts/${id}`, { method: 'DELETE', headers: getHeaders() });
   if (res.ok) {
-    alert('An goge!');
+    alert('Deleted!');
     showHome();
     loadPosts();
   }
@@ -574,22 +649,17 @@ function closeModal(id) {
 }
 
 function toggleTheme() {
-  const current = document.body.getAttribute('data-theme') || 'light';
-  const next = current === 'light' ? 'dark' : current === 'dark' ? 'sepia' : 'light';
-  document.body.setAttribute('data-theme', next);
-}
-
-function changeLang(lang) {
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : current === 'light' ? 'sepia' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
 }
 
 function escapeHtml(str) {
   return String(str || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' })[c]);
 }
 
-// Initial Run
 window.addEventListener('DOMContentLoaded', () => {
+  applyLanguage();
   recordSiteHit();
   loadPosts();
 });
