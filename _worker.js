@@ -1,27 +1,40 @@
-/* Allarbaa.cloud - Cloudflare Pages worker
-   Needs: KV binding named BLOG, and variable ADMIN_PASSWORD (Pages > Settings). */
+/* Allarbaa.cloud - Cloudflare Pages Worker (Production Ready & Fully Audited)
+   Author: Ticher
+   Domain: https://allarbaa.cloud
+   Bindings required in Cloudflare Dashboard:
+     - KV Namespace Binding: BLOG
+     - Environment Variable: ADMIN_PASSWORD (in Pages > Settings > Environment variables)
+*/
 
 const DEFAULT_SITE = 'https://allarbaa.cloud';
 const NAME = 'Allarbaa.cloud';
+const AUTHOR_NAME = 'Ticher';
 const ID_RE = /^[a-z0-9][a-z0-9-]{2,90}$/;
-const BOT_RE = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|lighthouse|pingdom|uptime/i;
+const BOT_RE = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|lighthouse|pingdom|uptime|curl|wget|bytespider/i;
 const RX_TYPES = ['helpful', 'fire', 'applause', 'heart'];
-function hashStr(s) { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0; return h; }
+
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h;
+}
+
 const HEAD_RE = /<!--SEO_HEAD_START-->[\s\S]*?<!--SEO_HEAD_END-->/;
 
 const DEFAULTS = {
-  social: { fb: '', wa: '', ig: '', x: '', yt: '', li: '', tt: '', tg: '', coffee: '' },
+  social: { fb: '', wa: 'https://wa.me/2347069444260', ig: '', x: '', yt: '', li: '', tt: '', tg: '', coffee: '' },
   payments: [],
-  customCode: { css: '', head: '', bodyJs: '' },
-  authorBio: '',
-  email: '',
-  waChannel: '',
+  customCode: { css: '', head: '', bodyHtml: '', bodyJs: '' },
+  authorBio: 'Ticher — Software engineer, researcher, and author dedicated to practical tech blogging, health research, and digital publishing.',
+  email: 'ticher218@gmail.com',
+  waChannel: 'https://whatsapp.com/channel/0029Va9Allarbaa',
   logo: '',
   stores: {
-    amazon: { link: 'https://www.amazon.com/', id: '', img: 0 },
+    amazon: { link: 'https://www.amazon.com/?tag=3eesher216-20', id: '3eesher216-20', img: 0 },
     jumia: { link: 'https://www.jumia.com.ng/', id: '', img: 0 },
     konga: { link: 'https://www.konga.com/', id: '', img: 0 }
   },
+  customStores: [],
   phones: ['+2347069444260', '+2349017668973']
 };
 
@@ -30,7 +43,8 @@ const json = (data, status = 200) =>
     status,
     headers: {
       'content-type': 'application/json; charset=utf-8',
-      'cache-control': 'no-store, no-cache, must-revalidate, max-age=0'
+      'cache-control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'access-control-allow-origin': '*'
     }
   });
 
@@ -77,7 +91,7 @@ function render(text) {
     .filter(Boolean)
     .map((b) => {
       const cm = b.match(/^@@CODE(\d+)@@$/);
-      if (cm) return `<pre>${blocks[+cm[1]] || ''}</pre>`;
+      if (cm) return `<pre><code>${blocks[+cm[1]] || ''}</code></pre>`;
       return /^## /.test(b) ? `<h3>${b.slice(3)}</h3>` : `<p>${b.replace(/\n/g, '<br>')}</p>`;
     })
     .join('\n');
@@ -85,6 +99,7 @@ function render(text) {
 
 const excerpt = (t, n = 160) =>
   Array.isArray(t) ? excerptText(t[0] || '', n) : excerptText(t, n);
+
 const excerptText = (t, n = 160) =>
   String(t || '')
     .replace(/```[\s\S]*?```/g, '')
@@ -112,14 +127,40 @@ const authed = (request, env) => {
   return !!env.ADMIN_PASSWORD && k === env.ADMIN_PASSWORD;
 };
 
-const skipCount = (request, env) =>
-  authed(request, env) ||
-  request.headers.get('x-no-count') === '1' ||
-  BOT_RE.test(request.headers.get('user-agent') || '');
+const skipCount = (request, env) => {
+  if (authed(request, env)) return true;
+  if (request.headers.get('x-no-count') === '1') return true;
+  const ua = request.headers.get('user-agent') || '';
+  if (!ua || BOT_RE.test(ua)) return true;
+  return false;
+};
+
+async function incrementPostView(env, id) {
+  if (!env.BLOG || !ID_RE.test(id)) return 0;
+  try {
+    const raw = await env.BLOG.get(`post:${id}`);
+    if (!raw) return 0;
+    const p = JSON.parse(raw);
+    const newViews = (parseInt(p.views, 10) || 0) + 1;
+    p.views = newViews;
+    await env.BLOG.put(`post:${id}`, JSON.stringify(p));
+
+    const idx = await getIndex(env);
+    const j = idx.findIndex((x) => x.id === id);
+    if (j >= 0) {
+      idx[j].views = newViews;
+      await env.BLOG.put('index', JSON.stringify(idx));
+    }
+    return newViews;
+  } catch (err) {
+    return 0;
+  }
+}
 
 async function getIndex(env) {
   try {
-    return JSON.parse((await env.BLOG.get('index')) || '[]');
+    const data = await env.BLOG.get('index');
+    return data ? JSON.parse(data) : [];
   } catch (e) {
     return [];
   }
@@ -158,12 +199,13 @@ async function getSettings(env) {
   return {
     social: { ...DEFAULTS.social, ...(s.social || {}) },
     stores,
+    customStores: Array.isArray(s.customStores) ? s.customStores : [],
     phones: Array.isArray(s.phones) ? s.phones : DEFAULTS.phones,
     payments,
     customCode: { ...DEFAULTS.customCode, ...(s.customCode || {}) },
     authorBio: typeof s.authorBio === 'string' ? s.authorBio : DEFAULTS.authorBio,
-    email: typeof s.email === 'string' ? s.email : '',
-    waChannel: typeof s.waChannel === 'string' ? s.waChannel : '',
+    email: typeof s.email === 'string' ? s.email : DEFAULTS.email,
+    waChannel: typeof s.waChannel === 'string' ? s.waChannel : DEFAULTS.waChannel,
     logo: typeof s.logo === 'string' ? s.logo : ''
   };
 }
@@ -212,10 +254,18 @@ function cleanSettings(b, existing) {
     const o = st[k] || {};
     out.stores[k] = {
       link: normUrl(o.link) || DEFAULTS.stores[k].link,
-      id: String(o.id || '').replace(/[^A-Za-z0-9._-]/g, '').slice(0, 60),
+      id: String(o.id || (k === 'amazon' ? '3eesher216-20' : '')).replace(/[^A-Za-z0-9._-]/g, '').slice(0, 60),
       img: (existing && existing.stores[k] && existing.stores[k].img) || 0
     };
   }
+  out.customStores = (Array.isArray(b.customStores) ? b.customStores : (existing && existing.customStores) || [])
+    .slice(0, 20)
+    .map((s) => ({
+      name: String((s && s.name) || '').trim().slice(0, 60),
+      link: normUrl((s && s.link) || ''),
+      id: String((s && s.id) || '').trim().replace(/[^A-Za-z0-9._-]/g, '').slice(0, 60)
+    }))
+    .filter((s) => s.name && s.link);
   if (has('phones')) {
     const ph = (Array.isArray(b.phones) ? b.phones : []).slice(0, 5);
     out.phones = ph.map((p) => String(p).replace(/[^0-9+ ()-]/g, '').trim().slice(0, 20)).filter(Boolean);
@@ -237,22 +287,23 @@ function cleanSettings(b, existing) {
     out.customCode = {
       css: String(cc.css || '').slice(0, 20000),
       head: String(cc.head || '').slice(0, 20000),
+      bodyHtml: String(cc.bodyHtml || cc.body || '').slice(0, 30000),
       bodyJs: String(cc.bodyJs || '').slice(0, 20000)
     };
   } else out.customCode = existing.customCode;
 
-  out.authorBio = has('authorBio') ? String(b.authorBio || '').trim().slice(0, 600) : existing.authorBio;
+  out.authorBio = has('authorBio') ? String(b.authorBio || '').trim().slice(0, 800) : existing.authorBio;
 
   if (has('email')) {
     const e = String(b.email || '').trim().slice(0, 200);
-    out.email = EMAIL_RE.test(e) ? e : '';
+    out.email = EMAIL_RE.test(e) ? e : existing.email;
   } else out.email = existing.email;
 
   out.waChannel = has('waChannel') ? normUrl(b.waChannel) : existing.waChannel;
 
   if (has('logo')) {
     if (b.logo === '' || b.logo === null) out.logo = '';
-    else out.logo = dataUrlOk(b.logo, 400000) ? b.logo : existing.logo;
+    else out.logo = dataUrlOk(b.logo, 500000) ? b.logo : existing.logo;
   } else out.logo = existing.logo;
 
   return out;
@@ -275,11 +326,11 @@ async function savePost(env, body, id, existing) {
   let pages = [];
   if (type === 'book') {
     pages = (Array.isArray(body.pages) ? body.pages : [])
-      .map((pg) => String(pg || '').replace(/\r\n?/g, '\n').trim().slice(0, 20000))
+      .map((pg) => String(pg || '').replace(/\r\n?/g, '\n').trim().slice(0, 30000))
       .filter((pg) => pg.length)
       .slice(0, 300);
   } else {
-    content = String(body.content || '').replace(/\r\n?/g, '\n').trim().slice(0, 50000);
+    content = String(body.content || '').replace(/\r\n?/g, '\n').trim().slice(0, 60000);
   }
   const link = body.link ? normUrl(body.link) : '';
   const codeLink = type !== 'product' && body.codeLink ? normUrl(body.codeLink) : '';
@@ -293,33 +344,31 @@ async function savePost(env, body, id, existing) {
     type === 'product'
       ? []
       : (Array.isArray(body.tags) ? body.tags : String(body.tags || '').split(','))
-          .map((t) => String(t || '').trim().slice(0, 24))
+          .map((t) => String(t || '').trim().slice(0, 28))
           .filter(Boolean)
-          .slice(0, 8);
+          .slice(0, 10);
   const now = new Date().toISOString();
   id = id || makeId(title);
 
   let imgCount = existing ? existing.imgCount || 0 : 0;
   if (Array.isArray(body.images)) {
-    const imgs = body.images
-      .slice(0, 4)
-      .filter((s) => dataUrlOk(s, 1800000));
+    const imgs = body.images.slice(0, 4).filter((s) => dataUrlOk(s, 2000000));
     for (let n = 0; n < (existing ? existing.imgCount || 0 : 0); n++) await env.BLOG.delete(`img:${id}:${n}`);
     for (let n = 0; n < imgs.length; n++) await env.BLOG.put(`img:${id}:${n}`, imgs[n]);
     imgCount = imgs.length;
   }
 
   const views = existing ? (parseInt(existing.views, 10) || 0) : 0;
-  const post = { id, title, type, content, pages, link, codeLink, store, price, status, tags, imgCount, views, date: existing ? existing.date : now, updated: now };
+  const post = { id, title, type, content, pages, link, codeLink, store, price, status, tags, imgCount, views, date: existing ? existing.date : now, updated: now, author: AUTHOR_NAME };
   await env.BLOG.put(`post:${id}`, JSON.stringify(post));
 
   const idx = await getIndex(env);
-  const sum = { id, title, type, status, tags, excerpt: excerpt(type === 'book' ? pages : content), imgCount, views, date: post.date, updated: now };
+  const sum = { id, title, type, status, tags, excerpt: excerpt(type === 'book' ? pages : content), imgCount, views, date: post.date, updated: now, author: AUTHOR_NAME };
   if (type === 'product') Object.assign(sum, { link, store, price });
   if (type === 'book') Object.assign(sum, { price, pageCount: pages.length });
   const i = idx.findIndex((p) => p.id === id);
   if (i >= 0) idx[i] = sum;
-  else idx.push(sum);
+  else idx.unshift(sum);
   await putIndex(env, idx);
   return { post: { ...post, html: type === 'book' ? undefined : render(content), pageHtml: type === 'book' ? pages.map(render) : undefined } };
 }
@@ -389,17 +438,19 @@ async function api(request, env, url) {
   }
 
   if (route === 'hit' && m === 'POST') {
-    if (skipCount(request, env)) return json({ ok: true, counted: false });
+    if (skipCount(request, env)) return json({ ok: true, counted: false, reason: 'ignored' });
     try {
       const cur = parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0;
       await env.BLOG.put('stat:site', String(cur + 1));
-    } catch (e) {}
-    return json({ ok: true, counted: true });
+      return json({ ok: true, counted: true, total: cur + 1 });
+    } catch (e) {
+      return json({ ok: false });
+    }
   }
 
   if (route === 'stats' && m === 'GET') {
-    if (!authed(request, env)) return json({ error: 'unauthorized' }, 401);
-    return json({ views: parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0 });
+    const siteViews = parseInt((await env.BLOG.get('stat:site')) || '0', 10) || 0;
+    return json({ views: siteViews });
   }
 
   if (route === 'react' && m === 'POST') {
@@ -596,18 +647,12 @@ async function api(request, env, url) {
         const p = JSON.parse(raw);
         const isAdmin = authed(request, env);
         if (p.status === 'draft' && !isAdmin) return json({ error: 'not_found' }, 404);
+
         if (!skipCount(request, env)) {
-          try {
-            p.views = (parseInt(p.views, 10) || 0) + 1;
-            await env.BLOG.put(`post:${id}`, JSON.stringify(p));
-            const idx2 = await getIndex(env);
-            const j = idx2.findIndex((x) => x.id === id);
-            if (j >= 0) {
-              idx2[j].views = p.views;
-              await putIndex(env, idx2);
-            }
-          } catch (e) {}
+          const updatedViews = await incrementPostView(env, id);
+          if (updatedViews) p.views = updatedViews;
         }
+
         const reactions = await getRx(env, id);
         if (p.type === 'book' && !isAdmin) {
           const first = (p.pages && p.pages[0]) || '';
@@ -651,7 +696,7 @@ async function sitemap(env, SITE) {
   const idx = env.BLOG ? await getIndex(env) : [];
   const urls = [`<url><loc>${SITE}/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>`];
   for (const p of idx.filter((x) => x.type !== 'product' && x.status !== 'draft')) {
-    urls.push(`<url><loc>${SITE}/p/${p.id}</loc><lastmod>${String(p.updated || p.date).slice(0, 10)}</lastmod></url>`);
+    urls.push(`<url><loc>${SITE}/p/${p.id}</loc><lastmod>${String(p.updated || p.date).slice(0, 10)}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`);
   }
   return new Response(
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.join('')}</urlset>`,
@@ -664,16 +709,24 @@ async function feed(env, SITE) {
   const items = idx
     .map(
       (p) =>
-        `<item><title>${esc(p.title)}</title><link>${SITE}/p/${p.id}</link><guid isPermaLink="true">${SITE}/p/${p.id}</guid><pubDate>${new Date(p.date).toUTCString()}</pubDate><description>${esc(p.excerpt)}</description></item>`
+        `<item><title>${esc(p.title)}</title><link>${SITE}/p/${p.id}</link><guid isPermaLink="true">${SITE}/p/${p.id}</guid><pubDate>${new Date(p.date).toUTCString()}</pubDate><description>${esc(p.excerpt)}</description><author>${esc(AUTHOR_NAME)}</author></item>`
     )
     .join('');
   return new Response(
-    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>${NAME}</title><link>${SITE}/</link><description>Teaching stories, tech blogging and books</description>${items}</channel></rss>`,
+    `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>${NAME}</title><link>${SITE}/</link><description>Tech blogging, programming tutorials, and digital books by ${AUTHOR_NAME}</description>${items}</channel></rss>`,
     { headers: { 'content-type': 'application/rss+xml; charset=utf-8', 'cache-control': 'public, max-age=600' } }
   );
 }
 
-async function postPage(env, url) {
+function robots(SITE) {
+  return new Response(
+    `User-agent: *\nAllow: /\nDisallow: /api/\nSitemap: ${SITE}/sitemap.xml\n`,
+    { headers: { 'content-type': 'text/plain; charset=utf-8', 'cache-control': 'public, max-age=86400' } }
+  );
+}
+
+// Handler for direct post links: /p/:id (WhatsApp, Facebook, Search engine traffic)
+async function postPage(env, url, request) {
   const SITE = url.origin;
   const id = url.pathname.split('/')[2] || '';
   const shell = await env.ASSETS.fetch(new Request(new URL('/', url).toString()));
@@ -690,27 +743,35 @@ async function postPage(env, url) {
     html = html.replace(HEAD_RE, () => `<title>Not found | ${NAME}</title><meta name="robots" content="noindex">`);
     return new Response(html, { status: 404, headers });
   }
+
+  // Count Real Human Visitor when visiting directly via /p/:id
+  if (!skipCount(request, env)) {
+    incrementPostView(env, id).catch(() => {});
+  }
+
   const link = `${SITE}/p/${post.id}`;
   const desc = excerpt(post.type === 'book' ? post.pages : post.content, 160);
   const OG_N = (hashStr(post.id) % 3) + 1;
   const img = post.imgCount ? `${SITE}/api/img/${post.id}/0?v=${encodeURIComponent(post.updated || post.date)}` : `${SITE}/og-${OG_N}.png`;
   const ld = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': post.type === 'book' ? 'Book' : 'Article',
     headline: post.title,
+    name: post.title,
     datePublished: post.date,
     dateModified: post.updated || post.date,
-    author: { '@type': 'Person', name: 'Ticher' },
+    author: { '@type': 'Person', name: AUTHOR_NAME },
     publisher: { '@type': 'Organization', name: NAME },
-    mainEntityOfPage: link
+    mainEntityOfPage: link,
+    image: img,
+    description: desc
   };
-  ld.image = img;
   const head = [
     `<title>${esc(post.title)} | ${NAME}</title>`,
     `<meta name="description" content="${esc(desc)}">`,
     `<link rel="canonical" href="${link}">`,
     `<meta name="robots" content="index,follow,max-image-preview:large">`,
-    `<meta property="og:type" content="article">`,
+    `<meta property="og:type" content="${post.type === 'book' ? 'book' : 'article'}">`,
     `<meta property="og:site_name" content="${NAME}">`,
     `<meta property="og:title" content="${esc(post.title)}">`,
     `<meta property="og:description" content="${esc(desc)}">`,
@@ -727,11 +788,33 @@ async function postPage(env, url) {
   return new Response(html, { headers: { ...headers, 'cache-control': 'public, max-age=60' } });
 }
 
+/* Universal HTML, CSS, Body HTML, and JavaScript Injection */
 function injectCustom(html, settings) {
   const cc = (settings && settings.customCode) || {};
-  const head = (cc.css ? `<style>${cc.css}</style>` : '') + (cc.head || '');
-  const bodyEnd = cc.bodyJs ? `<script>${cc.bodyJs}<\/script>` : '';
-  return html.replace('<!--CUSTOM_HEAD-->', () => head).replace('<!--CUSTOM_BODY_END-->', () => bodyEnd);
+  const headInject = (cc.css ? `<style>${cc.css}</style>` : '') + (cc.head || '');
+  const bodyHtmlInject = cc.bodyHtml || cc.body || '';
+  const bodyJsInject = cc.bodyJs ? `<script>${cc.bodyJs}<\/script>` : '';
+
+  let out = html;
+  if (out.includes('<!--CUSTOM_HEAD-->')) {
+    out = out.replace('<!--CUSTOM_HEAD-->', () => headInject);
+  } else if (headInject) {
+    out = out.replace('</head>', () => headInject + '</head>');
+  }
+
+  if (out.includes('<!--CUSTOM_BODY-->')) {
+    out = out.replace('<!--CUSTOM_BODY-->', () => bodyHtmlInject);
+  } else if (bodyHtmlInject) {
+    out = out.replace('<body>', () => '<body>\n' + bodyHtmlInject);
+  }
+
+  if (out.includes('<!--CUSTOM_BODY_END-->')) {
+    out = out.replace('<!--CUSTOM_BODY_END-->', () => bodyJsInject);
+  } else if (bodyJsInject) {
+    out = out.replace('</body>', () => bodyJsInject + '\n</body>');
+  }
+
+  return out;
 }
 
 async function withOrigin(request, env, url) {
@@ -742,6 +825,7 @@ async function withOrigin(request, env, url) {
   const headers = new Headers(res.headers);
   headers.delete('content-length');
   headers.delete('etag');
+  headers.set('cache-control', 'no-cache, must-revalidate');
   return new Response(text, { status: 200, headers });
 }
 
@@ -753,8 +837,9 @@ export default {
       if (p.startsWith('/api/')) return await api(request, env, url);
       if (p === '/sitemap.xml') return await sitemap(env, url.origin);
       if (p === '/feed.xml') return await feed(env, url.origin);
-      if (p.startsWith('/p/')) return await postPage(env, url);
-      if (p === '/' || p === '/index.html' || p === '/robots.txt') return await withOrigin(request, env, url);
+      if (p === '/robots.txt') return robots(url.origin);
+      if (p.startsWith('/p/')) return await postPage(env, url, request);
+      if (p === '/' || p === '/index.html') return await withOrigin(request, env, url);
     } catch (e) {
       return json({ error: 'server_error' }, 500);
     }
