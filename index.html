@@ -2355,7 +2355,7 @@ function showPost(id){
   setView('post');
   S.curPage = 0; S.unlocked = false; S.pending = false; stopListen();
   
-  // Check if it's one of the preset books
+  // 1. Check if it's one of the preset books
   var preset = PRESET_BOOKS.find(function(b){return b.id === id});
   if(preset){
     S.post = preset;
@@ -2364,14 +2364,24 @@ function showPost(id){
     return;
   }
 
+  // 2. Check if already loaded in S.posts for instant display
+  var localItem = (S.posts || []).find(function(p){return p.id === id});
+  if(localItem){
+    S.post = localItem;
+    renderPost();
+    var s1=$('#ssr'); if(s1) s1.remove();
+  }
+
   var seenKey='v_'+id, seen=SS.get(seenKey); SS.set(seenKey,'1');
   api('posts/'+id,{noCount:!!seen}).then(function(p){
     S.post=p;
     renderPost();
   }).catch(function(){
-    $('#commentsWrap').hidden=true;
-    $('#relatedWrap').hidden=true;
-    $('#postBody').innerHTML='<a class="back" href="/" style="font-weight:700;color:var(--acc)">&larr; '+esc(T('back'))+'</a><p style="margin-top:20px">'+esc(T('notfound'))+'</p>';
+    if(!localItem){
+      $('#commentsWrap').hidden=true;
+      $('#relatedWrap').hidden=true;
+      $('#postBody').innerHTML='<a class="back" href="/" style="font-weight:700;color:var(--acc)">&larr; '+esc(T('back'))+'</a><p style="margin-top:20px">'+esc(T('notfound'))+'</p>';
+    }
   }).then(function(){var s=$('#ssr');if(s)s.remove()});
 }
 
@@ -3989,16 +3999,14 @@ function handleRouteHash(){
     if(auth){ auth.scrollIntoView({behavior:'smooth'}); }
   } else if(h === '#posts' || h === '#library' || h === '#shop' || h === '#about' || h === '#contact' || h === '#privacy'){
     goHome(h);
-  } else if(h === '#top' || h === '' || h === '#'){
-    var adminActive = $('#adminView') && !$('#adminView').hidden;
-    var postActive = $('#postView') && !$('#postView').hidden;
-    if(adminActive || postActive){
-      goHome('#top');
-    }
+  } else if(h === '#top'){
+    goHome('#top');
   }
 }
 window.addEventListener('hashchange', handleRouteHash);
-setTimeout(handleRouteHash, 400);
+if(location.hash && location.hash !== '#' && location.hash !== '#top'){
+  setTimeout(handleRouteHash, 300);
+}
 
 
 /* Universal Navigation & Article Reader Click Interceptor */
