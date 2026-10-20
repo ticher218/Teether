@@ -1431,6 +1431,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function(){
 'use strict';
 
+function instantScrollTop(){
+  var html = document.documentElement;
+  var old = html.style.scrollBehavior;
+  html.style.scrollBehavior = 'auto';
+  window.scrollTo(0, 0);
+  html.scrollTop = 0;
+  document.body.scrollTop = 0;
+  setTimeout(function(){ html.style.scrollBehavior = old; }, 60);
+}
+
 /* A1 View Router */
 function setView(name){
   var home = document.getElementById('home');
@@ -1440,6 +1450,7 @@ function setView(name){
   if(post) post.hidden = name !== 'post';
   if(admin) admin.hidden = name !== 'admin';
   document.body.setAttribute('data-page', name);
+  instantScrollTop();
 }
 
 
@@ -2088,7 +2099,7 @@ function renderPost(){
     '<span>👁️ '+(p.views||0)+' '+esc(T('views'))+'</span> &middot; '+
     '<span>⏱️ '+mins+' '+esc(T('min_read'))+'</span>'+
     '</div>';
-  var cover=(p.imgCount?imgUrl(p,0):p.cover)?'<div class="gallery" style="margin:18px auto 26px;text-align:center"><img src="'+(p.imgCount?imgUrl(p,0):p.cover)+'" alt="'+esc(p.title)+'" loading="lazy" style="max-height:460px;width:auto;border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,0.55);border:1px solid var(--card-border)"></div>':'';
+  var cover=(p.imgCount?imgUrl(p,0):p.cover)?'<div class="gallery" style="margin:14px auto 16px;text-align:center"><img src="'+(p.imgCount?imgUrl(p,0):p.cover)+'" alt="'+esc(p.title)+'" loading="lazy" style="max-height:280px;width:100%;object-fit:cover;border-radius:12px;box-shadow:0 8px 25px rgba(0,0,0,0.45);border:1px solid var(--card-border)"></div>':'';
   
   if(p.type==='book'){
     renderReader(head,cover);
@@ -2167,32 +2178,30 @@ function renderPost(){
 }
 
 function readerToolsBar(){
-  return '<div class="reader-tools" style="display:flex;justify-content:space-between;align-items:center;background:var(--bg-card);border:1px solid var(--line);padding:10px 16px;border-radius:12px;margin:18px 0;flex-wrap:wrap;gap:8px">'+
-    '<div class="font-ctrls" style="display:flex;align-items:center;gap:6px">'+
-      '<span class="mut" style="font-size:.82rem">'+esc(T('font_ctrl'))+':</span> '+
-      '<button class="btn sm ghost" type="button" id="fontDec" title="A-">A-</button> '+
-      '<button class="btn sm ghost" type="button" id="fontInc" title="A+">A+</button> '+
-      '<button class="btn sm ghost" type="button" id="fontFamilyToggle" title="Serif / Sans">Serif / Sans</button>'+
-    '</div>'+
-    '<button class="btn sm ghost" type="button" id="printDocBtn" title="PDF / Print">'+esc(T('print_pdf'))+'</button>'+
-  '</div>';
-}
-
-function audioPlayerBar(){
-  return '<div class="audio-player-box" id="audioPlayerBox">'+
-    '<div class="audio-ctrls">'+
-      '<button class="btn sm" type="button" id="audioPlayBtn">▶ '+esc(T('listen'))+'</button>'+
-      '<button class="btn sm ghost" type="button" id="audioStopBtn" style="display:none">⏹ '+esc(T('stop'))+'</button>'+
-      '<div class="audio-speed-wrap" style="display:flex;gap:4px">'+
-        '<button class="btn sm ghost speed-btn on" type="button" data-spd="1">1x</button>'+
-        '<button class="btn sm ghost speed-btn" type="button" data-spd="1.25">1.25x</button>'+
-        '<button class="btn sm ghost speed-btn" type="button" data-spd="1.5">1.5x</button>'+
+  return '<div class="reader-tools" style="display:flex;justify-content:space-between;align-items:center;background:var(--bg-card);border:1px solid var(--line);padding:8px 14px;border-radius:12px;margin:12px 0 16px;flex-wrap:wrap;gap:8px">'+
+    '<div class="audio-ctrls" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">'+
+      '<button class="btn sm" type="button" id="audioPlayBtn" style="padding:5px 12px;font-size:.82rem">▶ '+esc(T('listen'))+'</button>'+
+      '<button class="btn sm ghost" type="button" id="audioStopBtn" style="display:none;padding:5px 10px;font-size:.82rem">⏹ '+esc(T('stop'))+'</button>'+
+      '<div class="audio-speed-wrap" style="display:flex;gap:3px">'+
+        '<button class="btn sm ghost speed-btn on" type="button" data-spd="1" style="padding:4px 8px;font-size:.78rem">1x</button>'+
+        '<button class="btn sm ghost speed-btn" type="button" data-spd="1.25" style="padding:4px 8px;font-size:.78rem">1.25x</button>'+
+        '<button class="btn sm ghost speed-btn" type="button" data-spd="1.5" style="padding:4px 8px;font-size:.78rem">1.5x</button>'+
       '</div>'+
       '<div class="audio-wave" id="audioWave" style="display:none">'+
         '<span></span><span></span><span></span><span></span>'+
       '</div>'+
     '</div>'+
+    '<div class="font-ctrls" style="display:flex;align-items:center;gap:4px">'+
+      '<button class="btn sm ghost" type="button" id="fontDec" title="A-" style="padding:4px 8px;font-size:.8rem">A-</button>'+
+      '<button class="btn sm ghost" type="button" id="fontInc" title="A+" style="padding:4px 8px;font-size:.8rem">A+</button>'+
+      '<button class="btn sm ghost" type="button" id="fontFamilyToggle" title="Serif / Sans" style="padding:4px 8px;font-size:.8rem">Font</button>'+
+      '<button class="btn sm ghost" type="button" id="printDocBtn" title="PDF / Print" style="padding:4px 8px;font-size:.8rem">🖨️ PDF</button>'+
+    '</div>'+
   '</div>';
+}
+
+function audioPlayerBar(){
+  return '';
 }
 
 function reactionsBar(postId){
@@ -2355,7 +2364,7 @@ function shareBar(p){
 
 function showPost(id){
   setView('post');
-  window.scrollTo({top:0,behavior:'auto'});
+  instantScrollTop();
   S.curPage = 0; S.unlocked = false; S.pending = false; stopListen();
   
   // 1. Check if it's one of the preset books
@@ -2364,6 +2373,7 @@ function showPost(id){
     S.post = preset;
     renderPost();
     var s0=$('#ssr'); if(s0) s0.remove();
+    instantScrollTop();
     return;
   }
 
@@ -2372,7 +2382,7 @@ function showPost(id){
   if(localItem){
     S.post = localItem;
     renderPost();
-    window.scrollTo({top:0,behavior:'auto'});
+    instantScrollTop();
     var s1=$('#ssr'); if(s1) s1.remove();
   }
 
@@ -2380,7 +2390,7 @@ function showPost(id){
   api('posts/'+id,{noCount:!!seen}).then(function(p){
     S.post=p;
     renderPost();
-    window.scrollTo({top:0,behavior:'auto'});
+    instantScrollTop();
   }).catch(function(){
     if(!localItem){
       $('#commentsWrap').hidden=true;
@@ -4055,8 +4065,6 @@ document.addEventListener('click', function(e){
     if(pid){
       if(history.pushState) history.pushState({ postId: pid }, '', href);
       showPost(pid);
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      setTimeout(function(){window.scrollTo({top:0,behavior:'auto'});},120);
     }
     return;
   }
