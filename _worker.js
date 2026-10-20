@@ -285,10 +285,10 @@ function cleanSettings(b, existing) {
   if (has('customCode')) {
     const cc = b.customCode || {};
     out.customCode = {
-      css: String(cc.css || '').slice(0, 20000),
-      head: String(cc.head || '').slice(0, 20000),
-      bodyHtml: String(cc.bodyHtml || cc.body || '').slice(0, 30000),
-      bodyJs: String(cc.bodyJs || '').slice(0, 20000)
+      css: String(cc.css || ''),
+      head: String(cc.head || ''),
+      bodyHtml: String(cc.bodyHtml || cc.body || ''),
+      bodyJs: String(cc.bodyJs || '')
     };
   } else out.customCode = existing.customCode;
 
@@ -374,15 +374,37 @@ async function savePost(env, body, id, existing) {
 }
 
 async function api(request, env, url) {
-  if (!env.BLOG) return json({ error: 'kv_missing' }, 503);
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'access-control-allow-origin': '*',
+        'access-control-allow-methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'access-control-allow-headers': 'content-type, x-admin-key, x-no-count'
+      }
+    });
+  }
+
   const parts = url.pathname.split('/').filter(Boolean);
   const route = parts[1];
   const m = request.method;
 
   if (route === 'login' && m === 'POST') {
     if (!env.ADMIN_PASSWORD) return json({ error: 'password_not_set' }, 503);
-    return authed(request, env) ? json({ ok: true }) : json({ error: 'unauthorized' }, 401);
+    const keyFromHeader = (request.headers.get('x-admin-key') || '').trim();
+    let keyFromBody = '';
+    try {
+      const b = await request.clone().json().catch(() => null);
+      if (b && b.password) keyFromBody = String(b.password).trim();
+    } catch (e) {}
+    const pass = keyFromBody || keyFromHeader;
+    if (pass && pass === env.ADMIN_PASSWORD.trim()) {
+      return json({ ok: true });
+    }
+    return json({ error: 'unauthorized' }, 401);
   }
+
+  if (!env.BLOG) return json({ error: 'kv_missing' }, 503);
 
   if (route === 'settings') {
     if (m === 'GET') return json(await getSettings(env));
@@ -737,11 +759,25 @@ async function postPage(env, url, request) {
     if (raw) post = JSON.parse(raw);
     if (post && post.type === 'product') post = null;
   }
+  const PRESET_TITLES = {
+    'learn-html-css-javascript-beginners-guide': "Learn HTML, CSS and JavaScript: A Beginner's Practical Guide",
+    'koyon-html-css-da-javascript-jagorar-mafari': "Koyon HTML, CSS da JavaScript: Jagorar Mafari Dalla-Dalla",
+    'from-code-to-website-deployment-handbook': "From Code to Website: The Complete Multi-Platform Deployment Handbook"
+  };
+  if (!post && PRESET_TITLES[id]) {
+    post = {
+      id: id,
+      title: PRESET_TITLES[id],
+      type: 'book',
+      content: PRESET_TITLES[id],
+      date: '2026-01-01',
+      status: 'published'
+    };
+  }
   const headers = { 'content-type': 'text/html; charset=utf-8' };
   if (post && post.status === 'draft') post = null;
   if (!post) {
-    html = html.replace(HEAD_RE, () => `<title>Not found | ${NAME}</title><meta name="robots" content="noindex">`);
-    return new Response(html, { status: 404, headers });
+    return new Response(html, { status: 200, headers });
   }
 
   // Count Real Human Visitor when visiting directly via /p/:id
