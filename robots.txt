@@ -6,5 +6,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /login
 
 Sitemap: https://allarbaa.cloud/sitemap.xml
